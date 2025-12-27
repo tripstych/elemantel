@@ -43,7 +43,6 @@ class LanguageData extends Schema {
       entry.definition = (value as any).definition || "";
       entry.spirit = (value as any).spirit || "";
       entry.weight = (value as any).weight || 0;
-      entry.composition = (value as any).composition || "";
       entry.type = (value as any).type || "";
       
       // Handle elemental_origin
@@ -52,6 +51,11 @@ class LanguageData extends Schema {
         entry.elemental_origin.water = (value as any).elemental_origin.water || 0;
         entry.elemental_origin.earth = (value as any).elemental_origin.earth || 0;
         entry.elemental_origin.air = (value as any).elemental_origin.air || 0;
+      }
+      
+      // Handle composition as string (JSON object)
+      if ((value as any).composition) {
+        entry.composition = JSON.stringify((value as any).composition);
       }
       
       // Handle spell_effect
