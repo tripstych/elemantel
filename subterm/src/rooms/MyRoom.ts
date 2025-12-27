@@ -18,21 +18,18 @@ class ElementalOrigin extends Schema {
 
 class SpellEffect extends Schema {
   @type("string") type: string = "";
-  @type("string") target: string = "";
   @type("string") amount: string = "";
-  @type("string") element: string = "";
-  @type("string") description: string = "";
 }
 
 class LanguageEntry extends Schema {
   @type("string") word: string = "";
   @type("string") definition: string = "";
-  @type(ElementalOrigin) origin: ElementalOrigin = new ElementalOrigin();
-  @type("boolean") derived: boolean = false;
+  @type(ElementalOrigin) elemental_origin: ElementalOrigin = new ElementalOrigin();
   @type("string") spirit: string = "";
   @type("number") weight: number = 0;
-  @type(ElementalOrigin) composition: ElementalOrigin = new ElementalOrigin();
+  @type("string") composition: string = "";
   @type(SpellEffect) spell_effect: SpellEffect = new SpellEffect();
+  @type("string") type: string = "";
 }
 
 class LanguageData extends Schema {
@@ -44,31 +41,23 @@ class LanguageData extends Schema {
       const entry = new LanguageEntry();
       entry.word = (value as any).word || "";
       entry.definition = (value as any).definition || "";
-      entry.derived = (value as any).derived || false;
-      
-      if ((value as any).origin) {
-        entry.origin.fire = (value as any).origin.fire || 0;
-        entry.origin.water = (value as any).origin.water || 0;
-        entry.origin.earth = (value as any).origin.earth || 0;
-        entry.origin.air = (value as any).origin.air || 0;
-      }
-      
       entry.spirit = (value as any).spirit || "";
       entry.weight = (value as any).weight || 0;
+      entry.composition = (value as any).composition || "";
+      entry.type = (value as any).type || "";
       
-      if ((value as any).composition) {
-        entry.composition.fire = (value as any).composition.fire || 0;
-        entry.composition.water = (value as any).composition.water || 0;
-        entry.composition.earth = (value as any).composition.earth || 0;
-        entry.composition.air = (value as any).composition.air || 0;
+      // Handle elemental_origin
+      if ((value as any).elemental_origin) {
+        entry.elemental_origin.fire = (value as any).elemental_origin.fire || 0;
+        entry.elemental_origin.water = (value as any).elemental_origin.water || 0;
+        entry.elemental_origin.earth = (value as any).elemental_origin.earth || 0;
+        entry.elemental_origin.air = (value as any).elemental_origin.air || 0;
       }
       
+      // Handle spell_effect
       if ((value as any).spell_effect) {
-        entry.spell_effect.type = (value as any).spell_effect.type || "";
-        entry.spell_effect.target = (value as any).spell_effect.target || "";
+        entry.spell_effect.type = String((value as any).spell_effect.type || "");
         entry.spell_effect.amount = String((value as any).spell_effect.amount || "");
-        entry.spell_effect.element = (value as any).spell_effect.element || "";
-        entry.spell_effect.description = (value as any).spell_effect.description || "";
       }
       
       this.entries.set(key, entry);
