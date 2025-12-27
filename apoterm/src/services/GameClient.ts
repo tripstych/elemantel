@@ -34,6 +34,8 @@ export class GameClient {
   private onStateChangeCallbacks: ((state: GameState) => void)[] = [];
   private onErrorCallbacks: ((error: any) => void)[] = [];
   private onConnectCallbacks: (() => void)[] = [];
+  private onEquipResultCallbacks: ((result: any) => void)[] = [];
+  private onUnequipResultCallbacks: ((result: any) => void)[] = [];
   private lastPlayerX: number | undefined;
   private lastPlayerY: number | undefined;
 
@@ -82,6 +84,16 @@ export class GameClient {
         console.log("Move result:", message);
       });
 
+      this.room.onMessage("equip_result", (message: any) => {
+        console.log("Equip result:", message);
+        this.notifyEquipResult(message);
+      });
+
+      this.room.onMessage("unequip_result", (message: any) => {
+        console.log("Unequip result:", message);
+        this.notifyUnequipResult(message);
+      });
+
       this.room.onMessage("combat_result", (message: any) => {
         console.log("Combat result:", message);
       });
@@ -96,14 +108,6 @@ export class GameClient {
 
       this.room.onMessage("drop_result", (message: any) => {
         console.log("Drop result:", message);
-      });
-
-      this.room.onMessage("equip_result", (message: any) => {
-        console.log("Equip result:", message);
-      });
-
-      this.room.onMessage("unequip_result", (message: any) => {
-        console.log("Unequip result:", message);
       });
 
       this.room.onMessage("error", (message: any) => {
@@ -169,9 +173,6 @@ export class GameClient {
     this.room.send("equip", { slotPath, itemName });
   }
 
-  /**
-   * Unequip an item from a slot
-   */
   unequipItem(slotPath: string): void {
     if (!this.room) {
       console.error('Not connected to room');
@@ -206,6 +207,14 @@ export class GameClient {
     this.onConnectCallbacks.push(callback);
   }
 
+  onEquipResult(callback: (result: any) => void) {
+    this.onEquipResultCallbacks.push(callback);
+  }
+
+  onUnequipResult(callback: (result: any) => void) {
+    this.onUnequipResultCallbacks.push(callback);
+  }
+
   private convertToPlainObject(obj: any): any {
     if (obj === null || obj === undefined) {
       return obj;
@@ -221,8 +230,17 @@ export class GameClient {
     }
 
     // Handle ArraySchema (convert to plain array)
-    if (obj.items && typeof obj.items === 'object' && obj.items.constructor.name.includes('ArraySchema')) {
+    if (obj.items && typeof obj.items === 'object' && (
+        obj.items.constructor.name.includes('ArraySchema') || 
+        obj.constructor.name.includes('ArraySchema')
+    )) {
       console.log("Converting ArraySchema to array, length:", obj.items.length);
+      return Array.from(obj.items).map(item => this.convertToPlainObject(item));
+    }
+
+    // Handle ArraySchema by checking for ArraySchema-like properties
+    if (obj.items && typeof obj.items === 'object' && typeof obj.items.length === 'number') {
+      console.log("Converting ArraySchema-like object to array, length:", obj.items.length);
       return Array.from(obj.items).map(item => this.convertToPlainObject(item));
     }
 
@@ -257,6 +275,14 @@ export class GameClient {
 
   private notifyConnect() {
     this.onConnectCallbacks.forEach(callback => callback());
+  }
+
+  private notifyEquipResult(result: any) {
+    this.onEquipResultCallbacks.forEach(callback => callback(result));
+  }
+
+  private notifyUnequipResult(result: any) {
+    this.onUnequipResultCallbacks.forEach(callback => callback(result));
   }
 
   disconnect() {

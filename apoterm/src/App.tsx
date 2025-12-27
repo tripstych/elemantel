@@ -211,11 +211,11 @@ export default function App() {
   const handleConnect = async () => {
     try {
       setError(null);
-      // Pass dungeon generation options
+      // Pass dungeon generation options - you can change these to test different algorithms
       const options = {
         width: 60,
         height: 30,
-        algorithm: 'bsp' // Try: 'bsp', 'cellular', 'drunkard', 'rooms_corridors'
+        algorithm: 'rooms_corridors' // Try: 'bsp', 'cellular', 'drunkard', 'rooms_corridors'
       };
       await gameClient.joinRoom("my_room", options);
     } catch (err: any) {

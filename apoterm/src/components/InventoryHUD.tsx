@@ -8,25 +8,64 @@ interface InventoryHUDProps {
 }
 
 export const InventoryHUD: React.FC<InventoryHUDProps> = ({ isVisible, onClose, playerState }) => {
-  const [selectedItem, setSelectedItem] = useState<string>('');
+  const [selectedIndex, setSelectedIndex] = useState<number>(-1);
   const [message, setMessage] = useState<string>('');
+
+  useEffect(() => {
+    // Set up equip/unequip result listeners
+    gameClient.onEquipResult((result: any) => {
+      setMessage(result.message || 'Item equipped!');
+      setSelectedIndex(-1); // Clear selection when equip succeeds
+      setTimeout(() => setMessage(''), 3000);
+    });
+
+    gameClient.onUnequipResult((result: any) => {
+      setMessage(result.message || 'Item unequipped!');
+      setTimeout(() => setMessage(''), 3000);
+    });
+
+    return () => {
+      // Cleanup would go here if needed
+    };
+  }, []);
 
   if (!isVisible || !playerState) return null;
 
-  const inventory = playerState.inventory || [];
+  const inventory = Array.isArray(playerState.inventory) ? playerState.inventory : [];
+  
+  // Debug logging
+  console.log("InventoryHUD - playerState:", playerState);
+  console.log("InventoryHUD - inventory type:", typeof playerState.inventory);
+  console.log("InventoryHUD - inventory:", playerState.inventory);
+  console.log("InventoryHUD - isArray:", Array.isArray(playerState.inventory));
+  
   const slots = playerState.slots || {};
   const handSlots = slots.hand_slots || {};
   const bodySlots = slots.body_slots || {};
+  
+  // Debug logging for slots
+  console.log("InventoryHUD - slots:", slots);
+  console.log("InventoryHUD - handSlots:", handSlots);
+  console.log("InventoryHUD - bodySlots:", bodySlots);
+  console.log("InventoryHUD - main_hand:", handSlots.main_hand);
+  console.log("InventoryHUD - off_hand:", handSlots.off_hand);
 
   const handleEquip = (slotPath: string) => {
-    if (!selectedItem) {
+    if (selectedIndex === -1) {
       setMessage('Select an item first!');
+      setTimeout(() => setMessage(''), 2000);
+      return;
+    }
+    
+    const selectedItem = inventory[selectedIndex];
+    if (!selectedItem) {
+      setMessage('Invalid item selection!');
+      setTimeout(() => setMessage(''), 2000);
       return;
     }
     
     gameClient.equipItem(slotPath, selectedItem);
     setMessage(`Equipping ${selectedItem} to ${slotPath}...`);
-    setSelectedItem('');
   };
 
   const handleUnequip = (slotPath: string) => {
@@ -101,12 +140,12 @@ export const InventoryHUD: React.FC<InventoryHUDProps> = ({ isVisible, onClose, 
               inventory.map((item: string, index: number) => (
                 <div
                   key={index}
-                  onClick={() => setSelectedItem(item)}
+                  onClick={() => setSelectedIndex(index)}
                   style={{
                     padding: '8px',
                     margin: '2px 0',
-                    backgroundColor: selectedItem === item ? '#4a4a4a' : '#2a2a2a',
-                    border: selectedItem === item ? '1px solid #gold' : '1px solid #555',
+                    backgroundColor: selectedIndex === index ? '#4a4a4a' : '#2a2a2a',
+                    border: selectedIndex === index ? '1px solid #gold' : '1px solid #555',
                     borderRadius: '4px',
                     cursor: 'pointer',
                     display: 'flex',
@@ -121,7 +160,7 @@ export const InventoryHUD: React.FC<InventoryHUDProps> = ({ isVisible, onClose, 
                       handleDrop(item);
                     }}
                     style={{
-                      backgroundColor: '#8B4513',
+                      backgroundColor: '#8B0000',
                       color: 'white',
                       border: 'none',
                       borderRadius: '3px',
@@ -152,7 +191,7 @@ export const InventoryHUD: React.FC<InventoryHUDProps> = ({ isVisible, onClose, 
                 item={handSlots.main_hand}
                 onEquip={() => handleEquip("hand_slots.main_hand")}
                 onUnequip={() => handleUnequip("hand_slots.main_hand")}
-                selectedItem={selectedItem}
+                selectedIndex={selectedIndex}
               />
               <SlotItem
                 slotName="Off Hand"
@@ -160,7 +199,7 @@ export const InventoryHUD: React.FC<InventoryHUDProps> = ({ isVisible, onClose, 
                 item={handSlots.off_hand}
                 onEquip={() => handleEquip("hand_slots.off_hand")}
                 onUnequip={() => handleUnequip("hand_slots.off_hand")}
-                selectedItem={selectedItem}
+                selectedIndex={selectedIndex}
               />
             </div>
           </div>
@@ -175,7 +214,7 @@ export const InventoryHUD: React.FC<InventoryHUDProps> = ({ isVisible, onClose, 
                 item={bodySlots.head}
                 onEquip={() => handleEquip("body_slots.head")}
                 onUnequip={() => handleUnequip("body_slots.head")}
-                selectedItem={selectedItem}
+                selectedIndex={selectedIndex}
               />
               <SlotItem
                 slotName="Face"
@@ -183,7 +222,7 @@ export const InventoryHUD: React.FC<InventoryHUDProps> = ({ isVisible, onClose, 
                 item={bodySlots.face}
                 onEquip={() => handleEquip("body_slots.face")}
                 onUnequip={() => handleUnequip("body_slots.face")}
-                selectedItem={selectedItem}
+                selectedIndex={selectedIndex}
               />
               <SlotItem
                 slotName="Neck"
@@ -191,7 +230,7 @@ export const InventoryHUD: React.FC<InventoryHUDProps> = ({ isVisible, onClose, 
                 item={bodySlots.neck}
                 onEquip={() => handleEquip("body_slots.neck")}
                 onUnequip={() => handleUnequip("body_slots.neck")}
-                selectedItem={selectedItem}
+                selectedIndex={selectedIndex}
               />
               <SlotItem
                 slotName="Torso"
@@ -199,7 +238,7 @@ export const InventoryHUD: React.FC<InventoryHUDProps> = ({ isVisible, onClose, 
                 item={bodySlots.torso}
                 onEquip={() => handleEquip("body_slots.torso")}
                 onUnequip={() => handleUnequip("body_slots.torso")}
-                selectedItem={selectedItem}
+                selectedIndex={selectedIndex}
               />
               <SlotItem
                 slotName="Back"
@@ -207,7 +246,7 @@ export const InventoryHUD: React.FC<InventoryHUDProps> = ({ isVisible, onClose, 
                 item={bodySlots.back}
                 onEquip={() => handleEquip("body_slots.back")}
                 onUnequip={() => handleUnequip("body_slots.back")}
-                selectedItem={selectedItem}
+                selectedIndex={selectedIndex}
               />
               <SlotItem
                 slotName="Waist"
@@ -215,7 +254,7 @@ export const InventoryHUD: React.FC<InventoryHUDProps> = ({ isVisible, onClose, 
                 item={bodySlots.waist}
                 onEquip={() => handleEquip("body_slots.waist")}
                 onUnequip={() => handleUnequip("body_slots.waist")}
-                selectedItem={selectedItem}
+                selectedIndex={selectedIndex}
               />
               <SlotItem
                 slotName="Wrists"
@@ -223,7 +262,7 @@ export const InventoryHUD: React.FC<InventoryHUDProps> = ({ isVisible, onClose, 
                 item={bodySlots.wrists}
                 onEquip={() => handleEquip("body_slots.wrists")}
                 onUnequip={() => handleUnequip("body_slots.wrists")}
-                selectedItem={selectedItem}
+                selectedIndex={selectedIndex}
               />
               <SlotItem
                 slotName="Left Finger"
@@ -231,7 +270,7 @@ export const InventoryHUD: React.FC<InventoryHUDProps> = ({ isVisible, onClose, 
                 item={bodySlots.left_finger}
                 onEquip={() => handleEquip("body_slots.left_finger")}
                 onUnequip={() => handleUnequip("body_slots.left_finger")}
-                selectedItem={selectedItem}
+                selectedIndex={selectedIndex}
               />
               <SlotItem
                 slotName="Right Finger"
@@ -239,7 +278,7 @@ export const InventoryHUD: React.FC<InventoryHUDProps> = ({ isVisible, onClose, 
                 item={bodySlots.right_finger}
                 onEquip={() => handleEquip("body_slots.right_finger")}
                 onUnequip={() => handleUnequip("body_slots.right_finger")}
-                selectedItem={selectedItem}
+                selectedIndex={selectedIndex}
               />
               <SlotItem
                 slotName="Legs"
@@ -247,7 +286,7 @@ export const InventoryHUD: React.FC<InventoryHUDProps> = ({ isVisible, onClose, 
                 item={bodySlots.legs}
                 onEquip={() => handleEquip("body_slots.legs")}
                 onUnequip={() => handleUnequip("body_slots.legs")}
-                selectedItem={selectedItem}
+                selectedIndex={selectedIndex}
               />
               <SlotItem
                 slotName="Feet"
@@ -255,7 +294,7 @@ export const InventoryHUD: React.FC<InventoryHUDProps> = ({ isVisible, onClose, 
                 item={bodySlots.feet}
                 onEquip={() => handleEquip("body_slots.feet")}
                 onUnequip={() => handleUnequip("body_slots.feet")}
-                selectedItem={selectedItem}
+                selectedIndex={selectedIndex}
               />
             </div>
           </div>
@@ -271,10 +310,10 @@ interface SlotItemProps {
   item: string;
   onEquip: () => void;
   onUnequip: () => void;
-  selectedItem: string;
+  selectedIndex: number;
 }
 
-const SlotItem: React.FC<SlotItemProps> = ({ slotName, slotPath, item, onEquip, onUnequip, selectedItem }) => {
+const SlotItem: React.FC<SlotItemProps> = ({ slotName, slotPath, item, onEquip, onUnequip, selectedIndex }) => {
   return (
     <div style={{
       backgroundColor: '#1a1a1a',
@@ -316,15 +355,15 @@ const SlotItem: React.FC<SlotItemProps> = ({ slotName, slotPath, item, onEquip, 
         ) : (
           <button
             onClick={onEquip}
-            disabled={!selectedItem}
+            disabled={selectedIndex === -1}
             style={{
-              backgroundColor: selectedItem ? '#2E8B57' : '#555',
+              backgroundColor: selectedIndex !== -1 ? '#2E8B57' : '#555',
               color: 'white',
               border: 'none',
               borderRadius: '2px',
               padding: '2px 6px',
               fontSize: '10px',
-              cursor: selectedItem ? 'pointer' : 'not-allowed',
+              cursor: selectedIndex !== -1 ? 'pointer' : 'not-allowed',
               flex: 1
             }}
           >
