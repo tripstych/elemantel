@@ -36,6 +36,9 @@ export class GameClient {
   private onConnectCallbacks: (() => void)[] = [];
   private onEquipResultCallbacks: ((result: any) => void)[] = [];
   private onUnequipResultCallbacks: ((result: any) => void)[] = [];
+  private onLanguageDataInitCallbacks: ((data: any) => void)[] = [];
+  private onLanguageSearchResultsCallbacks: ((results: any) => void)[] = [];
+  private onLanguageEntryResultCallbacks: ((result: any) => void)[] = [];
   private lastPlayerX: number | undefined;
   private lastPlayerY: number | undefined;
 
@@ -115,6 +118,22 @@ export class GameClient {
         this.notifyError(message);
       });
 
+      // Language data handlers
+      this.room.onMessage("language_data_init", (message: any) => {
+        console.log("Language data initialized:", message.totalEntries, "entries");
+        this.notifyLanguageDataInit(message);
+      });
+
+      this.room.onMessage("language_search_results", (message: any) => {
+        console.log("Language search results:", message.results);
+        this.notifyLanguageSearchResults(message);
+      });
+
+      this.room.onMessage("language_entry_result", (message: any) => {
+        console.log("Language entry result:", message.entry);
+        this.notifyLanguageEntryResult(message);
+      });
+
       this.room.onLeave((code: number) => {
         console.log("Left room:", code);
         this.room = null;
@@ -187,6 +206,19 @@ export class GameClient {
     }
   }
 
+  // Language data methods
+  searchLanguage(query: string) {
+    if (this.room) {
+      this.room.send("search_language", { query });
+    }
+  }
+
+  getLanguageEntry(key: string) {
+    if (this.room) {
+      this.room.send("get_language_entry", { key });
+    }
+  }
+
   getCurrentState(): GameState | null {
     return this.room ? this.room.state : null;
   }
@@ -213,6 +245,18 @@ export class GameClient {
 
   onUnequipResult(callback: (result: any) => void) {
     this.onUnequipResultCallbacks.push(callback);
+  }
+
+  onLanguageDataInit(callback: (data: any) => void) {
+    this.onLanguageDataInitCallbacks.push(callback);
+  }
+
+  onLanguageSearchResults(callback: (results: any) => void) {
+    this.onLanguageSearchResultsCallbacks.push(callback);
+  }
+
+  onLanguageEntryResult(callback: (result: any) => void) {
+    this.onLanguageEntryResultCallbacks.push(callback);
   }
 
   private convertToPlainObject(obj: any): any {
@@ -283,6 +327,18 @@ export class GameClient {
 
   private notifyUnequipResult(result: any) {
     this.onUnequipResultCallbacks.forEach(callback => callback(result));
+  }
+
+  private notifyLanguageDataInit(data: any) {
+    this.onLanguageDataInitCallbacks.forEach(callback => callback(data));
+  }
+
+  private notifyLanguageSearchResults(results: any) {
+    this.onLanguageSearchResultsCallbacks.forEach(callback => callback(results));
+  }
+
+  private notifyLanguageEntryResult(result: any) {
+    this.onLanguageEntryResultCallbacks.forEach(callback => callback(result));
   }
 
   disconnect() {

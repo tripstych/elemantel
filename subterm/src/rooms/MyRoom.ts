@@ -1,14 +1,142 @@
 import { Room, Client } from "@colyseus/core";
-import { MyRoomState, Item } from "./schema/MyRoomState";
-import { ArraySchema } from "@colyseus/schema";
+import { MyRoomState, Item, PlayerState } from "./schema/MyRoomState";
+import { ArraySchema, Schema, type, MapSchema, Encoder } from "@colyseus/schema";
 import { CombatCommand, CombatLog } from "../commands/CombatCommand";
+import * as fs from 'fs';
+import * as path from 'path';
+
+// Increase buffer size for large language data
+Encoder.BUFFER_SIZE = 16 * 1024; // 16 KB
+
+// Temporary inline LanguageData schema to avoid import issues
+class ElementalOrigin extends Schema {
+  @type("number") fire: number = 0;
+  @type("number") water: number = 0;
+  @type("number") earth: number = 0;
+  @type("number") air: number = 0;
+}
+
+class SpellEffect extends Schema {
+  @type("string") type: string = "";
+  @type("string") target: string = "";
+  @type("string") amount: string = "";
+  @type("string") element: string = "";
+  @type("string") description: string = "";
+}
+
+class LanguageEntry extends Schema {
+  @type("string") word: string = "";
+  @type("string") definition: string = "";
+  @type(ElementalOrigin) origin: ElementalOrigin = new ElementalOrigin();
+  @type("boolean") derived: boolean = false;
+  @type("string") spirit: string = "";
+  @type("number") weight: number = 0;
+  @type(ElementalOrigin) composition: ElementalOrigin = new ElementalOrigin();
+  @type(SpellEffect) spell_effect: SpellEffect = new SpellEffect();
+}
+
+class LanguageData extends Schema {
+  @type({ map: LanguageEntry }) entries: MapSchema<LanguageEntry> = new MapSchema<LanguageEntry>();
+  
+  loadFromJSON(jsonData: any) {
+    this.entries.clear();
+    for (const [key, value] of Object.entries(jsonData)) {
+      const entry = new LanguageEntry();
+      entry.word = (value as any).word || "";
+      entry.definition = (value as any).definition || "";
+      entry.derived = (value as any).derived || false;
+      
+      if ((value as any).origin) {
+        entry.origin.fire = (value as any).origin.fire || 0;
+        entry.origin.water = (value as any).origin.water || 0;
+        entry.origin.earth = (value as any).origin.earth || 0;
+        entry.origin.air = (value as any).origin.air || 0;
+      }
+      
+      entry.spirit = (value as any).spirit || "";
+      entry.weight = (value as any).weight || 0;
+      
+      if ((value as any).composition) {
+        entry.composition.fire = (value as any).composition.fire || 0;
+        entry.composition.water = (value as any).composition.water || 0;
+        entry.composition.earth = (value as any).composition.earth || 0;
+        entry.composition.air = (value as any).composition.air || 0;
+      }
+      
+      if ((value as any).spell_effect) {
+        entry.spell_effect.type = (value as any).spell_effect.type || "";
+        entry.spell_effect.target = (value as any).spell_effect.target || "";
+        entry.spell_effect.amount = String((value as any).spell_effect.amount || "");
+        entry.spell_effect.element = (value as any).spell_effect.element || "";
+        entry.spell_effect.description = (value as any).spell_effect.description || "";
+      }
+      
+      this.entries.set(key, entry);
+    }
+  }
+  
+  getEntry(key: string): LanguageEntry | undefined {
+    return this.entries.get(key);
+  }
+  
+  searchEntries(query: string): LanguageEntry[] {
+    const results: LanguageEntry[] = [];
+    const lowerQuery = query.toLowerCase();
+    
+    for (const entry of this.entries.values()) {
+      if (entry.word.toLowerCase().includes(lowerQuery) ||
+          entry.definition.toLowerCase().includes(lowerQuery)) {
+        results.push(entry);
+      }
+    }
+    
+    return results;
+  }
+}
+
+// Data loading utilities
+const dataPath = path.join(__dirname, '../../../data');
+
+function loadJsonData(filename: string): any {
+  const filePath = path.join(dataPath, filename);
+  try {
+    const data = fs.readFileSync(filePath, 'utf8');
+    console.log(`Loaded ${filename} from ${filePath}`);
+    return JSON.parse(data);
+  } catch (error) {
+    console.error(`Error loading ${filename}:`, error);
+    return null;
+  }
+}
 
 export class MyRoom extends Room<MyRoomState> {
   maxClients = 4;
   state = new MyRoomState();
+  private gameData: any = {};
+  private languageData: LanguageData = new LanguageData();
 
   onCreate (options: any) {
     console.log("Creating room with full main.py functionality");
+
+    // Load shared data files
+    const elementalDarkAlphabet = loadJsonData('elemental_dark_alphabet.json');
+    const elementalDictionary = loadJsonData('elemental_dictionary.json');
+    const elementalLightAlphabet = loadJsonData('elemental_light_alphabet.json');
+
+    // Store data for game use
+    this.gameData = {
+      elementalDarkAlphabet,
+      elementalDictionary,
+      elementalLightAlphabet
+    };
+
+    // Load language data into schema
+    if (elementalDictionary) {
+      this.languageData.loadFromJSON(elementalDictionary);
+      console.log(`Loaded ${this.languageData.entries.size} language entries`);
+    }
+
+    console.log("Game data loaded:", Object.keys(this.gameData));
 
     // Get dungeon generation options
     const width = options.width || 60;
@@ -75,6 +203,26 @@ export class MyRoom extends Room<MyRoomState> {
 
     this.onMessage("unequip", (client, message) => {
       this.handleUnequip(client, message);
+    });
+
+    // Language data handlers
+    this.onMessage("get_language_data", (client, message) => {
+      client.send("language_data_init", {
+        entries: this.languageData.entries,
+        totalEntries: this.languageData.entries.size
+      });
+    });
+
+    this.onMessage("search_language", (client, message) => {
+      const query = message.query || "";
+      const results = this.languageData.searchEntries(query);
+      client.send("language_search_results", { query, results });
+    });
+
+    this.onMessage("get_language_entry", (client, message) => {
+      const key = message.key;
+      const entry = this.languageData.getEntry(key);
+      client.send("language_entry_result", { key, entry });
     });
   }
 
@@ -506,6 +654,65 @@ export class MyRoom extends Room<MyRoomState> {
     } else {
       client.send("error", { message: "Not enough mana!" });
     }
+  }
+
+  onJoin(client: Client, options: any) {
+    console.log("Client joined:", client.sessionId);
+    
+    // Don't send language data automatically - let client request it
+    // client.send("language_data_init", {
+    //   entries: this.languageData.entries,
+    //   totalEntries: this.languageData.entries.size
+    // });
+    
+    // Create player (using existing logic)
+    const player = new PlayerState();
+    player.name = options.name || "Player";
+    
+    // Find valid spawn location (not in walls)
+    let spawnX, spawnY;
+    let attempts = 0;
+    const maxAttempts = 100;
+    
+    do {
+      spawnX = Math.floor(Math.random() * this.state.map.width);
+      spawnY = Math.floor(Math.random() * this.state.map.height);
+      attempts++;
+      
+      // Check if position is valid floor tile (0 = floor)
+      const tileIndex = spawnY * this.state.map.width + spawnX;
+      const tile = this.state.map.tiles[tileIndex];
+      
+      if (tile === 0 || tile === undefined) {
+        break; // Found valid spawn location
+      }
+    } while (attempts < maxAttempts);
+    
+    if (attempts >= maxAttempts) {
+      console.warn("Could not find valid spawn location, using center");
+      spawnX = Math.floor(this.state.map.width / 2);
+      spawnY = Math.floor(this.state.map.height / 2);
+    }
+    
+    player.x = spawnX;
+    player.y = spawnY;
+    console.log(`Placed player at (${spawnX}, ${spawnY}) after ${attempts} attempts`);
+    player.hp = 100;
+    player.max_hp = 100;
+    player.mana = 50;
+    player.strength = 10;
+    player.dexterity = 10;
+    player.constitution = 10;
+    player.intelligence = 10;
+    player.wisdom = 10;
+    player.charisma = 10;
+    player.armor_class = 10;
+    player.speed = 30;
+    player.proficiency_bonus = 2;
+    player.inventory = new ArraySchema<string>();
+    // Initialize slots with proper schema objects
+    this.state.player = player;
+    console.log("Created player:", this.state.player.name);
   }
 
   private handlePickup(client: Client, message: any) {

@@ -6,3 +6,4 @@ export * from "./NPCState";
 export * from "./PlayerState";
 export * from "./GameMap";
 export * from "./GameState";
+export * from "./LanguageData";
