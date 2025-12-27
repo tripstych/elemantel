@@ -13,6 +13,47 @@ const DungeonRenderer: React.FC<{ gameState: any }> = ({ gameState }) => {
   const viewportWidth = 40; // tiles visible horizontally
   const viewportHeight = 25; // tiles visible vertically
   
+  const handleTileClick = (worldX: number, worldY: number) => {
+    console.log(`[DEBUG] CSS Tile clicked at (${worldX}, ${worldY})`);
+    
+    // Check if the tile is a floor (not a wall)
+    const tileIndex = worldY * map.width + worldX;
+    let tileValue;
+    if (map.tiles.items) {
+      tileValue = map.tiles.items[tileIndex];
+    } else if (Array.isArray(map.tiles)) {
+      tileValue = map.tiles[tileIndex];
+    }
+    
+    console.log(`[DEBUG] Tile value at (${worldX}, ${worldY}):`, tileValue);
+    
+    if (tileValue === 1) {
+      console.log(`[DEBUG] Cannot navigate to wall tile at (${worldX}, ${worldY})`);
+      return;
+    }
+    
+    // Calculate movement interval based on inventory weight
+    const strength = player?.strength || 10;
+    const maxCarryWeight = strength * 15 * 450;
+    console.log(`[DEBUG] Strength: ${strength}, Max carry weight: ${maxCarryWeight}`);
+    
+    // Calculate current inventory weight (assuming each item weighs 1kg for now)
+    const currentWeight = player?.inventory?.length || 0;
+    console.log(`[DEBUG] Current inventory weight: ${currentWeight}kg`);
+    
+    let moveInterval = 200; // Base interval
+    if (currentWeight > maxCarryWeight) {
+      const excessWeight = currentWeight - maxCarryWeight;
+      const penalty = excessWeight * 15; // 15ms per kg over limit
+      moveInterval += penalty;
+      console.log(`[DEBUG] Overweight by ${excessWeight}kg, adding ${penalty}ms penalty`);
+    }
+    
+    console.log(`[DEBUG] Final movement interval: ${moveInterval}ms`);
+    console.log(`[DEBUG] Starting autonavigation to (${worldX}, ${worldY})`);
+    gameClient.autoNavigate(worldX, worldY, moveInterval);
+  };
+  
   // Debug logging
   console.log("DungeonRenderer debug:", {
     mapWidth: map.width,
@@ -163,13 +204,15 @@ const DungeonRenderer: React.FC<{ gameState: any }> = ({ gameState }) => {
         return (
           <div
             key={index}
+            onClick={() => handleTileClick(worldX, worldY)}
             style={{
               width: `${tileSize}px`,
               height: `${tileSize}px`,
               backgroundColor,
               border,
               borderRadius,
-              boxSizing: 'border-box'
+              boxSizing: 'border-box',
+              cursor: tileValue === 0 ? 'pointer' : 'default'
             }}
           />
         );

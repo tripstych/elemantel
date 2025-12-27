@@ -114,6 +114,8 @@ export class MyRoom extends Room<MyRoomState> {
   state = new MyRoomState();
   private gameData: any = {};
   private languageData: LanguageData = new LanguageData();
+  private playerPaths: Map<string, { path: Array<{x: number, y: number}>, currentIndex: number, moveInterval: NodeJS.Timeout | null }> = new Map();
+  private playerMoveTimes: Map<string, number> = new Map();
 
   onCreate (options: any) {
     console.log("Creating room with full main.py functionality");
@@ -164,6 +166,33 @@ export class MyRoom extends Room<MyRoomState> {
       const dx = message.dx || 0;
       const dy = message.dy || 0;
       
+      // Calculate movement interval based on inventory weight
+      const strength = player.strength || 10;
+      const maxCarryWeight = strength * 15 * 450;
+      console.log(`[DEBUG] Backend - Strength: ${strength}, Max carry weight: ${maxCarryWeight}`);
+      
+      // Calculate current inventory weight (assuming each item weighs 1kg for now)
+      const currentWeight = player.inventory?.length || 0;
+      console.log(`[DEBUG] Backend - Current inventory weight: ${currentWeight}kg`);
+      
+      let moveInterval = 200; // Base interval
+      if (currentWeight > maxCarryWeight) {
+        const excessWeight = currentWeight - maxCarryWeight;
+        const penalty = excessWeight * 15; // 15ms per kg over limit
+        moveInterval += penalty;
+        console.log(`[DEBUG] Backend - Overweight by ${excessWeight}kg, adding ${penalty}ms penalty`);
+      }
+      
+      console.log(`[DEBUG] Backend - Final movement interval: ${moveInterval}ms`);
+      
+      // Check if movement is on cooldown
+      const now = Date.now();
+      const lastMoveTime = this.playerMoveTimes.get(client.sessionId) || 0;
+      if (now - lastMoveTime < moveInterval) {
+        console.log(`[DEBUG] Backend - Movement on cooldown, ${moveInterval - (now - lastMoveTime)}ms remaining`);
+        return; // Ignore movement if still on cooldown
+      }
+      
       const newX = player.x + dx;
       const newY = player.y + dy;
       
@@ -176,6 +205,8 @@ export class MyRoom extends Room<MyRoomState> {
             this.state.map.tiles[tileIndex] === 0) {
           player.x = newX;
           player.y = newY;
+          this.playerMoveTimes.set(client.sessionId, now);
+          console.log(`[DEBUG] Backend - Player moved to (${newX}, ${newY})`);
           console.log(`${player.name} moved to (${newX}, ${newY})`);
         }
       }
@@ -223,6 +254,14 @@ export class MyRoom extends Room<MyRoomState> {
       const key = message.key;
       const entry = this.languageData.getEntry(key);
       client.send("language_entry_result", { key, entry });
+    });
+
+    // Autonavigation handler
+    this.onMessage("auto_navigate", (client, message) => {
+      console.log(`[DEBUG] Received auto_navigate message:`, message);
+      const { targetX, targetY, moveInterval = 1000 } = message;
+      console.log(`[DEBUG] Extracted target: (${targetX}, ${targetY}), interval: ${moveInterval}`);
+      this.handleAutoNavigate(client, targetX, targetY, moveInterval);
     });
   }
 
@@ -713,6 +752,177 @@ export class MyRoom extends Room<MyRoomState> {
     // Initialize slots with proper schema objects
     this.state.player = player;
     console.log("Created player:", this.state.player.name);
+  }
+
+  // Pathfinding function using A* algorithm
+  private findPath(startX: number, startY: number, endX: number, endY: number): Array<{x: number, y: number}> | null {
+    const width = this.state.map.width;
+    const height = this.state.map.height;
+    
+    // Check if start or end are walls
+    if (!this.isWalkable(startX, startY) || !this.isWalkable(endX, endY)) {
+      return null;
+    }
+    
+    // A* algorithm
+    const openSet: Array<{x: number, y: number, g: number, h: number, f: number, parent: {x: number, y: number} | null}> = [];
+    const closedSet: Set<string> = new Set();
+    const startNode = { x: startX, y: startY, g: 0, h: 0, f: 0, parent: null };
+    
+    openSet.push(startNode);
+    
+    while (openSet.length > 0) {
+      // Find node with lowest f score
+      let currentIndex = 0;
+      for (let i = 1; i < openSet.length; i++) {
+        if (openSet[i].f < openSet[currentIndex].f) {
+          currentIndex = i;
+        }
+      }
+      
+      const current = openSet[currentIndex];
+      
+      // Check if we reached the target
+      if (current.x === endX && current.y === endY) {
+        const path: Array<{x: number, y: number}> = [];
+        let temp: typeof current | null = current;
+        while (temp) {
+          path.push({ x: temp.x, y: temp.y });
+          temp = temp.parent;
+        }
+        return path.reverse();
+      }
+      
+      // Move current from open to closed
+      openSet.splice(currentIndex, 1);
+      closedSet.add(`${current.x},${current.y}`);
+      
+      // Check neighbors
+      const neighbors = [
+        { x: current.x - 1, y: current.y },
+        { x: current.x + 1, y: current.y },
+        { x: current.x, y: current.y - 1 },
+        { x: current.x, y: current.y + 1 }
+      ];
+      
+      for (const neighbor of neighbors) {
+        // Skip if out of bounds or not walkable or already in closed
+        if (neighbor.x < 0 || neighbor.x >= width || neighbor.y < 0 || neighbor.y >= height) continue;
+        if (!this.isWalkable(neighbor.x, neighbor.y)) continue;
+        if (closedSet.has(`${neighbor.x},${neighbor.y}`)) continue;
+        
+        const g = current.g + 1;
+        const h = Math.abs(neighbor.x - endX) + Math.abs(neighbor.y - endY);
+        const f = g + h;
+        
+        // Check if neighbor is already in open set
+        const existingIndex = openSet.findIndex(n => n.x === neighbor.x && n.y === neighbor.y);
+        if (existingIndex === -1) {
+          openSet.push({ x: neighbor.x, y: neighbor.y, g, h, f, parent: current });
+        } else if (g < openSet[existingIndex].g) {
+          openSet[existingIndex] = { x: neighbor.x, y: neighbor.y, g, h, f, parent: current };
+        }
+      }
+    }
+    
+    return null; // No path found
+  }
+  
+  private isWalkable(x: number, y: number): boolean {
+    const tileIndex = y * this.state.map.width + x;
+    const tile = this.state.map.tiles[tileIndex];
+    return tile === 0 || tile === undefined; // 0 = floor, undefined = empty
+  }
+  
+  private handleAutoNavigate(client: Client, targetX: number, targetY: number, moveInterval: number) {
+    const player = this.state.player;
+    if (!player) return;
+    
+    // Clear any existing path for this player
+    this.clearPlayerPath(client.sessionId);
+    
+    // Find path to target
+    const path = this.findPath(player.x, player.y, targetX, targetY);
+    
+    if (!path) {
+      client.send("auto_navigate_result", { success: false, message: "No path to target" });
+      return;
+    }
+    
+    // Store path and start movement
+    this.playerPaths.set(client.sessionId, {
+      path: path.slice(1), // Skip starting position
+      currentIndex: 0,
+      moveInterval: null
+    });
+    
+    // Send path to client for highlighting
+    client.send("auto_navigate_result", { 
+      success: true, 
+      path: path,
+      message: `Path found with ${path.length} steps`
+    });
+    
+    // Start movement
+    this.startPlayerMovement(client, moveInterval);
+  }
+  
+  private startPlayerMovement(client: Client, moveInterval: number) {
+    const pathData = this.playerPaths.get(client.sessionId);
+    if (!pathData) return;
+    
+    pathData.moveInterval = setInterval(() => {
+      this.movePlayerAlongPath(client);
+    }, moveInterval);
+  }
+  
+  private movePlayerAlongPath(client: Client) {
+    const player = this.state.player;
+    const pathData = this.playerPaths.get(client.sessionId);
+    
+    if (!player || !pathData || pathData.currentIndex >= pathData.path.length) {
+      this.clearPlayerPath(client.sessionId);
+      client.send("auto_navigate_complete", { message: "Destination reached" });
+      return;
+    }
+    
+    const nextStep = pathData.path[pathData.currentIndex];
+    
+    // Check if next position is still walkable (obstacle check)
+    if (!this.isWalkable(nextStep.x, nextStep.y)) {
+      this.clearPlayerPath(client.sessionId);
+      client.send("auto_navigate_stopped", { 
+        message: "Path blocked by obstacle", 
+        stoppedAt: { x: player.x, y: player.y }
+      });
+      return;
+    }
+    
+    // Move player
+    player.x = nextStep.x;
+    player.y = nextStep.y;
+    pathData.currentIndex++;
+    
+    // Send movement update
+    client.send("auto_navigate_step", { 
+      x: player.x, 
+      y: player.y, 
+      step: pathData.currentIndex,
+      totalSteps: pathData.path.length
+    });
+  }
+  
+  private clearPlayerPath(sessionId: string) {
+    const pathData = this.playerPaths.get(sessionId);
+    if (pathData && pathData.moveInterval) {
+      clearInterval(pathData.moveInterval);
+    }
+    this.playerPaths.delete(sessionId);
+  }
+  
+  onLeave(client: Client) {
+    // Clear player's path when they disconnect
+    this.clearPlayerPath(client.sessionId);
   }
 
   private handlePickup(client: Client, message: any) {

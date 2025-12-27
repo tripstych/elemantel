@@ -39,6 +39,10 @@ export class GameClient {
   private onLanguageDataInitCallbacks: ((data: any) => void)[] = [];
   private onLanguageSearchResultsCallbacks: ((results: any) => void)[] = [];
   private onLanguageEntryResultCallbacks: ((result: any) => void)[] = [];
+  private onAutoNavigateResultCallbacks: ((result: any) => void)[] = [];
+  private onAutoNavigateStepCallbacks: ((step: any) => void)[] = [];
+  private onAutoNavigateCompleteCallbacks: ((result: any) => void)[] = [];
+  private onAutoNavigateStoppedCallbacks: ((result: any) => void)[] = [];
   private lastPlayerX: number | undefined;
   private lastPlayerY: number | undefined;
 
@@ -134,6 +138,27 @@ export class GameClient {
         this.notifyLanguageEntryResult(message);
       });
 
+      // Autonavigation handlers
+      this.room.onMessage("auto_navigate_result", (message: any) => {
+        console.log("Auto navigate result:", message);
+        this.notifyAutoNavigateResult(message);
+      });
+
+      this.room.onMessage("auto_navigate_step", (message: any) => {
+        console.log("Auto navigate step:", message);
+        this.notifyAutoNavigateStep(message);
+      });
+
+      this.room.onMessage("auto_navigate_complete", (message: any) => {
+        console.log("Auto navigate complete:", message);
+        this.notifyAutoNavigateComplete(message);
+      });
+
+      this.room.onMessage("auto_navigate_stopped", (message: any) => {
+        console.log("Auto navigate stopped:", message);
+        this.notifyAutoNavigateStopped(message);
+      });
+
       this.room.onLeave((code: number) => {
         console.log("Left room:", code);
         this.room = null;
@@ -219,6 +244,20 @@ export class GameClient {
     }
   }
 
+  // Autonavigation methods
+  autoNavigate(targetX: number, targetY: number, moveInterval: number = 1000) {
+    console.log(`[DEBUG] GameClient.autoNavigate called with target (${targetX}, ${targetY}), interval: ${moveInterval}`);
+    console.log(`[DEBUG] Room available:`, !!this.room);
+    
+    if (this.room) {
+      console.log(`[DEBUG] Sending auto_navigate message to server`);
+      this.room.send("auto_navigate", { targetX, targetY, moveInterval });
+      console.log(`[DEBUG] auto_navigate message sent`);
+    } else {
+      console.log(`[DEBUG] No room available for autonavigation`);
+    }
+  }
+
   getCurrentState(): GameState | null {
     return this.room ? this.room.state : null;
   }
@@ -257,6 +296,22 @@ export class GameClient {
 
   onLanguageEntryResult(callback: (result: any) => void) {
     this.onLanguageEntryResultCallbacks.push(callback);
+  }
+
+  onAutoNavigateResult(callback: (result: any) => void) {
+    this.onAutoNavigateResultCallbacks.push(callback);
+  }
+
+  onAutoNavigateStep(callback: (step: any) => void) {
+    this.onAutoNavigateStepCallbacks.push(callback);
+  }
+
+  onAutoNavigateComplete(callback: (result: any) => void) {
+    this.onAutoNavigateCompleteCallbacks.push(callback);
+  }
+
+  onAutoNavigateStopped(callback: (result: any) => void) {
+    this.onAutoNavigateStoppedCallbacks.push(callback);
   }
 
   private convertToPlainObject(obj: any): any {
@@ -339,6 +394,22 @@ export class GameClient {
 
   private notifyLanguageEntryResult(result: any) {
     this.onLanguageEntryResultCallbacks.forEach(callback => callback(result));
+  }
+
+  private notifyAutoNavigateResult(result: any) {
+    this.onAutoNavigateResultCallbacks.forEach(callback => callback(result));
+  }
+
+  private notifyAutoNavigateStep(step: any) {
+    this.onAutoNavigateStepCallbacks.forEach(callback => callback(step));
+  }
+
+  private notifyAutoNavigateComplete(result: any) {
+    this.onAutoNavigateCompleteCallbacks.forEach(callback => callback(result));
+  }
+
+  private notifyAutoNavigateStopped(result: any) {
+    this.onAutoNavigateStoppedCallbacks.forEach(callback => callback(result));
   }
 
   disconnect() {

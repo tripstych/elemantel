@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Texture } from "pixi.js";
 import { Application, Sprite, Container } from "@pixi/react";
 import { tileManager } from "../services/TileManager";
-import { GameState } from "../services/GameClient";
+import { GameState, gameClient } from "../services/GameClient";
 
 interface DungeonMapProps {
   gameState: GameState | null;
@@ -16,9 +16,12 @@ interface TileProps {
   y: number;
   texture: Texture;
   tileSize: number;
+  isHighlighted?: boolean;
 }
 
-const Tile: React.FC<TileProps> = ({ x, y, texture, tileSize }) => {
+const Tile: React.FC<TileProps> = ({ x, y, texture, tileSize, isHighlighted = false }) => {
+  console.log(`[DEBUG] Rendering Tile at (${x}, ${y}), interactive: true, highlighted: ${isHighlighted}`);
+
   return (
     <Sprite
       texture={texture}
@@ -26,6 +29,8 @@ const Tile: React.FC<TileProps> = ({ x, y, texture, tileSize }) => {
       y={y * tileSize}
       width={tileSize}
       height={tileSize}
+      tint={isHighlighted ? 0x00FF00 : 0xFFFFFF} // Green tint for highlighted path
+      alpha={isHighlighted ? 0.7 : 1.0}
     />
   );
 };
@@ -55,10 +60,94 @@ export const DungeonMap: React.FC<DungeonMapProps> = ({
   tileSize = TILE_SIZE 
 }) => {
   const [assetsLoaded, setAssetsLoaded] = useState(false);
+  const [highlightedPath, setHighlightedPath] = useState<Array<{x: number, y: number}>>([]);
 
   useEffect(() => {
     console.log("DungeonMap gameState updated:", gameState);
   }, [gameState]);
+
+  // Set up autonavigation event listeners
+  useEffect(() => {
+    gameClient.onAutoNavigateResult((result) => {
+      if (result.success) {
+        setHighlightedPath(result.path);
+        console.log("Path highlighted:", result.path);
+      } else {
+        setHighlightedPath([]);
+        console.log("No path found:", result.message);
+      }
+    });
+
+    gameClient.onAutoNavigateComplete(() => {
+      setHighlightedPath([]);
+      console.log("Navigation complete, clearing path");
+    });
+
+    gameClient.onAutoNavigateStopped(() => {
+      setHighlightedPath([]);
+      console.log("Navigation stopped, clearing path");
+    });
+  }, []);
+
+  const handleTileClick = (x: number, y: number) => {
+    console.log(`[DEBUG] handleTileClick called at (${x}, ${y})`);
+    console.log(`[DEBUG] gameState available:`, !!gameState);
+    
+    if (!gameState) {
+      console.log(`[DEBUG] No gameState available, returning`);
+      return;
+    }
+    
+    // Only navigate to floor tiles (not walls)
+    const tilesArray = (gameState?.map.tiles as any)?.items || [];
+    console.log(`[DEBUG] tilesArray length:`, tilesArray.length);
+    
+    const tileIndex = y * gameState!.map.width + x;
+    console.log(`[DEBUG] Calculated tileIndex: ${tileIndex} for (${x}, ${y})`);
+    
+    const tileValue = tilesArray[tileIndex];
+    console.log(`[DEBUG] Tile value at (${x}, ${y}):`, tileValue);
+    
+    if (tileValue === 1) {
+      console.log(`[DEBUG] Cannot navigate to wall tile at (${x}, ${y})`);
+      return;
+    }
+    
+    console.log(`[DEBUG] Starting autonavigation to (${x}, ${y})`);
+    // Start autonavigation
+    gameClient.autoNavigate(x, y, 1000);
+    console.log(`[DEBUG] autoNavigate called for (${x}, ${y})`);
+  };
+
+  const handleStageClick = (event: any) => {
+    console.log(`[DEBUG] Stage click event:`, event);
+    
+    // Get click position relative to stage
+    const clickX = event.data.global.x;
+    const clickY = event.data.global.y;
+    
+    console.log(`[DEBUG] Click at global position: (${clickX}, ${clickY})`);
+    
+    // Adjust for camera offset
+    const adjustedX = clickX - cameraOffsetX;
+    const adjustedY = clickY - cameraOffsetY;
+    
+    console.log(`[DEBUG] Adjusted position: (${adjustedX}, ${adjustedY})`);
+    
+    // Convert to tile coordinates
+    const tileX = Math.floor(adjustedX / tileSize);
+    const tileY = Math.floor(adjustedY / tileSize);
+    
+    console.log(`[DEBUG] Tile coordinates: (${tileX}, ${tileY})`);
+    
+    // Check if within map bounds
+    if (tileX >= 0 && tileX < gameState!.map.width && tileY >= 0 && tileY < gameState!.map.height) {
+      console.log(`[DEBUG] Valid tile coordinates, calling handleTileClick`);
+      handleTileClick(tileX, tileY);
+    } else {
+      console.log(`[DEBUG] Click outside map bounds`);
+    }
+  };
 
   useEffect(() => {
     const loadAssets = async () => {
@@ -135,6 +224,9 @@ export const DungeonMap: React.FC<DungeonMapProps> = ({
       
       const texture = isWall ? wallTexture : floorTexture;
       
+      // Check if this tile is in the highlighted path
+      const isHighlighted = highlightedPath.some(pathTile => pathTile.x === x && pathTile.y === y);
+      
       mapTiles.push(
         <Tile
           key={`tile-${x}-${y}`}
@@ -142,6 +234,7 @@ export const DungeonMap: React.FC<DungeonMapProps> = ({
           y={y}
           texture={texture}
           tileSize={tileSize}
+          isHighlighted={isHighlighted}
         />
       );
     }
@@ -183,6 +276,8 @@ export const DungeonMap: React.FC<DungeonMapProps> = ({
   return (
     <pixiContainer 
       position={{ x: cameraOffsetX, y: cameraOffsetY }}
+      interactive={true}
+      onClick={handleStageClick}
     >
       {/* Map tiles */}
       {mapTiles}
