@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { GameClient, gameClient } from './services/GameClient';
+import { gameClient, GameState } from './services/GameClient';
 import { InventoryHUD } from './components/InventoryHUD';
 import { KeyboardControls } from "./components/KeyboardControls";
 import { GameUI } from "./components/GameUI";
@@ -28,6 +28,41 @@ const DungeonRenderer: React.FC<{ gameState: any }> = ({ gameState }) => {
     worldSize: world?.size,
     worldKeys: world ? Array.from(world.keys()) : []
   });
+
+  // Check what's around the player
+  if (player && map.tiles) {
+    const playerTileIndex = player.y * map.width + player.x;
+    let playerTileValue;
+    if (map.tiles.items) {
+      playerTileValue = map.tiles.items[playerTileIndex];
+    } else if (Array.isArray(map.tiles)) {
+      playerTileValue = map.tiles[playerTileIndex];
+    }
+    console.log("Player standing on tile:", playerTileValue, "at index:", playerTileIndex);
+    
+    // Check surrounding tiles
+    const surroundingTiles = [];
+    for (let dy = -1; dy <= 1; dy++) {
+      for (let dx = -1; dx <= 1; dx++) {
+        const checkX = player.x + dx;
+        const checkY = player.y + dy;
+        if (checkX >= 0 && checkX < map.width && checkY >= 0 && checkY < map.height) {
+          const tileIndex = checkY * map.width + checkX;
+          let tileValue;
+          if (map.tiles.items) {
+            tileValue = map.tiles.items[tileIndex];
+          } else if (Array.isArray(map.tiles)) {
+            tileValue = map.tiles[tileIndex];
+          }
+          surroundingTiles.push({ x: checkX, y: checkY, tile: tileValue });
+        }
+      }
+    }
+    console.log("Surrounding tiles:", surroundingTiles);
+    console.log("Map dimensions:", map.width, "x", map.height);
+    console.log("Player at:", player.x, player.y, "within bounds?", 
+      player.x >= 0 && player.x < map.width && player.y >= 0 && player.y < map.height);
+  }
   
   // Add specific player position logging
   if (player) {
@@ -81,7 +116,20 @@ const DungeonRenderer: React.FC<{ gameState: any }> = ({ gameState }) => {
         }
         
         const tileIndex = worldY * map.width + worldX;
-        const tileValue = map.tiles.items[tileIndex]; // Access via .items for Colyseus ArraySchema
+        let tileValue;
+        try {
+          // Try different ways to access the tiles data
+          if (map.tiles.items) {
+            tileValue = map.tiles.items[tileIndex];
+          } else if (Array.isArray(map.tiles)) {
+            tileValue = map.tiles[tileIndex];
+          } else if (map.tiles && typeof map.tiles === 'object') {
+            tileValue = map.tiles[tileIndex];
+          }
+        } catch (e) {
+          console.warn("Error accessing tile data:", e);
+          tileValue = 0; // Default to floor
+        }
         const isPlayer = player && player.x === worldX && player.y === worldY;
         
         // Check for items at this position
@@ -102,9 +150,14 @@ const DungeonRenderer: React.FC<{ gameState: any }> = ({ gameState }) => {
           border = '1px solid #6666ff';
           borderRadius = '25%';
         } else if (tileValue === 1) {
-          backgroundColor = '#4a4a4a'; // wall
+          backgroundColor = '#2a2a2a'; // wall - darker
+          border = '1px solid #1a1a1a';
         } else if (tileValue === 0) {
           backgroundColor = '#8b7355'; // floor
+        } else {
+          // Unknown tile type - make it visible
+          backgroundColor = '#ffaa00';
+          border = '1px solid #ff8800';
         }
         
         return (
@@ -134,6 +187,8 @@ export default function App() {
   useEffect(() => {
     // Set up game client event listeners
     gameClient.onStateChange((state: GameState) => {
+      console.log("App.tsx onStateChange - New state:", state);
+      console.log("App.tsx onStateChange - Player position:", state?.player?.x, state?.player?.y);
       setGameState(state);
     });
 
@@ -170,7 +225,7 @@ export default function App() {
 
   return (
     <div style={{ width: '100vw', height: '100vh', position: 'relative', backgroundColor: '#1a1a1a' }}>
-      <DungeonRenderer gameState={gameState} />
+      <DungeonRenderer key={`player-${gameState?.player?.x}-${gameState?.player?.y}`} gameState={gameState} />
       
       <KeyboardControls enabled={isConnected} onToggleInventory={() => setShowInventory(!showInventory)} />
       

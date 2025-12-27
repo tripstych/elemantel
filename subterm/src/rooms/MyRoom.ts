@@ -2,7 +2,6 @@ import { Room, Client } from "@colyseus/core";
 import { MyRoomState, Item } from "./schema/MyRoomState";
 import { ArraySchema } from "@colyseus/schema";
 import { CombatCommand, CombatLog } from "../commands/CombatCommand";
-import { MovementCommand, SpellResult } from "../commands/MovementCommand";
 
 export class MyRoom extends Room<MyRoomState> {
   maxClients = 4;
@@ -26,7 +25,7 @@ export class MyRoom extends Room<MyRoomState> {
     console.log("Room ready with full functionality");
 
     this.onMessage("move", (client, message) => {
-      const player = this.state.players.get(client.sessionId);
+      const player = this.state.player; // Fixed: player is stored directly, not in players Map
       if (!player) return;
 
       const dx = message.dx || 0;
@@ -158,18 +157,22 @@ export class MyRoom extends Room<MyRoomState> {
       const y = this.state.player.y + offset.dy;
 
       if (x >= 0 && x < this.state.map.width && 
-          y >= 0 && y < this.state.map.height &&
-          this.state.map.tiles[y] && this.state.map.tiles[y].values &&
-          this.state.map.tiles[y].values[x] === 0) { // 0 = floor
+          y >= 0 && y < this.state.map.height) {
         
-        addItem(x, y, catalog[Math.floor(Math.random() * catalog.length)]);
-        placed++;
+        // Check if tile is walkable using flat array
+        const tileIndex = y * this.state.map.width + x;
+        if (tileIndex >= 0 && tileIndex < this.state.map.tiles.length && 
+            this.state.map.tiles[tileIndex] === 0) { // 0 = floor
+          
+          addItem(x, y, catalog[Math.floor(Math.random() * catalog.length)]);
+          placed++;
+        }
       }
     }
   }
 
   private handleAttack(client: Client, message: any) {
-    const player = this.state.players.get(client.sessionId);
+    const player = this.state.player; // Fixed: player is stored directly
     if (!player) return;
 
     const targetX = message.targetX;
@@ -187,7 +190,7 @@ export class MyRoom extends Room<MyRoomState> {
   }
 
   private handleSpellCast(client: Client, message: any) {
-    const player = this.state.players.get(client.sessionId);
+    const player = this.state.player; // Fixed: player is stored directly
     if (!player) return;
 
     const spellName = message.spellName;
@@ -205,7 +208,7 @@ export class MyRoom extends Room<MyRoomState> {
   }
 
   private handlePickup(client: Client, message: any) {
-    const player = this.state.players.get(client.sessionId);
+    const player = this.state.player; // Fixed: player is stored directly
     if (!player) return;
 
     const key = `${player.x},${player.y}`;
@@ -222,7 +225,7 @@ export class MyRoom extends Room<MyRoomState> {
   }
 
   private handleDropItem(client: Client, message: any) {
-    const player = this.state.players.get(client.sessionId);
+    const player = this.state.player; // Fixed: player is stored directly
     if (!player) return;
 
     const itemName = message.itemName;

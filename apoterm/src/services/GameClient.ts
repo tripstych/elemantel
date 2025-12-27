@@ -34,6 +34,8 @@ export class GameClient {
   private onStateChangeCallbacks: ((state: GameState) => void)[] = [];
   private onErrorCallbacks: ((error: any) => void)[] = [];
   private onConnectCallbacks: (() => void)[] = [];
+  private lastPlayerX: number | undefined;
+  private lastPlayerY: number | undefined;
 
   constructor() {
     // Connect to Colyseus server (adjust port as needed)
@@ -54,6 +56,16 @@ export class GameClient {
         // Convert Colyseus Schema objects to plain objects
         const plainState = this.convertToPlainObject(state);
         console.log("Plain state:", plainState);
+        console.log("Player position in state:", plainState.player?.x, plainState.player?.y);
+        console.log("Full player object:", plainState.player);
+        
+        // Check if this is actually a different state
+        if (this.lastPlayerX !== plainState.player?.x || this.lastPlayerY !== plainState.player?.y) {
+          console.log("PLAYER POSITION CHANGED from", this.lastPlayerX, this.lastPlayerY, "to", plainState.player?.x, plainState.player?.y);
+        }
+        this.lastPlayerX = plainState.player?.x;
+        this.lastPlayerY = plainState.player?.y;
+        
         this.notifyStateChange(plainState);
       });
 
@@ -66,6 +78,10 @@ export class GameClient {
       }
 
       // Set up message handlers
+      this.room.onMessage("move_result", (message: any) => {
+        console.log("Move result:", message);
+      });
+
       this.room.onMessage("combat_result", (message: any) => {
         console.log("Combat result:", message);
       });
@@ -100,6 +116,11 @@ export class GameClient {
         this.room = null;
       });
 
+      // Add catch-all message handler to see all messages
+      this.room.onMessage("*", (type: any, message: any) => {
+        console.log("Received message type:", type, "message:", message);
+      });
+
       this.notifyConnect();
       return this.room;
     } catch (error) {
@@ -110,8 +131,12 @@ export class GameClient {
   }
 
   move(dx: number, dy: number) {
+    console.log("GameClient.move called with:", dx, dy);
     if (this.room) {
+      console.log("Sending move message to server");
       this.room.send("move", { dx, dy });
+    } else {
+      console.log("No room available for movement");
     }
   }
 
@@ -196,6 +221,12 @@ export class GameClient {
     }
 
     // Handle ArraySchema (convert to plain array)
+    if (obj.items && typeof obj.items === 'object' && obj.items.constructor.name.includes('ArraySchema')) {
+      console.log("Converting ArraySchema to array, length:", obj.items.length);
+      return Array.from(obj.items).map(item => this.convertToPlainObject(item));
+    }
+
+    // Handle regular arrays
     if (Array.isArray(obj)) {
       return obj.map(item => this.convertToPlainObject(item));
     }
@@ -203,6 +234,7 @@ export class GameClient {
     // Handle Schema objects (convert to plain object)
     if (typeof obj === 'object' && obj.constructor && obj.constructor.name.includes('_')) {
       const plainObj: any = {};
+      console.log("Converting Schema object:", obj.constructor.name, "keys:", Object.keys(obj));
       for (const key in obj) {
         if (!key.startsWith('~') && key !== 'constructor') {
           plainObj[key] = this.convertToPlainObject(obj[key]);

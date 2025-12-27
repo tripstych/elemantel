@@ -168,6 +168,14 @@ export const GameUI: React.FC<GameUIProps> = ({
         <div>E/Space - Pickup Item</div>
         <div>Q - Attack/Action</div>
         <div>I - Toggle Inventory</div>
+        <div style={{marginTop: '5px', fontSize: '10px'}}>
+          <strong>Legend:</strong><br/>
+          <span style={{color: '#ff4444'}}>●</span> Player<br/>
+          <span style={{color: '#8b7355'}}>■</span> Floor (walkable)<br/>
+          <span style={{color: '#2a2a2a'}}>■</span> Wall (blocked)<br/>
+          <span style={{color: '#4444ff'}}>■</span> Item<br/>
+          <span style={{color: '#ffaa00'}}>■</span> Unknown
+        </div>
       </div>
 
       {/* Connection Status */}
