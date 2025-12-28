@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { gameClient } from '../services/GameClient';
 import { convertToCuneiform } from '../utils/CuneiformUtils';
+import { GAME_CONSTANTS } from "../../../shared/constants";
 
 interface InventoryHUDProps {
   isVisible: boolean;

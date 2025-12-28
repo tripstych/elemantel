@@ -328,7 +328,6 @@ export class WorldGenerationCommand {
     player.wisdom = 12;
     player.charisma = 10;
     player.armor_class = 10;
-    player.speed = 30;
     player.proficiency_bonus = 2;
   }
 

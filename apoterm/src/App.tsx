@@ -3,70 +3,31 @@ import { gameClient, GameState } from './services/GameClient';
 import { InventoryHUD } from './components/InventoryHUD';
 import { KeyboardControls } from "./components/KeyboardControls";
 import { GameUI } from "./components/GameUI";
+import { MessageHUD } from "./components/MessageHUD";
+import { GAME_CONSTANTS } from "../../shared/constants";
 
 // Simple CSS-based dungeon renderer
 const DungeonRenderer: React.FC<{ gameState: any }> = ({ gameState }) => {
   if (!gameState || !gameState.map) return null;
 
   const { map, player, world } = gameState;
-  const tileSize = 16;
+  const tileSize = GAME_CONSTANTS.TILE_SIZE;
   const viewportWidth = 40; // tiles visible horizontally
   const viewportHeight = 25; // tiles visible vertically
   
   const handleTileClick = (worldX: number, worldY: number) => {
-    console.log(`[DEBUG] CSS Tile clicked at (${worldX}, ${worldY})`);
-    
-    // Check if the tile is a floor (not a wall)
-    const tileIndex = worldY * map.width + worldX;
-    let tileValue;
-    if (map.tiles.items) {
-      tileValue = map.tiles.items[tileIndex];
-    } else if (Array.isArray(map.tiles)) {
-      tileValue = map.tiles[tileIndex];
-    }
-    
-    console.log(`[DEBUG] Tile value at (${worldX}, ${worldY}):`, tileValue);
-    
-    if (tileValue === 1) {
-      console.log(`[DEBUG] Cannot navigate to wall tile at (${worldX}, ${worldY})`);
-      return;
-    }
-    
-    // Calculate movement interval based on inventory weight
-    const strength = player?.strength || 10;
-    const maxCarryWeight = strength * 15 * 450;
-    console.log(`[DEBUG] Strength: ${strength}, Max carry weight: ${maxCarryWeight}`);
-    
-    // Calculate current inventory weight (assuming each item weighs 1kg for now)
-    const currentWeight = player?.inventory?.length || 0;
-    console.log(`[DEBUG] Current inventory weight: ${currentWeight}kg`);
-    
-    let moveInterval = 200; // Base interval
-    if (currentWeight > maxCarryWeight) {
-      const excessWeight = currentWeight - maxCarryWeight;
-      const penalty = excessWeight * 15; // 15ms per kg over limit
-      moveInterval += penalty;
-      console.log(`[DEBUG] Overweight by ${excessWeight}kg, adding ${penalty}ms penalty`);
-    }
-    
-    console.log(`[DEBUG] Final movement interval: ${moveInterval}ms`);
-    console.log(`[DEBUG] Starting autonavigation to (${worldX}, ${worldY})`);
-    gameClient.autoNavigate(worldX, worldY, moveInterval);
+    if (GAME_CONSTANTS.DEBUG) console.log(`[DEBUG] CSS Tile clicked at (${worldX}, ${worldY}) -> melee attack`);
+    // Trigger melee AoE (server handles via move attack flag)
+    gameClient.meleeAttack();
   };
   
   // Debug logging
-  console.log("DungeonRenderer debug:", {
+  if (GAME_CONSTANTS.DEBUG) console.log("DungeonRenderer debug:", {
     mapWidth: map.width,
     mapHeight: map.height,
     playerPos: player ? { x: player.x, y: player.y } : "no player",
     tiles: map.tiles,
     tilesKeys: map.tiles ? Object.keys(map.tiles) : [],
-    tilesItems: map.tiles?.items,
-    tilesLength: map.tiles?.items?.length,
-    tilesType: typeof map.tiles,
-    tilesConstructor: map.tiles?.constructor?.name,
-    sampleTiles: map.tiles?.items ? Array.from(map.tiles.items).slice(0, 20) : [],
-    worldSize: world?.size,
     worldKeys: world ? Array.from(world.keys()) : []
   });
 
@@ -197,10 +158,10 @@ const DungeonRenderer: React.FC<{ gameState: any }> = ({ gameState }) => {
           backgroundColor = '#4444ff';
           border = '1px solid #6666ff';
           borderRadius = '25%';
-        } else if (tileValue === 1) {
+        } else if (tileValue === GAME_CONSTANTS.TILE_TYPES.WALL) {
           backgroundColor = '#2a2a2a'; // wall - darker
           border = '1px solid #1a1a1a';
-        } else if (tileValue === 0) {
+        } else if (tileValue === GAME_CONSTANTS.TILE_TYPES.FLOOR) {
           backgroundColor = '#8b7355'; // floor
         } else {
           // Unknown tile type - make it visible
@@ -213,15 +174,49 @@ const DungeonRenderer: React.FC<{ gameState: any }> = ({ gameState }) => {
             key={index}
             onClick={() => handleTileClick(worldX, worldY)}
             style={{
+              position: 'relative',
               width: `${tileSize}px`,
               height: `${tileSize}px`,
               backgroundColor,
               border,
               borderRadius,
               boxSizing: 'border-box',
-              cursor: tileValue === 0 ? 'pointer' : 'default'
+              cursor: tileValue === GAME_CONSTANTS.TILE_TYPES.FLOOR ? 'pointer' : 'default'
             }}
-          />
+          >
+            {/* HP gauge above player and monsters */}
+            {(() => {
+              const hpFraction = isPlayer
+                ? Math.max(0, Math.min(1, (player?.hp ?? 0) / Math.max(1, player?.max_hp ?? 1)))
+                : isMonster
+                  ? 1
+                  : null;
+
+              if (hpFraction === null) return null;
+              const HP_BAR_HEIGHT = 2;
+              return (
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: `-6px`,
+                    left: 0,
+                    width: `${tileSize}px`,
+                    height: `${HP_BAR_HEIGHT}px`,
+                    backgroundColor: '#330000',
+                    pointerEvents: 'none',
+                  }}
+                >
+                  <div
+                    style={{
+                      width: `${Math.round(hpFraction * tileSize)}px`,
+                      height: '100%',
+                      backgroundColor: '#ff0000',
+                    }}
+                  />
+                </div>
+              );
+            })()}
+          </div>
         );
       })}
     </div>
@@ -237,8 +232,10 @@ export default function App() {
   useEffect(() => {
     // Set up game client event listeners
     gameClient.onStateChange((state: GameState) => {
-      console.log("App.tsx onStateChange - New state:", state);
-      console.log("App.tsx onStateChange - Player position:", state?.player?.x, state?.player?.y);
+      if (GAME_CONSTANTS.DEBUG) {
+        console.log("App.tsx onStateChange - New state:", state);
+        console.log("App.tsx onStateChange - Player position:", state?.player?.x, state?.player?.y);
+      }
       setGameState(state);
     });
 
@@ -292,6 +289,27 @@ export default function App() {
         onClose={() => setShowInventory(false)}
         playerState={gameState?.player}
       />
+
+      {/* Pixi Message HUD overlay (lower-right) */}
+      {isConnected && (
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '10px',
+            right: '10px',
+            width: '320px',
+            height: '180px',
+            pointerEvents: 'auto',
+            zIndex: 1000,
+            background: 'rgba(0,0,0,0.6)',
+            borderRadius: '8px',
+            border: '2px solid #444',
+          }}
+        >
+          <MessageHUD width={320} height={180} />
+        </div>
+      )}
+      
     </div>
   );
 }

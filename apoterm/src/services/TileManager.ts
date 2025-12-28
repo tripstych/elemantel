@@ -1,4 +1,5 @@
-import { Assets, Texture, Spritesheet } from "pixi.js";
+import { Texture, Assets } from "pixi.js";
+import { GAME_CONSTANTS } from "../../../shared/constants";
 
 export interface TileAssets {
   floor: Texture;
@@ -26,7 +27,7 @@ export class TileManager {
     if (this.loaded) return;
 
     try {
-      console.log("Loading tile assets...");
+      if (GAME_CONSTANTS.DEBUG) console.log("Loading tile assets...");
       
       // Load individual tiles based on the provided paths
       this.assets.floor = await Assets.load("/assets/tiles/dc-dngn/floor/sandstone_floor0.png");
@@ -35,7 +36,7 @@ export class TileManager {
       this.assets.enemy = await Assets.load("/assets/tiles/dc-mon/goblin.png");
       this.assets.item = await Assets.load("/assets/tiles/item/misc/misc_box.png");
 
-      console.log("All tile assets loaded successfully!");
+      if (GAME_CONSTANTS.DEBUG) console.log("All tile assets loaded successfully!");
       this.loaded = true;
     } catch (error) {
       console.error("Failed to load tile assets:", error);
@@ -45,7 +46,7 @@ export class TileManager {
   }
 
   private createPlaceholderTextures(): void {
-    console.log("Creating placeholder textures...");
+    if (GAME_CONSTANTS.DEBUG) console.log("Creating placeholder textures...");
     
     // Create simple colored rectangles as placeholders
     const canvas = document.createElement('canvas');
@@ -83,13 +84,13 @@ export class TileManager {
 
   getAsset(type: keyof TileAssets): Texture {
     if (!this.loaded) {
-      console.warn("Assets not loaded yet, returning empty texture");
+      if (GAME_CONSTANTS.DEBUG) console.warn("Assets not loaded yet, returning empty texture");
       return Texture.EMPTY;
     }
 
     const asset = this.assets[type];
     if (!asset) {
-      console.warn(`Asset ${type} not found, returning empty texture`);
+      if (GAME_CONSTANTS.DEBUG) console.warn(`Asset ${type} not found, returning empty texture`);
       return Texture.EMPTY;
     }
 

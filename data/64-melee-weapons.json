@@ -1,0 +1,506 @@
+[
+  {
+    "name": "Sharp Stick",
+    "cost": 1,
+    "damage": 1,
+    "weight": 300,
+    "material": "wood",
+    "description": "A pointed stick, the most basic of weapons."
+  },
+  {
+    "name": "Wooden Club",
+    "cost": 2,
+    "damage": 3,
+    "weight": 1500,
+    "material": "wood",
+    "description": "A heavy branch used for bludgeoning."
+  },
+  {
+    "name": "Stone Dagger",
+    "cost": 5,
+    "damage": 4,
+    "weight": 800,
+    "material": "stone",
+    "description": "A sharpened rock lashed to a handle."
+  },
+  {
+    "name": "Bone Shiv",
+    "cost": 8,
+    "damage": 5,
+    "weight": 400,
+    "material": "bone",
+    "description": "A sharp fragment of a large creature's bone."
+  },
+  {
+    "name": "Copper Shortsword",
+    "cost": 15,
+    "damage": 8,
+    "weight": 1200,
+    "material": "copper",
+    "description": "A soft metal blade, better than stone."
+  },
+  {
+    "name": "Bronze Hatchet",
+    "cost": 25,
+    "damage": 10,
+    "weight": 1400,
+    "material": "bronze",
+    "description": "A single-handed axe made of bronze."
+  },
+  {
+    "name": "Flail",
+    "cost": 30,
+    "damage": 12,
+    "weight": 2000,
+    "material": "iron",
+    "description": "A spiked ball on a chain, attached to a handle."
+  },
+  {
+    "name": "Iron Mace",
+    "cost": 35,
+    "damage": 14,
+    "weight": 3500,
+    "material": "iron",
+    "description": "A heavy iron head on a stout wooden shaft."
+  },
+  {
+    "name": "Iron Spear",
+    "cost": 40,
+    "damage": 16,
+    "weight": 1800,
+    "material": "iron",
+    "description": "A long wooden pole with an iron tip."
+  },
+  {
+    "name": "Iron Shortsword",
+    "cost": 50,
+    "damage": 18,
+    "weight": 1300,
+    "material": "iron",
+    "description": "A standard-issue iron blade for infantry."
+  },
+  {
+    "name": "Iron Warhammer",
+    "cost": 65,
+    "damage": 20,
+    "weight": 4000,
+    "material": "iron",
+    "description": "A hammer designed for crushing armor."
+  },
+  {
+    "name": "Iron Longsword",
+    "cost": 75,
+    "damage": 22,
+    "weight": 1600,
+    "material": "iron",
+    "description": "A versatile, well-balanced one or two-handed sword."
+  },
+  {
+    "name": "Steel Dagger",
+    "cost": 100,
+    "damage": 24,
+    "weight": 900,
+    "material": "steel",
+    "description": "A reliable steel blade, perfect for parrying."
+  },
+  {
+    "name": "Steel Handaxe",
+    "cost": 120,
+    "damage": 26,
+    "weight": 1500,
+    "material": "steel",
+    "description": "A sturdy, well-balanced throwing and melee axe."
+  },
+  {
+    "name": "Rapier",
+    "cost": 150,
+    "damage": 28,
+    "weight": 1100,
+    "material": "steel",
+    "description": "A slender, sharp thrusting sword for precision strikes."
+  },
+  {
+    "name": "Scimitar",
+    "cost": 175,
+    "damage": 30,
+    "weight": 1700,
+    "material": "steel",
+    "description": "A curved blade designed for slashing attacks."
+  },
+  {
+    "name": "Steel Longsword",
+    "cost": 200,
+    "damage": 32,
+    "weight": 1500,
+    "material": "steel",
+    "description": "The pinnacle of standard martial swordsmanship."
+  },
+  {
+    "name": "Glaive",
+    "cost": 250,
+    "damage": 34,
+    "weight": 2800,
+    "material": "steel",
+    "description": "A polearm with a single-edged blade on a long pole."
+  },
+  {
+    "name": "Halberd",
+    "cost": 300,
+    "damage": 36,
+    "weight": 3200,
+    "material": "steel",
+    "description": "An axe blade topped with a spike and backed by a hook."
+  },
+  {
+    "name": "Steel War Pick",
+    "cost": 350,
+    "damage": 38,
+    "weight": 3800,
+    "material": "steel",
+    "description": "Features a powerful spike designed to punch through plate."
+  },
+  {
+    "name": "Bastard Sword",
+    "cost": 400,
+    "damage": 40,
+    "weight": 2200,
+    "material": "steel",
+    "description": "A longsword with a grip long enough for two hands."
+  },
+  {
+    "name": "Double-Bladed Scimitar",
+    "cost": 500,
+    "damage": 42,
+    "weight": 2500,
+    "material": "steel",
+    "description": "An exotic weapon with a curved blade at each end."
+  },
+  {
+    "name": "Great Axe",
+    "cost": 600,
+    "damage": 44,
+    "weight": 6000,
+    "material": "steel",
+    "description": "A massive axe requiring immense strength to wield."
+  },
+  {
+    "name": "Maul",
+    "cost": 650,
+    "damage": 46,
+    "weight": 7000,
+    "material": "steel",
+    "description": "A two-handed warhammer of devastating power."
+  },
+  {
+    "name": "Greatsword",
+    "cost": 750,
+    "damage": 48,
+    "weight": 3800,
+    "material": "steel",
+    "description": "A massive two-handed sword, a fearsome sight on the battlefield."
+  },
+  {
+    "name": "Mithril Dagger",
+    "cost": 2000,
+    "damage": 50,
+    "weight": 300,
+    "material": "mithril",
+    "description": "A blade of legendary silver metal, impossibly light and sharp."
+  },
+  {
+    "name": "Mithril Longsword",
+    "cost": 5000,
+    "damage": 52,
+    "weight": 800,
+    "material": "mithril",
+    "description": "A blade that sings as it cuts through the air."
+  },
+  {
+    "name": "Mithril Spear",
+    "cost": 4500,
+    "damage": 54,
+    "weight": 1200,
+    "material": "mithril",
+    "description": "A polearm whose tip never blunts and shaft never breaks."
+  },
+  {
+    "name": "Mithril Greatsword",
+    "cost": 8000,
+    "damage": 56,
+    "weight": 2000,
+    "material": "mithril",
+    "description": "Wielding this magnificent blade feels like swinging a longsword."
+  },
+  {
+    "name": "Flame-Tongue Longsword",
+    "cost": 12000,
+    "damage": 58,
+    "material": "steel",
+    "weight": 1600,
+    "description": "The blade is wreathed in magical fire, dealing extra heat damage."
+  },
+  {
+    "name": "Frost Brand Greatsword",
+    "cost": 15000,
+    "damage": 60,
+    "material": "steel",
+    "weight": 3800,
+    "description": "Exudes a palpable chill and can extinguish non-magical fires."
+  },
+  {
+    "name": "Vorpal Blade",
+    "cost": 50000,
+    "damage": 62,
+    "material": "adamantine",
+    "weight": 1700,
+    "description": "A legendary sword known for its ability to sever heads with a single critical strike."
+  },
+  {
+    "name": "Sword of Ultimate Demise",
+    "cost": 100000,
+    "damage": 64,
+    "material": "unknown",
+    "weight": 2500,
+    "description": "A blade of pure energy and darkness, said to be able to slay gods."
+  },
+  {
+    "name": "Sickle",
+    "cost": 10,
+    "damage": 6,
+    "weight": 1100,
+    "material": "iron",
+    "description": "A farming tool adapted for combat."
+  },
+  {
+    "name": "Quarterstaff",
+    "cost": 5,
+    "damage": 7,
+    "weight": 2000,
+    "material": "wood",
+    "description": "A simple but effective stave for striking and blocking."
+  },
+  {
+    "name": "Light Hammer",
+    "cost": 20,
+    "damage": 9,
+    "weight": 1000,
+    "material": "iron",
+    "description": "A small, balanced hammer meant for throwing or melee."
+  },
+  {
+    "name": "Javelin",
+    "cost": 15,
+    "damage": 11,
+    "weight": 1200,
+    "material": "iron",
+    "description": "A light spear designed for throwing."
+  },
+  {
+    "name": "Trident",
+    "cost": 80,
+    "damage": 17,
+    "weight": 2500,
+    "material": "iron",
+    "description": "A three-pronged spear, often used by gladiators."
+  },
+  {
+    "name": "Morningstar",
+    "cost": 55,
+    "damage": 19,
+    "weight": 3000,
+    "material": "iron",
+    "description": "A club-like weapon with a spiked metal head."
+  },
+  {
+    "name": "Pike",
+    "cost": 90,
+    "damage": 21,
+    "weight": 5000,
+    "material": "steel",
+    "description": "An extremely long spear for formation fighting."
+  },
+  {
+    "name": "Lance",
+    "cost": 180,
+    "damage": 23,
+    "weight": 4500,
+    "material": "steel",
+    "description": "A long spear used by mounted knights."
+  },
+  {
+    "name": "Whip",
+    "cost": 5,
+    "damage": 2,
+    "weight": 500,
+    "material": "leather",
+    "description": "Inflicts little damage but can disarm or trip foes."
+  },
+  {
+    "name": "Blowgun",
+    "cost": 20,
+    "damage": 1,
+    "weight": 400,
+    "material": "wood",
+    "description": "A tube for firing poisoned darts, melee damage is negligible."
+  },
+  {
+    "name": "Scythe",
+    "cost": 40,
+    "damage": 13,
+    "weight": 3500,
+    "material": "iron",
+    "description": "A reaper's tool, awkward but deadly."
+  },
+  {
+    "name": "Kukri",
+    "cost": 130,
+    "damage": 25,
+    "weight": 1000,
+    "material": "steel",
+    "description": "A heavy curved knife from southern mountains."
+  },
+  {
+    "name": "Falchion",
+    "cost": 190,
+    "damage": 27,
+    "weight": 1900,
+    "material": "steel",
+    "description": "A single-edged sword with a heavy, cleaving blade."
+  },
+  {
+    "name": "Estoc",
+    "cost": 220,
+    "damage": 29,
+    "weight": 1650,
+    "material": "steel",
+    "description": "A rigid thrusting sword designed against armored foes."
+  },
+  {
+    "name": "Bill Hook",
+    "cost": 280,
+    "damage": 31,
+    "weight": 3000,
+    "material": "steel",
+    "description": "A polearm with a hooked blade for pulling riders from mounts."
+  },
+  {
+    "name": "Naginata",
+    "cost": 320,
+    "damage": 33,
+    "weight": 2600,
+    "material": "steel",
+    "description": "A Japanese polearm with a curved sword-like blade."
+  },
+  {
+    "name": "Zweihänder",
+    "cost": 700,
+    "damage": 45,
+    "weight": 4000,
+    "material": "steel",
+    "description": "A massive German two-handed sword with a parrying hook."
+  },
+  {
+    "name": "Greataxe (Orcish)",
+    "cost": 550,
+    "damage": 43,
+    "weight": 6500,
+    "material": "iron",
+    "description": "A crudely made but brutally effective oversized axe."
+  },
+  {
+    "name": "Spiked Chain",
+    "cost": 70,
+    "damage": 15,
+    "weight": 2200,
+    "material": "iron",
+    "description": "A length of chain adorned with sharp spikes."
+  },
+  {
+    "name": "Shotel",
+    "cost": 160,
+    "damage": 26,
+    "weight": 1550,
+    "material": "steel",
+    "description": "An Ethiopian sword with a curved tip for reaching around shields."
+  },
+  {
+    "name": "Khopesh",
+    "cost": 140,
+    "damage": 24,
+    "weight": 1800,
+    "material": "bronze",
+    "description": "An Egyptian sickle-sword."
+  },
+  {
+    "name": "Urumi",
+    "cost": 600,
+    "damage": 35,
+    "weight": 1500,
+    "material": "steel",
+    "description": "A whip-like sword from India, incredibly difficult to master."
+  },
+  {
+    "name": "Mithril Rapier",
+    "cost": 4500,
+    "damage": 53,
+    "weight": 600,
+    "material": "mithril",
+    "description": "A blade so light and swift it seems to move on its own."
+  },
+  {
+    "name": "Dwarven Thrower (Warhammer)",
+    "cost": 10000,
+    "damage": 55,
+    "weight": 3000,
+    "material": "mithril",
+    "description": "A magical hammer that returns to the thrower's hand."
+  },
+  {
+    "name": "Holy Avenger (Longsword)",
+    "cost": 25000,
+    "damage": 59,
+    "weight": 1700,
+    "material": "silvered steel",
+    "description": "A paladin's sacred blade, deadly to fiends and undead."
+  },
+  {
+    "name": "Dagger of Venom",
+    "cost": 8000,
+    "damage": 49,
+    "weight": 900,
+    "material": "steel",
+    "description": "Its edge is coated with a deadly, magical poison."
+  },
+  {
+    "name": "Sun Blade",
+    "cost": 18000,
+    "damage": 57,
+    "weight": 500,
+    "material": "light",
+    "description": "A hilt that projects a blade of pure sunlight."
+  },
+  {
+    "name": "Hammer of Thunderbolts",
+    "cost": 30000,
+    "damage": 61,
+    "weight": 5000,
+    "material": "adamantine",
+    "description": "A giant's maul that crackles with lightning on impact."
+  },
+  {
+    "name": "Blackrazor",
+    "cost": 75000,
+    "damage": 63,
+    "weight": 2000,
+    "material": "obsidian",
+    "description": "A sentient, soul-drinking sword from the Shadowfell."
+  },
+  {
+    "name": "Giant's Tooth",
+    "cost": 3,
+    "damage": 8,
+    "weight": 2500,
+    "material": "tooth",
+    "description": "A large, sharp tooth from a giant beast, used as a crude knife."
+  }
+]

@@ -1,4 +1,6 @@
 // Data loading utilities for shared /data folder
+import { GAME_CONSTANTS } from "../../../shared/constants";
+
 export async function loadJsonData(filename: string): Promise<any> {
   try {
     const response = await fetch(`/data/${filename}`);
@@ -6,7 +8,7 @@ export async function loadJsonData(filename: string): Promise<any> {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
-    console.log(`Loaded ${filename} from /data/`);
+    if (GAME_CONSTANTS.DEBUG) console.log(`Loaded ${filename} from /data/`);
     return data;
   } catch (error) {
     console.error(`Error loading ${filename}:`, error);

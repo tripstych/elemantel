@@ -1,0 +1,623 @@
+[
+  {
+    "name": "Cloth Robes",
+    "cost": 5,
+    "armor_class": 1,
+    "weight": 500,
+    "material": "cloth",
+    "body_parts": ["torso", "arms"],
+    "description": "Simple woven garments offering minimal protection."
+  },
+  {
+    "name": "Padded Armor",
+    "cost": 15,
+    "armor_class": 3,
+    "weight": 4000,
+    "material": "cloth",
+    "body_parts": ["torso", "arms", "legs"],
+    "description": "Quilted layers of cloth stuffed with wool or scrap."
+  },
+  {
+    "name": "Leather Jerkin",
+    "cost": 25,
+    "armor_class": 5,
+    "weight": 3500,
+    "material": "leather",
+    "body_parts": ["torso"],
+    "description": "Hardened leather chestpiece, light and flexible."
+  },
+  {
+    "name": "Studded Leather",
+    "cost": 50,
+    "armor_class": 7,
+    "weight": 6000,
+    "material": "leather",
+    "body_parts": ["torso", "arms"],
+    "description": "Leather armor reinforced with close-set metal studs."
+  },
+  {
+    "name": "Hide Armor",
+    "cost": 20,
+    "armor_class": 4,
+    "weight": 7000,
+    "material": "hide",
+    "body_parts": ["torso", "legs"],
+    "description": "Crude armor made from thick animal hides."
+  },
+  {
+    "name": "Chain Shirt",
+    "cost": 100,
+    "armor_class": 9,
+    "weight": 12000,
+    "material": "iron",
+    "body_parts": ["torso"],
+    "description": "A shirt made of interlocking metal rings."
+  },
+  {
+    "name": "Scale Mail",
+    "cost": 75,
+    "armor_class": 8,
+    "weight": 15000,
+    "material": "iron",
+    "body_parts": ["torso", "arms"],
+    "description": "A coat and leggings covered with overlapping metal scales."
+  },
+  {
+    "name": "Breastplate",
+    "cost": 500,
+    "armor_class": 12,
+    "weight": 10000,
+    "material": "steel",
+    "body_parts": ["torso"],
+    "description": "A solid metal plate that protects the front of the torso."
+  },
+  {
+    "name": "Half Plate",
+    "cost": 850,
+    "armor_class": 14,
+    "weight": 22000,
+    "material": "steel",
+    "body_parts": ["torso", "arms", "legs"],
+    "description": "A combination of plate and chain, covering most of the body."
+  },
+  {
+    "name": "Full Plate",
+    "cost": 2000,
+    "armor_class": 16,
+    "weight": 30000,
+    "material": "steel",
+    "body_parts": ["torso", "arms", "legs", "head"],
+    "description": "A complete suit of interlocking metal plates."
+  },
+  {
+    "name": "Ring Mail",
+    "cost": 40,
+    "armor_class": 6,
+    "weight": 14000,
+    "material": "iron",
+    "body_parts": ["torso", "arms"],
+    "description": "Leather armor with metal rings sewn into it."
+  },
+  {
+    "name": "Splint Mail",
+    "cost": 250,
+    "armor_class": 11,
+    "weight": 28000,
+    "material": "steel",
+    "body_parts": ["torso", "arms", "legs"],
+    "description": "Armor made of narrow vertical strips of metal riveted to a leather backing."
+  },
+  {
+    "name": "Banded Mail",
+    "cost": 300,
+    "armor_class": 13,
+    "weight": 20000,
+    "material": "steel",
+    "body_parts": ["torso", "arms", "legs"],
+    "description": "Overlapping horizontal bands of steel laminated to leather."
+  },
+  {
+    "name": "Mithril Chain Shirt",
+    "cost": 1200,
+    "armor_class": 11,
+    "weight": 4000,
+    "material": "mithril",
+    "body_parts": ["torso"],
+    "description": "A shirt of incredibly light and strong mithril rings."
+  },
+  {
+    "name": "Mithril Breastplate",
+    "cost": 2500,
+    "armor_class": 14,
+    "weight": 5000,
+    "material": "mithril",
+    "body_parts": ["torso"],
+    "description": "A breastplate of shimmering mithril, strong as steel but feather-light."
+  },
+  {
+    "name": "Mithril Full Plate",
+    "cost": 7500,
+    "armor_class": 18,
+    "weight": 10000,
+    "material": "mithril",
+    "body_parts": ["torso", "arms", "legs", "head"],
+    "description": "A masterpiece of smithing, offering incredible protection with minimal weight."
+  },
+  {
+    "name": "Shield, Buckler",
+    "cost": 10,
+    "armor_class": 1,
+    "weight": 2000,
+    "material": "wood",
+    "body_parts": ["hand"],
+    "description": "A small, fist-gripped shield for parrying."
+  },
+  {
+    "name": "Shield, Light Steel",
+    "cost": 30,
+    "armor_class": 2,
+    "weight": 4000,
+    "material": "steel",
+    "body_parts": ["hand"],
+    "description": "A round or kite shield made of steel, offering good protection."
+  },
+  {
+    "name": "Shield, Tower",
+    "cost": 50,
+    "armor_class": 4,
+    "weight": 15000,
+    "material": "wood",
+    "body_parts": ["hand"],
+    "description": "A massive shield that can provide cover."
+  },
+  {
+    "name": "Helmet, Open",
+    "cost": 15,
+    "armor_class": 1,
+    "weight": 1500,
+    "material": "iron",
+    "body_parts": ["head"],
+    "description": "A simple metal cap that protects the top of the head."
+  },
+  {
+    "name": "Helmet, Great Helm",
+    "cost": 60,
+    "armor_class": 3,
+    "weight": 3500,
+    "material": "steel",
+    "body_parts": ["head"],
+    "description": "A full helmet enclosing the entire head, with a narrow visor."
+  },
+  {
+    "name": "Gauntlets, Leather",
+    "cost": 5,
+    "armor_class": 1,
+    "weight": 500,
+    "material": "leather",
+    "body_parts": ["hands"],
+    "description": "Reinforced leather gloves."
+  },
+  {
+    "name": "Gauntlets, Plate",
+    "cost": 25,
+    "armor_class": 2,
+    "weight": 1500,
+    "material": "steel",
+    "body_parts": ["hands"],
+    "description": "Metallic gloves with articulated plates."
+  },
+  {
+    "name": "Greaves",
+    "cost": 40,
+    "armor_class": 2,
+    "weight": 2500,
+    "material": "steel",
+    "body_parts": ["legs"],
+    "description": "Plate armor designed to protect the shins."
+  },
+  {
+    "name": "Pauldrons",
+    "cost": 35,
+    "armor_class": 2,
+    "weight": 2000,
+    "material": "steel",
+    "body_parts": ["shoulders"],
+    "description": "Armor plates that protect the shoulders."
+  },
+  {
+    "name": "Mask of the Silent",
+    "cost": 800,
+    "armor_class": 0,
+    "weight": 300,
+    "material": "silver",
+    "body_parts": ["face"],
+    "description": "A magically silenced mask that muffles the wearer's breath and speech."
+  },
+  {
+    "name": "Spider Silk Cloak",
+    "cost": 1500,
+    "armor_class": 8,
+    "weight": 800,
+    "material": "spider_silk",
+    "body_parts": ["shoulders"],
+    "description": "A cloak woven from the silk of giant phase spiders, offering surprising resistance."
+  },
+  {
+    "name": "Wyvern Hide Vest",
+    "cost": 900,
+    "armor_class": 10,
+    "weight": 3000,
+    "material": "wyvern_hide",
+    "body_parts": ["torso"],
+    "description": "Tough leather from a wyvern, resistant to piercing attacks."
+  },
+  {
+    "name": "Boneweave Armor",
+    "cost": 400,
+    "armor_class": 9,
+    "weight": 8000,
+    "material": "bone",
+    "body_parts": ["torso", "arms"],
+    "description": "Armor crafted from the bones and sinews of monstrous creatures."
+  },
+  {
+    "name": "Dragonscale Mail",
+    "cost": 10000,
+    "armor_class": 20,
+    "weight": 12000,
+    "material": "dragon_scale",
+    "body_parts": ["torso", "arms", "legs"],
+    "description": "Legendary armor crafted from the scales of an ancient dragon. Resists the dragon's element."
+  },
+  {
+    "name": "Glimmerwood Shield",
+    "cost": 2000,
+    "armor_class": 5,
+    "weight": 3000,
+    "material": "glimmerwood",
+    "body_parts": ["hand"],
+    "description": "A shield made from wood that absorbs magic, granting resistance to spells."
+  },
+  {
+    "name": "Obsidian Plate",
+    "cost": 1500,
+    "armor_class": 15,
+    "weight": 28000,
+    "material": "obsidian",
+    "body_parts": ["torso", "arms", "legs"],
+    "description": "Brittle but incredibly hard armor formed from volcanic glass. Weak to bludgeoning."
+  },
+  {
+    "name": "Crystal Shard Armor",
+    "cost": 3000,
+    "armor_class": 13,
+    "weight": 10000,
+    "material": "crystal",
+    "body_parts": ["torso"],
+    "description": "Armor made from living crystal that can refract light-based attacks."
+  },
+  {
+    "name": "Dwarven Stoneplate",
+    "cost": 1800,
+    "armor_class": 17,
+    "weight": 45000,
+    "material": "granite",
+    "body_parts": ["torso", "arms", "legs"],
+    "description": "Extremely heavy armor carved from a single block of enchanted mountain granite."
+  },
+  {
+    "name": "Elven Leafweave",
+    "cost": 2200,
+    "armor_class": 12,
+    "weight": 2500,
+    "material": "living_wood",
+    "body_parts": ["torso", "arms"],
+    "description": "Armor that seems grown rather than made, offering stealth and protection."
+  },
+  {
+    "name": "Brigandine",
+    "cost": 150,
+    "armor_class": 10,
+    "weight": 13000,
+    "material": "steel",
+    "body_parts": ["torso"],
+    "description": "Cloth or leather armor with steel plates riveted to the inside."
+  },
+  {
+    "name": "Cuirass",
+    "cost": 400,
+    "armor_class": 11,
+    "weight": 11000,
+    "material": "steel",
+    "body_parts": ["torso"],
+    "description": A breastplate and backplate fastened together."
+  },
+  {
+    "name": "Gorget",
+    "cost": 20,
+    "armor_class": 1,
+    "weight": 1000,
+    "material": "steel",
+    "body_parts": ["neck"],
+    "description": "A steel collar to protect the neck."
+  },
+  {
+    "name": "Vambraces",
+    "cost": 30,
+    "armor_class": 2,
+    "weight": 1200,
+    "material": "steel",
+    "body_parts": ["forearms"],
+    "description": "Forearm guards."
+  },
+  {
+    "name": "Chausses",
+    "cost": 70,
+    "armor_class": 3,
+    "weight": 4000,
+    "material": "steel",
+    "body_parts": ["legs"],
+    "description": "Plate armor for the legs."
+  },
+  {
+    "name": "Sabatons",
+    "cost": 25,
+    "armor_class": 1,
+    "weight": 1500,
+    "material": "steel",
+    "body_parts": ["feet"],
+    "description": "Armored shoes covering the top of the foot."
+  },
+  {
+    "name": "Shadow Drapery",
+    "cost": 3500,
+    "armor_class": 9,
+    "weight": 100,
+    "material": "shadow_stuff",
+    "body_parts": ["shoulders"],
+    "description": "A cloak woven from tangible shadows, granting near-invisibility in darkness."
+  },
+  {
+    "name": "Celestial Aegis",
+    "cost": 12000,
+    "armor_class": 22,
+    "weight": 5000,
+    "material": "starlight_iron",
+    "body_parts": ["torso"],
+    "description": "A brilliant breastplate forged from a fallen star, radiating holy power."
+  },
+  {
+    "name": "Abyssal Carapace",
+    "cost": 9000,
+    "armor_class": 19,
+    "weight": 15000,
+    "material": "demon_chitin",
+    "body_parts": ["torso", "arms"],
+    "description": "Armor fashioned from the chitinous plates of a demon, resistant to fire and fear."
+  },
+  {
+    "name": "Living Ivy Wrap",
+    "cost": 800,
+    "armor_class": 6,
+    "weight": 2000,
+    "material": "enchanted_ivy",
+    "body_parts": ["torso", "arms"],
+    "description": "Constantly growing ivy that hardens on impact. Regenerates over time."
+  },
+  {
+    "name": "Frostfell Mantle",
+    "cost": 5000,
+    "armor_class": 14,
+    "weight": 8000,
+    "material": "everice",
+    "body_parts": ["shoulders"],
+    "description": "A mantle of ice that never melts, granting immunity to cold and vulnerability to fire."
+  },
+  {
+    "name": "Molten Core Harness",
+    "cost": 7000,
+    "armor_class": 16,
+    "weight": 20000,
+    "material": "basalt",
+    "body_parts": ["torso"],
+    "description": "Harness of cooled volcanic rock, glowing with internal heat. Immune to fire."
+  },
+  {
+    "name": "Puzzleplate",
+    "cost": 4500,
+    "armor_class": 15,
+    "weight": 18000,
+    "material": "adamantine",
+    "body_parts": ["torso", "arms", "legs"],
+    "description": "Armor made of interlocking adamantine plates that can be rearranged for different defenses."
+  },
+  {
+    "name": "Whisperweave Garb",
+    "cost": 2500,
+    "armor_class": 7,
+    "weight": 1500,
+    "material": "phase_spider_silk",
+    "body_parts": ["torso", "arms", "legs"],
+    "description": "Armor that allows the wearer to briefly become ethereal."
+  },
+  {
+    "name": "Trollhide Jerkin",
+    "cost": 1200,
+    "armor_class": 11,
+    "weight": 6000,
+    "material": "troll_hide",
+    "body_parts": ["torso"],
+    "description": "Tough hide that slowly knits itself back together when damaged."
+  },
+  {
+    "name": "Gorgon Hide Shield",
+    "cost": 4000,
+    "armor_class": 6,
+    "weight": 10000,
+    "material": "petrified_hide",
+    "body_parts": ["hand"],
+    "description": "A heavy shield that can temporarily petrify attackers who strike it."
+  },
+  {
+    "name": "Stormrider's Cuirass",
+    "cost": 6000,
+    "armor_class": 13,
+    "weight": 7000,
+    "material": "tempest_steel",
+    "body_parts": ["torso"],
+    "description": "Armor that crackles with lightning, shocking nearby foes."
+  },
+  {
+    "name": "Lichebone Armor",
+    "cost": 15000,
+    "armor_class": 18,
+    "weight": 5000,
+    "material": "lichebone",
+    "body_parts": ["torso", "arms"],
+    "description": "Bone armor from a powerful lich, granting resistance to necrotic energy."
+  },
+  {
+    "name": "Kraken Leather",
+    "cost": 3000,
+    "armor_class": 12,
+    "weight": 5000,
+    "material": "kraken_skin",
+    "body_parts": ["torso", "arms", "legs"],
+    "description": "Slick, water-resistant leather that grants freedom of movement underwater."
+  },
+  {
+    "name": "Sunforged Plate",
+    "cost": 10000,
+    "armor_class": 21,
+    "weight": 25000,
+    "material": "sun_steel",
+    "body_parts": ["torso", "arms", "legs", "head"],
+    "description": "Plate armor blessed by a sun god, dealing radiant damage to undead attackers."
+  },
+  {
+    "name": "Runic Warding Bands",
+    "cost": 5000,
+    "armor_class": 0,
+    "weight": 500,
+    "material": "gold",
+    "body_parts": ["wrists"],
+    "description": "Bracelets etched with runes that can absorb a magical attack before shattering."
+  },
+  {
+    "name": "Doomplate",
+    "cost": 20000,
+    "armor_class": 25,
+    "weight": 40000,
+    "material": "void_iron",
+    "body_parts": ["torso", "arms", "legs", "head"],
+    "description": "Armor forged in the heart of a dying star. Exudes an aura of dread."
+  },
+  {
+    "name": "Phoenix Down Cloak",
+    "cost": 18000,
+    "armor_class": 10,
+    "weight": 1000,
+    "material": "phoenix_feathers",
+    "body_parts": ["shoulders"],
+    "description": "A cloak that allows the wearer to rise from death once, consumed in the process."
+  },
+  {
+    "name": "Mage's Aetherial Robes",
+    "cost": 8000,
+    "armor_class": 8,
+    "weight": 1000,
+    "material": "aether_silk",
+    "body_parts": ["torso", "arms"],
+    "description": "Robes that enhance magical power but offer little physical protection."
+  },
+  {
+    "name": "Sentinel's Ward",
+    "cost": 3500,
+    "armor_class": 0,
+    "weight": 2000,
+    "material": "truesilver",
+    "body_parts": ["neck"],
+    "description": "An amulet that creates a temporary forcefield against projectiles."
+  },
+  {
+    "name": "Platemail of the Juggernaut",
+    "cost": 5000,
+    "armor_class": 17,
+    "weight": 50000,
+    "material": "steel",
+    "body_parts": ["torso", "arms", "legs", "head"],
+    "description": "Extremely heavy armor that allows the wearer to crash through obstacles."
+  },
+  {
+    "name": "Ghostwalker's Shroud",
+    "cost": 7500,
+    "armor_class": 5,
+    "weight": 200,
+    "material": "ectoplasm",
+    "body_parts": ["shoulders"],
+    "description": "A shroud that allows the wearer to pass through solid objects for a short time."
+  },
+  {
+    "name": "Serpent Scale Armor",
+    "cost": 600,
+    "armor_class": 9,
+    "weight": 6000,
+    "material": "serpent_scale",
+    "body_parts": ["torso"],
+    "description": "Scaly armor that grants resistance to poison."
+  },
+  {
+    "name": "Barbarian's Hide",
+    "cost": 50,
+    "armor_class": 6,
+    "weight": 8000,
+    "material": "great_beast_hide",
+    "body_parts": ["torso"],
+    "description": "A simple, rugged hide favored by northern tribes."
+  },
+  {
+    "name": "Assassin's Guild Leathers",
+    "cost": 400,
+    "armor_class": 8,
+    "weight": 3500,
+    "material": "blackened_leather",
+    "body_parts": ["torso", "arms", "legs"],
+    "description": "Supple, silent leather armor with hidden pockets for tools."
+  },
+  {
+    "name": "Knight's Tabard",
+    "cost": 100,
+    "armor_class": 0,
+    "weight": 800,
+    "material": "cloth",
+    "body_parts": ["torso"],
+    "description": "A cloth surcoat worn over armor, displaying a knight's heraldry."
+  },
+  {
+    "name": "Warlock's Cryptarmor",
+    "cost": 11000,
+    "armor_class": 14,
+    "weight": 12000,
+    "material": "skeletal_remains",
+    "body_parts": ["torso", "arms"],
+    "description": "Armor fused from the remains of a patron's previous champions."
+  },
+  {
+    "name": "Dragonbone Mail",
+    "cost": 14000,
+    "armor_class": 19,
+    "weight": 15000,
+    "material": "dragonbone",
+    "body_parts": ["torso", "arms"],
+    "description": "Armor crafted from the bones of a dragon, humming with residual power."
+  },
+  {
+    "name": "Final Bastion",
+    "cost": 30000,
+    "armor_class": 64,
+    "weight": 100000,
+    "material": "divine_ore",
+    "body_parts": ["torso", "arms", "legs", "head", "hands", "feet"],
+    "description": "The ultimate armor, said to be worn by the gods themselves. Nearly impenetrable."
+  }
+]

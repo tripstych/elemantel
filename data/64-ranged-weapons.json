@@ -1,0 +1,522 @@
+[
+  {
+    "name": "Peasant's Sling",
+    "cost_gp": 1,
+    "damage": 1,
+    "weight_grams": 150,
+    "material": "cloth, leather",
+    "description": "A simple, braided sling used by herders and the poorest of militia. Effective only in the most desperate of situations."
+  },
+  {
+    "name": "Bone Shortbow",
+    "cost_gp": 15,
+    "damage": 8,
+    "weight_grams": 800,
+    "material": "bone, sinew",
+    "description": "Crafted from the rib of a great beast and strung with its tendons. A primitive but reliable weapon."
+  },
+  {
+    "name": "Ironwood Recurve",
+    "cost_gp": 50,
+    "damage": 16,
+    "weight_grams": 1100,
+    "material": "ironwood",
+    "description": "A finely crafted bow from the heartwood of an ironwood tree, granting it superior power and resilience."
+  },
+  {
+    "name": "Gnome-engineered Hand Crossbow",
+    "cost_gp": 200,
+    "damage": 20,
+    "weight_grams": 1200,
+    "material": "steel, brass",
+    "description": "A compact, clockwork crossbow with a magazine for five bolts. Favored by rogues and artisans."
+  },
+  {
+    "name": "Elven Hunting Longbow",
+    "cost_gp": 300,
+    "damage": 28,
+    "weight_grams": 900,
+    "material": "heartwood, mithril inlay",
+    "description": "A bow of elegant and impossible grace, seemingly grown rather than made. Silent and deadly in the right hands."
+  },
+  {
+    "name": "Dwarven Heavy Repeater",
+    "cost_gp": 650,
+    "damage": 38,
+    "weight_grams": 6500,
+    "material": "steel",
+    "description": "A massive, crank-operated crossbow that fires heavy bolts at a frightening rate. Requires a strong arm to wield effectively."
+  },
+  {
+    "name": "Titanstring Bow",
+    "cost_gp": 5000,
+    "damage": 64,
+    "weight_grams": 1500,
+    "material": "mithril, dragon gut",
+    "description": "A legendary bow strung with the sinew of a titan. It draws upon the wielder's strength, firing arrows with earth-shattering force."
+  },
+  {
+    "name": "Goblin Toss-Knife",
+    "cost_gp": 2,
+    "damage": 3,
+    "weight_grams": 300,
+    "material": "junk iron",
+    "description": "A crudely sharpened piece of scrap metal, balanced for throwing. As likely to injure the thrower as the target."
+  },
+  {
+    "name": "Windlass Crossbow",
+    "cost_gp": 100,
+    "damage": 24,
+    "weight_grams": 4000,
+    "material": "steel, oak",
+    "description": "A powerful crossbow requiring a windlass to cock. Slow to load, but packs a tremendous punch."
+  },
+  {
+    "name": "Shadow-Woven Shortbow",
+    "cost_gp": 800,
+    "damage": 30,
+    "weight_grams": 700,
+    "material": "shadow-stuff, obsidian",
+    "description": "Forged in the Shadowfell, this bow's arrows seem to drink the light around them, making them near-impossible to dodge."
+  },
+  {
+    "name": "Blunderbuss",
+    "cost_gp": 250,
+    "damage": 22,
+    "weight_grams": 3500,
+    "material": "iron, brass",
+    "description": "A loud, messy firearm that fires a spray of shrapnel. Devastating at close range but highly inaccurate."
+  },
+  {
+    "name": "Boomerang of Returning",
+    "cost_gp": 75,
+    "damage": 6,
+    "weight_grams": 500,
+    "material": "curved wood",
+    "description": "A masterfully carved wooden boomerang that magically returns to the thrower's hand, provided it doesn't hit a target."
+  },
+  {
+    "name": "Javelin of Lightning",
+    "cost_gp": 1500,
+    "damage": 40,
+    "weight_grams": 2000,
+    "material": "steel, enchanted wood",
+    "description": "When thrown, this javelin transforms into a line of lightning, striking the first target in its path."
+  },
+  {
+    "name": "Thorn Whip",
+    "cost_gp": 20,
+    "damage": 5,
+    "weight_grams": 1000,
+    "material": "living vine",
+    "description": "A druidic weapon, a living vine that can strike at a distance and entangle foes."
+  },
+  {
+    "name": "Arquebus",
+    "cost_gp": 400,
+    "damage": 36,
+    "weight_grams": 4500,
+    "material": "iron",
+    "description": "An early, long-barreled firearm. Powerful and armor-piercing, but prone to misfires and requires a forked stand to aim."
+  },
+  {
+    "name": "Sunstone Sling",
+    "cost_gp": 500,
+    "damage": 12,
+    "weight_grams": 200,
+    "material": "gold, sunstone",
+    "description": "A sling of gilded leather that fires sunstone pellets. Its projectiles glow with radiant energy, harmful to the undead."
+  },
+  {
+    "name": "Orcish Skull-Launcher",
+    "cost_gp": 80,
+    "damage": 18,
+    "weight_grams": 8000,
+    "material": "bone, iron bands",
+    "description": "A brutal contraption that hurls spiked skulls or similarly sized rocks. More terrifying than accurate."
+  },
+  {
+    "name": "Wyvern-Fang Blowgun",
+    "cost_gp": 200,
+    "damage": 4,
+    "weight_grams": 600,
+    "material": "wyvern bone",
+    "description": "A blowgun crafted from a hollowed wyvern fang. Often used to deliver potent toxins."
+  },
+  {
+    "name": "Hooked Net",
+    "cost_gp": 10,
+    "damage": 2,
+    "weight_grams": 3000,
+    "material": "hemp, lead weights",
+    "description": "A weighted net used to entangle and trip opponents, rather than cause direct injury."
+  },
+  {
+    "name": "Crystal Shard Launcher",
+    "cost_gp": 1200,
+    "damage": 34,
+    "weight_grams": 2500,
+    "material": "crystal, mithril",
+    "description": "An arcane focus that fires concentrated shards of pure force."
+  },
+  {
+    "name": "Ballista Bolt (Siege)",
+    "cost_gp": 50,
+    "damage": 50,
+    "weight_grams": 15000,
+    "material": "steel, oak",
+    "description": "A massive bolt meant for a ballista. Not a wieldable weapon, but a munition for siege engines."
+  },
+  {
+    "name": "Fey-Twisted Branch",
+    "cost_gp": 350,
+    "damage": 14,
+    "weight_grams": 850,
+    "material": "feywood",
+    "description": "A branch from the Feywild that never runs out of magical thorns to fire. Its shots can cause confusion or sleep."
+  },
+  {
+    "name": "Repeating Hand Crossbow",
+    "cost_gp": 450,
+    "damage": 26,
+    "weight_grams": 1800,
+    "material": "steel",
+    "description": "A sophisticated hand crossbow with a top-mounted 6-bolt magazine, allowing for rapid fire."
+  },
+  {
+    "name": "Flametongue Longbow",
+    "cost_gp": 2200,
+    "damage": 48,
+    "weight_grams": 1000,
+    "material": "redwood, fire-opal",
+    "description": "Arrows nocked on this bow burst into magical flame, dealing severe fire damage on impact."
+  },
+  {
+    "name": "Gnomish Acid Sprinkler",
+    "cost_gp": 180,
+    "damage": 10,
+    "weight_grams": 1000,
+    "material": "glass, copper",
+    "description": "A device that sprays a cone of corrosive acid. Short-ranged and requires careful handling."
+  },
+  {
+    "name": "Drow Poison Needle-Shooter",
+    "cost_gp": 300,
+    "damage": 7,
+    "weight_grams": 400,
+    "material": "adamantine, spider silk",
+    "description": "A delicate, wrist-mounted device that silently fires needles coated in paralytic drow poison."
+  },
+  {
+    "name": "Giant's Throwing Boulder",
+    "cost_gp": 0,
+    "damage": 42,
+    "weight_grams": 200000,
+    "material": "stone",
+    "description": "A favorite projectile of hill and stone giants. Not a weapon to be carried, but certainly to be avoided."
+  },
+  {
+    "name": "Whisper-Fletched Arrow (Ammo)",
+    "cost_gp": 5,
+    "damage": 0,
+    "weight_grams": 50,
+    "material": "wood, owl feather",
+    "description": "Special arrows that make no sound in flight. They confer their silent property to the bow that fires them."
+  },
+  {
+    "name": "Spectral Longbow",
+    "cost_gp": 3000,
+    "damage": 44,
+    "weight_grams": 500,
+    "material": "ectoplasm, soul-stuff",
+    "description": "A bow formed from the essence of the Ethereal Plane. Its arrows can strike ethereal creatures and phase through minor barriers."
+  },
+  {
+    "name": "Halfling Soup-Can Launcher",
+    "cost_gp": 5,
+    "damage": 9,
+    "weight_grams": 1500,
+    "material": "wood, rubber",
+    "description": "A quirky slingshot-like weapon built to fire heavy cans or stones with surprising force. A halfling innovation."
+  },
+  {
+    "name": "Mithril-Hafted Javelin",
+    "cost_gp": 600,
+    "damage": 20,
+    "weight_grams": 1200,
+    "material": "mithril",
+    "description": "A javelin so perfectly balanced and light it can be thrown with pinpoint accuracy over incredible distances."
+  },
+  {
+    "name": "Onyx Panther Shortbow",
+    "cost_gp": 750,
+    "damage": 32,
+    "weight_grams": 950,
+    "material": "ebony, onyx",
+    "description": "A bow as black as midnight, carved in the likeness of a stalking panther. Grants the wielder enhanced night vision."
+  },
+  {
+    "name": "Arcane Blast-Rod",
+    "cost_gp": 1500,
+    "damage": 35,
+    "weight_grams": 1800,
+    "material": "crystal, silver",
+    "description": "A fundamental wizard's weapon, channeling raw magical energy into a destructive bolt. Scales with the user's power."
+  },
+  {
+    "name": "Serpentine Bow",
+    "cost_gp": 400,
+    "damage": 22,
+    "weight_grams": 1100,
+    "material": "yew, snake scales",
+    "description": "A bow wrapped in the scales of a giant constrictor snake. Arrows fired from it have a chance to poison the target."
+  },
+  {
+    "name": "Gravity Cannon",
+    "cost_gp": 10000,
+    "damage": 60,
+    "weight_grams": 20000,
+    "material": "orichalcum, lodestone",
+    "description": "An experimental dwarven cannon that uses gravitational fields to launch solid metal spheres at hypersonic speeds."
+  },
+  {
+    "name": "Auran Wind-Bow",
+    "cost_gp": 900,
+    "damage": 28,
+    "weight_grams": 600,
+    "material": "crystallized air",
+    "description": "A bow made by air elementals. It creates its own arrows from solidified wind and never needs ammunition."
+  },
+  {
+    "name": "Trebuchet (Siege)",
+    "cost_gp": 2000,
+    "damage": 58,
+    "weight_grams": 5000000,
+    "material": "oak, iron",
+    "description": "The superior siege engine. Hurls massive stones or incendiary payloads over castle walls. A stationary weapon."
+  },
+  {
+    "name": "Chakram",
+    "cost_gp": 25,
+    "damage": 8,
+    "weight_grams": 800,
+    "material": "steel",
+    "description": "A sharp, circular throwing blade. Skilled users can make it ricochet off surfaces."
+  },
+  {
+    "name": "Dragonbone Greatbow",
+    "cost_gp": 2800,
+    "damage": 52,
+    "weight_grams": 1300,
+    "material": "dragonbone, dragon sinew",
+    "description": "A bow of immense power, crafted from the bones and sinew of an ancient dragon. Imbues arrows with elemental energy."
+  },
+  {
+    "name": "Wand of Magic Missiles",
+    "cost_gp": 750,
+    "damage": 15,
+    "weight_grams": 300,
+    "material": "wood, crystal",
+    "description": "A classic arcane focus that projects unerring bolts of force. Damage is consistent but not overwhelming."
+  },
+  {
+    "name": "Barbed Sling Bullet (Ammo)",
+    "cost_gp": 1,
+    "damage": 0,
+    "weight_grams": 40,
+    "material": "lead",
+    "description": "Lead bullets with cruel barbs designed to cause bleeding wounds and be difficult to remove."
+  },
+  {
+    "name": "Starfall Longbow",
+    "cost_gp": 4500,
+    "damage": 56,
+    "weight_grams": 1400,
+    "material": "star-metal, pearl",
+    "description": "Forged from a meteorite, this bow fires arrows that gleam like falling stars, dealing radiant damage and blinding foes."
+  },
+  {
+    "name": "Gnomish Shocker",
+    "cost_gp": 220,
+    "damage": 11,
+    "weight_grams": 900,
+    "material": "copper, zinc",
+    "description": "A handheld device that launches a pair of conductive darts connected by a wire, delivering a powerful electric shock."
+  },
+  {
+    "name": "Molotov Cocktail",
+    "cost_gp": 5,
+    "damage": 13,
+    "weight_grams": 700,
+    "material": "glass, oil, cloth",
+    "description": "An improvised incendiary weapon. The initial impact is less dangerous than the spreading fire that follows."
+  },
+  {
+    "name": "Harp of Sonic Shards",
+    "cost_gp": 1800,
+    "damage": 30,
+    "weight_grams": 2500,
+    "material": "gold, crystal",
+    "description": "A bardic instrument that, when played, fires projectiles of solidified sound."
+  },
+  {
+    "name": "Phase-Lock Crossbow",
+    "cost_gp": 3500,
+    "damage": 42,
+    "weight_grams": 3000,
+    "material": "mithril, ether-essence",
+    "description": "This crossbow's bolts ignore conventional armor, phasing through it to strike the target's true form beneath."
+  },
+  {
+    "name": "Shrieker Dart",
+    "cost_gp": 15,
+    "damage": 5,
+    "weight_grams": 100,
+    "material": "iron",
+    "description": "A dart with a specially designed head that emits a piercing shriek in flight, disorienting the target."
+  },
+  {
+    "name": "Living Longbow",
+    "cost_gp": 2000,
+    "damage": 36,
+    "weight_grams": 1000,
+    "material": "living wood",
+    "description": "A bow that is a symbiotic creature. It can adjust its draw weight and even guide arrows slightly towards their target."
+  },
+  {
+    "name": "Explosive Bolt (Ammo)",
+    "cost_gp": 100,
+    "damage": 25,
+    "weight_grams": 500,
+    "material": "steel, alchemical powder",
+    "description": "A crossbow bolt with an alchemical charge in its head. Explodes on impact, dealing area damage."
+  },
+  {
+    "name": "Griffon Rider's Lance",
+    "cost_gp": 800,
+    "damage": 24,
+    "weight_grams": 3500,
+    "material": "steel",
+    "description": "A long, aerodynamic lance designed to be dropped from a great height onto targets below."
+  },
+  {
+    "name": "Blightwood Blowgun",
+    "cost_gp": 600,
+    "damage": 8,
+    "weight_grams": 500,
+    "material": "blightwood",
+    "description": "A blowgun carved from wood corrupted by necrotic energy. Its darts inflict a rotting disease."
+  },
+  {
+    "name": "Orcish Throw-Axe",
+    "cost_gp": 20,
+    "damage": 12,
+    "weight_grams": 1500,
+    "material": "iron",
+    "description": "A heavy, unbalanced axe designed for one thing: being hurled with overwhelming force at an enemy's face."
+  },
+  {
+    "name": "Crystal Spire Longbow",
+    "cost_gp": 5000,
+    "damage": 62,
+    "weight_grams": 1200,
+    "material": "pure crystal",
+    "description": "A bow of breathtaking beauty, carved from a single giant crystal. It focuses sunlight into devastating laser-like arrows."
+  },
+  {
+    "name": "Netherium Repeater",
+    "cost_gp": 4000,
+    "damage": 46,
+    "weight_grams": 2000,
+    "material": "netherium",
+    "description": "A weapon from the lower planes, this crossbow fires bolts that siphon the life force of those they strike."
+  },
+  {
+    "name": "Bola",
+    "cost_gp": 8,
+    "damage": 4,
+    "weight_grams": 1200,
+    "material": "leather, lead",
+    "description": "Weights connected by cords, thrown to entangle an enemy's legs and bring them to the ground."
+  },
+  {
+    "name": "Gravity Hammer",
+    "cost_gp": 1200,
+    "damage": 32,
+    "weight_grams": 8000,
+    "material": "iron, lodestone",
+    "description": "A massive hammer that, when thrown, creates a localized gravity well upon impact, crushing armor and bone."
+  },
+  {
+    "name": "Wasp-Nest-on-a-Stick",
+    "cost_gp": 1,
+    "damage": 6,
+    "weight_grams": 1000,
+    "material": "wood, wasp nest",
+    "description": "The lowest form of ranged weaponry. Throw it and run. The damage comes from the ensuing swarm of angry insects."
+  },
+  {
+    "name": "Spectral Dagger",
+    "cost_gp": 150,
+    "damage": 7,
+    "weight_grams": 200,
+    "material": "phantom iron",
+    "description": "A dagger that can be magically summoned back to the hand after being thrown. A favorite of spellblades."
+  },
+  {
+    "name": "Flame-Belcher",
+    "cost_gp": 350,
+    "damage": 18,
+    "weight_grams": 5000,
+    "material": "brass, copper",
+    "description": "A primitive, dragon-like flamethrower that spews a cone of burning alchemical gel."
+  },
+  {
+    "name": "Heartseeker Bow",
+    "cost_gp": 2500,
+    "damage": 50,
+    "weight_grams": 1050,
+    "material": "whalebone, mithril string",
+    "description": "A bow that guides its arrows unerringly to the most vulnerable spot on a target, often bypassing armor entirely."
+  },
+  {
+    "name": "Anchor Hook Launcher",
+    "cost_gp": 150,
+    "damage": 15,
+    "weight_grams": 4000,
+    "material": "iron",
+    "description": "Fires a grappling hook on a chain. Can be used to pull objects, enemies, or for cinematic swinging."
+  },
+  {
+    "name": "Thunderstone",
+    "cost_gp": 50,
+    "damage": 10,
+    "weight_grams": 300,
+    "material": "alchemical stone",
+    "description": "A alchemically-treated stone that creates a deafening thunderclap when it strikes a hard surface."
+  },
+  {
+    "name": "Void-Touched Shortbow",
+    "cost_gp": 3200,
+    "damage": 54,
+    "weight_grams": 800,
+    "material": "obsidian, void essence",
+    "description": "A bow that seems to absorb light and sound. Its arrows create small voids upon impact, dealing force and necrotic damage."
+  },
+  {
+    "name": "Gnomish Pocket Catapult",
+    "cost_gp": 100,
+    "damage": 16,
+    "weight_grams": 2000,
+    "material": "brass, springs",
+    "description": "A folding, spring-loaded mini-catapult perfect for launching caltrops, alchemical pellets, or small rocks."
+  },
+  {
+    "name": "Quill of the Storyteller",
+    "cost_gp": 10000,
+    "damage": 1,
+    "weight_grams": 50,
+    "material": "feather, ink",
+    "description": "A mythical artifact. It does not deal physical damage, but can 'write' events into reality, making it the most potent ranged weapon of all."
+  }
+]

@@ -1,6 +1,7 @@
 import config from "@colyseus/tools";
 import { monitor } from "@colyseus/monitor";
 import { playground } from "@colyseus/playground";
+import { DataService } from "./services/DataService";
 
 /**
  * Import your Room files
@@ -13,7 +14,12 @@ export default config({
         /**
          * Define your room handlers:
          */
-        gameServer.define('my_room', MyRoom);
+        const dataService = new DataService();
+        // Preload asynchronously (fire-and-forget); rooms will await ensureLoaded.
+        dataService.ensureLoaded().catch(err => {
+            console.warn("[app.config] DataService preload failed:", err);
+        });
+        gameServer.define('my_room', MyRoom, { dataService });
 
     },
 
@@ -30,7 +36,8 @@ export default config({
          * Use @colyseus/playground
          * (It is not recommended to expose this route in a production environment)
          */
-        if (process.env.NODE_ENV !== "production") {
+        // Enable playground only during local development; disable during tests
+        if (process.env.NODE_ENV === "development") {
             app.use("/", playground());
         }
 

@@ -3,6 +3,7 @@ import { Texture } from "pixi.js";
 import { Application, Sprite, Container } from "@pixi/react";
 import { tileManager } from "../services/TileManager";
 import { GameState, gameClient } from "../services/GameClient";
+import { GAME_CONSTANTS } from "../../../shared/constants";
 
 interface DungeonMapProps {
   gameState: GameState | null;

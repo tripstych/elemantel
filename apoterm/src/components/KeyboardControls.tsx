@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback } from "react";
 import { gameClient } from "../services/GameClient";
+import { GAME_CONSTANTS } from "../../../shared/constants";
 
 interface KeyboardControlsProps {
   enabled?: boolean;
@@ -48,6 +49,10 @@ export const KeyboardControls: React.FC<KeyboardControlsProps> = ({
         gameClient.move(1, 0);
         break;
       case ' ':
+        event.preventDefault();
+        console.log("Melee attack (spacebar)");
+        gameClient.meleeAttack();
+        break;
       case 'e':
       case 'E':
         event.preventDefault();
@@ -57,8 +62,8 @@ export const KeyboardControls: React.FC<KeyboardControlsProps> = ({
       case 'q':
       case 'Q':
         event.preventDefault();
-        console.log("Attack/action");
-        gameClient.pickup();
+        console.log("Melee attack (Q)");
+        gameClient.meleeAttack();
         break;
       case 'i':
       case 'I':

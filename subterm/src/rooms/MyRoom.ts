@@ -1,179 +1,54 @@
 import { Room, Client } from "@colyseus/core";
-import { MyRoomState, Item, PlayerState } from "./schema/MyRoomState";
-import { ArraySchema, Schema, type, MapSchema, Encoder } from "@colyseus/schema";
+import { MyRoomState, WorldItem, PlayerSchema } from "./schema/MyRoomState";
+import { ArraySchema, Encoder } from "@colyseus/schema";
 import { CombatCommand, CombatLog } from "../commands/CombatCommand";
 import { ItemData } from "../schema/ItemData";
 import { WorldGenerationCommand } from "../commands/WorldGenerationCommand";
-import * as fs from 'fs';
-import * as path from 'path';
+import { LanguageData } from "../schema/LanguageData";
+import { DataService } from "../services/DataService";
+import { promises as fsp } from "fs";
+import path from "path";
 
 // Increase buffer size for large language data
 Encoder.BUFFER_SIZE = 16 * 1024; // 16 KB
 
-// Temporary inline LanguageData schema to avoid import issues
-class ElementalOrigin extends Schema {
-  @type("number") fire: number = 0;
-  @type("number") water: number = 0;
-  @type("number") earth: number = 0;
-  @type("number") air: number = 0;
-}
-
-class SpellEffect extends Schema {
-  @type("string") type: string = "";
-  @type("string") amount: string = "";
-}
-
-class LanguageEntry extends Schema {
-  @type("string") word: string = "";
-  @type("string") definition: string = "";
-  @type(ElementalOrigin) origin: ElementalOrigin = new ElementalOrigin();
-  @type("string") spirit: string = "";
-  @type("number") weight: number = 0;
-  @type("string") composition: string = "";
-  @type(SpellEffect) spell_effect: SpellEffect = new SpellEffect();
-  @type("string") type: string = "";
-}
-
-class LanguageData extends Schema {
-  @type({ map: LanguageEntry }) entries: MapSchema<LanguageEntry> = new MapSchema<LanguageEntry>();
-  
-  loadFromJSON(jsonData: any) {
-    this.entries.clear();
-    for (const [key, value] of Object.entries(jsonData)) {
-      const entry = new LanguageEntry();
-      entry.word = (value as any).word || "";
-      entry.definition = (value as any).definition || "";
-      entry.spirit = (value as any).spirit || "";
-      entry.weight = (value as any).weight || 0;
-      entry.type = (value as any).type || "";
-
-      try {      
-      // note:origin data MUST exist or something critical has failed 
-      entry.origin.fire = (value as any).origin.fire || 0;
-      entry.origin.water = (value as any).origin.water || 0;
-      entry.origin.earth = (value as any).origin.earth || 0;
-      entry.origin.air = (value as any).origin.air || 0;
-      /*
-      console.log(`LanguageData: Loaded origin for ${key}:`, {
-        fire: entry.origin.fire,
-        water: entry.origin.water,
-        earth: entry.origin.earth,
-        air: entry.origin.air
-      });
-      */
-    } catch(e) {
-      console.warn(`${key} missing origin data!`);
-    }
-      
-      // Handle composition as string (JSON object)
-      if ((value as any).composition) {
-        entry.composition = JSON.stringify((value as any).composition);
-      }
-      
-      // Handle spell_effect
-      if ((value as any).spell_effect) {
-        entry.spell_effect.type = String((value as any).spell_effect.type || "");
-        entry.spell_effect.amount = String((value as any).spell_effect.amount || "");
-      }
-      
-      this.entries.set(key, entry);
-    }
-  }
-  
-  getEntry(key: string): LanguageEntry | undefined {
-    return this.entries.get(key);
-  }
-  
-  searchEntries(query: string): LanguageEntry[] {
-    const results: LanguageEntry[] = [];
-    const lowerQuery = query.toLowerCase();
-    
-    for (const entry of this.entries.values()) {
-      if (entry.word.toLowerCase().includes(lowerQuery) ||
-          entry.definition.toLowerCase().includes(lowerQuery)) {
-        results.push(entry);
-      }
-    }
-    
-    return results;
-  }
-}
-
-// Data loading utilities
-const dataPath = path.join(__dirname, '../../../data');
-
-function loadJsonData(filename: string): any {
-  const filePath = path.join(dataPath, filename);
-  try {
-    const data = fs.readFileSync(filePath, 'utf8');
-    console.log(`Loaded ${filename} from ${filePath}`);
-    return JSON.parse(data);
-  } catch (error) {
-    console.error(`Error loading ${filename}:`, error);
-    return null;
-  }
-}
-
-function loadItemTypeFiles(): { [type: string]: string[] } {
-  const itemTypes: { [type: string]: string[] } = {};
-  
-  try {
-    // Get all files matching item_*_synsets.json pattern
-    const files = fs.readdirSync(dataPath).filter((file: string) => 
-      file.startsWith('item_') && file.endsWith('_synsets.json')
-    );
-    
-    for (const file of files) {
-      const type = file.replace('item_', '').replace('_synsets.json', '');
-      const itemKeys = loadJsonData(file);
-      if (itemKeys && Array.isArray(itemKeys)) {
-        itemTypes[type] = itemKeys;
-        console.log(`Loaded ${itemKeys.length} ${type} items from ${file}`);
-      }
-    }
-  } catch (error) {
-    console.error('Error loading item type files:', error);
-  }
-  
-  return itemTypes;
-}
+// Use the shared schema `LanguageData` and preload via DataService
+const shouldLog = !(typeof process !== "undefined" && process.env && process.env.NODE_ENV === "test");
 
 export class MyRoom extends Room<MyRoomState> {
   maxClients = 4;
-  state = new MyRoomState();
+  // state will be initialized via setState() during onCreate
   private gameData: any = {};
   private languageData: LanguageData = new LanguageData();
   private itemData: ItemData = new ItemData();
   private playerPaths: Map<string, { path: Array<{x: number, y: number}>, currentIndex: number, moveInterval: NodeJS.Timeout | null }> = new Map();
   private playerMoveTimes: Map<string, number> = new Map();
+  private dataService: DataService | null = null;
 
-  onCreate (options: any) {
-    console.log("Creating room with full main.py functionality");
+  async onCreate (options: any) {
+    if (shouldLog) console.log("Creating room with full main.py functionality");
 
-    // Load shared data files
-    const elementalDarkAlphabet = loadJsonData('elemental_dark_alphabet.json');
-    const elementalDictionary = loadJsonData('elemental_dictionary.json');
-    const elementalLightAlphabet = loadJsonData('elemental_light_alphabet.json');
+    // Delay setState until after initial world generation
 
-    // Store data for game use
-    this.gameData = {
-      elementalDarkAlphabet,
-      elementalDictionary,
-      elementalLightAlphabet
-    };
+    // Initialize data service and preload datasets
+    this.dataService = options?.dataService || new DataService();
+    await this.dataService.ensureLoaded();
+    const { elementalDarkAlphabet, elementalDictionary, elementalLightAlphabet, itemTypes } = this.dataService.getData();
 
-    // Load language data into schema
+    this.gameData = { elementalDarkAlphabet, elementalDictionary, elementalLightAlphabet };
+
     if (elementalDictionary) {
       this.languageData.loadFromJSON(elementalDictionary);
-      console.log(`Loaded ${this.languageData.entries.size} language entries`);
+      if (shouldLog) console.log(`Loaded ${this.languageData.entries.size} language entries`);
     }
 
-    // Load item type data
-    const itemTypes = loadItemTypeFiles();
     this.itemData.loadFromLanguageData(this.languageData, itemTypes);
-    console.log(`Loaded ItemData with ${this.itemData.entries.size} items`);
+    if (shouldLog) console.log(`Loaded ItemData with ${this.itemData.entries.size} items`);
 
-    console.log("Game data loaded:", Object.keys(this.gameData));
+    if (shouldLog) console.log("Game data loaded:", Object.keys(this.gameData));
+
+    // Initialize synchronized state
+    this.setState(new MyRoomState());
 
     // Get dungeon generation options
     const width = options.width || 60;
@@ -195,7 +70,7 @@ export class MyRoom extends Room<MyRoomState> {
     // Spawn monsters
     this.spawnMonsters();
 
-    console.log("Room ready with full functionality");
+    if (shouldLog) console.log("Room ready with full functionality");
 
     // Start monster AI loop
     this.startMonsterAI();
@@ -206,6 +81,12 @@ export class MyRoom extends Room<MyRoomState> {
 
       const dx = message.dx || 0;
       const dy = message.dy || 0;
+      
+      // Check for spacebar attack (dx=0, dy=0 with attack flag)
+      if (message.attack && dx === 0 && dy === 0) {
+        this.handleSpacebarAttack(client, player);
+        return;
+      }
       
       // Calculate movement interval based on inventory weight
       const strength = player.strength || 10;
@@ -244,6 +125,18 @@ export class MyRoom extends Room<MyRoomState> {
         const tileIndex = newY * this.state.map.width + newX;
         if (tileIndex >= 0 && tileIndex < this.state.map.tiles.length && 
             this.state.map.tiles[tileIndex] === 0) {
+          
+          // Check for collision with monsters
+          const targetKey = `${newX},${newY}`;
+          if (this.state.world.has(targetKey)) {
+            const item = this.state.world.get(targetKey);
+            if (item.type === 'monster') {
+              console.log(`[DEBUG] Backend - Collision with monster ${item.name} at (${newX}, ${newY})`);
+              // Stop player movement - don't allow moving into monster
+              return;
+            }
+          }
+          
           player.x = newX;
           player.y = newY;
           this.playerMoveTimes.set(client.sessionId, now);
@@ -291,7 +184,7 @@ export class MyRoom extends Room<MyRoomState> {
       client.send("language_search_results", { query, results });
     });
 
-    this.onMessage("save_game", (client, message) => {
+    this.onMessage("save_game", async (client, message) => {
       const player = this.state.player;
       if (!player) return;
 
@@ -331,10 +224,8 @@ export class MyRoom extends Room<MyRoomState> {
 
       // Save to file
       try {
-        const fs = require('fs');
-        const path = require('path');
-        const savePath = path.join(__dirname, '../../data/save.json');
-        fs.writeFileSync(savePath, JSON.stringify(saveData, null, 2));
+        const savePath = this.dataService ? this.dataService.getSavePath() : path.join(path.resolve(__dirname, '../../..'), 'data', 'save.json');
+        await fsp.writeFile(savePath, JSON.stringify(saveData, null, 2), 'utf8');
         console.log('Game saved successfully');
         client.send("save_result", { success: true, message: "Game saved!" });
       } catch (error) {
@@ -343,18 +234,19 @@ export class MyRoom extends Room<MyRoomState> {
       }
     });
 
-    this.onMessage("load_game", (client, message) => {
+    this.onMessage("load_game", async (client, message) => {
       try {
-        const fs = require('fs');
-        const path = require('path');
-        const savePath = path.join(__dirname, '../../data/save.json');
+        const savePath = this.dataService ? this.dataService.getSavePath() : path.join(path.resolve(__dirname, '../../..'), 'data', 'save.json');
         
-        if (!fs.existsSync(savePath)) {
+        try {
+          await fsp.access(savePath);
+        } catch {
           client.send("load_result", { success: false, message: "No save file found" });
           return;
         }
 
-        const saveData = JSON.parse(fs.readFileSync(savePath, 'utf8'));
+        const saveBuf = await fsp.readFile(savePath, 'utf8');
+        const saveData = JSON.parse(saveBuf);
         
         // Restore player state
         const player = this.state.player;
@@ -439,6 +331,13 @@ export class MyRoom extends Room<MyRoomState> {
       const { targetX, targetY, moveInterval = 1000 } = message;
       console.log(`[DEBUG] Extracted target: (${targetX}, ${targetY}), interval: ${moveInterval}`);
       this.handleAutoNavigate(client, targetX, targetY, moveInterval);
+    });
+    
+    // Visibility query (line-of-sight) for debugging or client use
+    this.onMessage("is_visible", (client, message) => {
+      const { sx, sy, tx, ty } = message || {};
+      const visible = this.isVisible(sx, sy, tx, ty);
+      client.send("is_visible_result", { sx, sy, tx, ty, visible });
     });
   }
 
@@ -769,7 +668,7 @@ export class MyRoom extends Room<MyRoomState> {
     this.state.player.wisdom = 12;
     this.state.player.charisma = 10;
     this.state.player.armor_class = 10;
-    this.state.player.speed = 30;
+    // movement speed removed from schema to ensure consistent client/server definitions
     this.state.player.proficiency_bonus = 2;
   }
 
@@ -790,7 +689,7 @@ export class MyRoom extends Room<MyRoomState> {
         return;
       }
       
-      const item = new Item();
+      const item = new WorldItem();
       item.name = itemKey; // Use the synset key for inventory
       item.type = itemEntry.type; // Use the type from ItemData
       this.state.world.set(key, item);
@@ -860,6 +759,54 @@ export class MyRoom extends Room<MyRoomState> {
     console.log(`Scattered ${placed} items from ${availableItems.length} available items using ${emptyTiles.length} empty tiles`);
   }
 
+  private handleSpacebarAttack(client: Client, player: PlayerState) {
+    // Attack in all 8 adjacent tiles around the player
+    const adjacentPositions = [
+      { x: player.x - 1, y: player.y - 1 }, // NW
+      { x: player.x, y: player.y - 1 },     // N
+      { x: player.x + 1, y: player.y - 1 }, // NE
+      { x: player.x - 1, y: player.y },     // W
+      { x: player.x + 1, y: player.y },     // E
+      { x: player.x - 1, y: player.y + 1 }, // SW
+      { x: player.x, y: player.y + 1 },     // S
+      { x: player.x + 1, y: player.y + 1 }  // SE
+    ];
+
+    const hitTargets: Array<{x: number, y: number, type: string, name: string}> = [];
+
+    for (const pos of adjacentPositions) {
+      const key = `${pos.x},${pos.y}`;
+      
+      // Check if there's a monster at this position
+      if (this.state.world.has(key)) {
+        const item = this.state.world.get(key);
+        if (item.type === 'monster') {
+          hitTargets.push({
+            x: pos.x,
+            y: pos.y,
+            type: 'monster',
+            name: item.name
+          });
+          
+          // Remove the monster (simple attack - kills it)
+          this.state.world.delete(key);
+          console.log(`${player.name} killed ${item.name} at (${pos.x}, ${pos.y})`);
+        }
+      }
+    }
+
+    // Send attack result to client
+    client.send("spacebar_attack_result", {
+      success: true,
+      targets: hitTargets,
+      message: hitTargets.length > 0 
+        ? `Hit ${hitTargets.length} targets!` 
+        : "No targets in range."
+    });
+
+    console.log(`${player.name} performed spacebar attack, hit ${hitTargets.length} targets`);
+  }
+
   private handleAttack(client: Client, message: any) {
     const player = this.state.player; // Fixed: player is stored directly
     if (!player) return;
@@ -906,7 +853,7 @@ export class MyRoom extends Room<MyRoomState> {
     // });
     
     // Create player (using existing logic)
-    const player = new PlayerState();
+    const player = new PlayerSchema();
     player.name = options.name || "Player";
     
     // Find valid spawn location (not in walls)
@@ -947,7 +894,7 @@ export class MyRoom extends Room<MyRoomState> {
     player.wisdom = 10;
     player.charisma = 10;
     player.armor_class = 10;
-    player.speed = 30;
+    // movement speed removed from schema to ensure consistent client/server definitions
     player.proficiency_bonus = 2;
     player.inventory = new ArraySchema<string>();
     // Initialize slots with proper schema objects
@@ -1032,7 +979,66 @@ export class MyRoom extends Room<MyRoomState> {
   private isWalkable(x: number, y: number): boolean {
     const tileIndex = y * this.state.map.width + x;
     const tile = this.state.map.tiles[tileIndex];
-    return tile === 0 || tile === undefined; // 0 = floor, undefined = empty
+    if (tile !== 0 && tile !== undefined) return false; // Not floor or empty
+    
+    // Check for monster collision
+    const key = `${x},${y}`;
+    if (this.state.world.has(key)) {
+      const item = this.state.world.get(key);
+      if (item.type === 'monster') return false; // Monster blocks path
+    }
+    
+    return true;
+  }
+
+  /**
+   * Line-of-sight visibility check between two points using Bresenham's algorithm.
+   * Returns true if there is an unobstructed line (no walls) from (sx, sy) to (tx, ty).
+   */
+  private isVisible(sx: number, sy: number, tx: number, ty: number): boolean {
+    const width = this.state.map.width;
+    const height = this.state.map.height;
+
+    // Bounds check for endpoints
+    if (sx < 0 || sy < 0 || sx >= width || sy >= height) return false;
+    if (tx < 0 || ty < 0 || tx >= width || ty >= height) return false;
+
+    const isWall = (x: number, y: number) => {
+      const idx = y * width + x;
+      const val = this.state.map.tiles[idx];
+      // Treat non-floor tiles (e.g., walls=1) as blocking visibility
+      return val === 1;
+    };
+
+    // Bresenham's line algorithm
+    let x = sx;
+    let y = sy;
+    const dx = Math.abs(tx - sx);
+    const dy = Math.abs(ty - sy);
+    const sxStep = sx < tx ? 1 : -1;
+    const syStep = sy < ty ? 1 : -1;
+    let err = dx - dy;
+
+    // Walk the line; skip starting cell when checking block
+    while (true) {
+      if (x === tx && y === ty) {
+        return true; // Reached target with no blocking
+      }
+
+      const e2 = 2 * err;
+      if (e2 > -dy) { err -= dy; x += sxStep; }
+      if (e2 <  dx) { err += dx; y += syStep; }
+
+      // Bounds check during traversal
+      if (x < 0 || y < 0 || x >= width || y >= height) {
+        return false;
+      }
+
+      // If a wall blocks the line, not visible
+      if (isWall(x, y)) {
+        return false;
+      }
+    }
   }
   
   private handleAutoNavigate(client: Client, targetX: number, targetY: number, moveInterval: number) {
@@ -1165,7 +1171,7 @@ export class MyRoom extends Room<MyRoomState> {
       
       // Add to world at player's position
       const key = `${player.x},${player.y}`;
-      const item = new Item();
+      const item = new WorldItem();
       item.name = itemName;
       item.type = "weapon"; // Default type, could be enhanced
       this.state.world.set(key, item);
@@ -1280,9 +1286,12 @@ export class MyRoom extends Room<MyRoomState> {
         
         // Create monster
         const monsterType = monsterTypes[Math.floor(Math.random() * monsterTypes.length)];
-        const monster = new Item();
+        const monster = new WorldItem();
         monster.name = monsterType;
         monster.type = 'monster';
+        monster.description = `${monsterType} lurking in the dungeon`;
+        monster.value = 0;
+        monster.weight = 0;
         
         this.state.world.set(key, monster);
         monsterCount++;
@@ -1323,27 +1332,47 @@ export class MyRoom extends Room<MyRoomState> {
     // Move each monster towards player
     for (const monster of monsters) {
       // Calculate distance to player
-      const distance = Math.abs(player.x - monster.x) + Math.abs(player.y - monster.y);
       
       // Only move if monster is within 10 tiles and not already adjacent
-      if (distance <= 10 && distance > 1) {
-        // Simple pathfinding - move one step towards player
+      // Simple pathfinding - move one step towards player
+
+      if (this.isVisible(monster.x, monster.y, player.x, player.y) === true) {
+
         const nextPos = this.getNextPositionTowards(monster.x, monster.y, player.x, player.y);
         
         if (nextPos && this.isValidPosition(nextPos.x, nextPos.y, walkableTiles)) {
           // Remove monster from old position
-          const oldKey = `${monster.x},${monster.y}`;
-          this.state.world.delete(oldKey);
+          this.moveMonster(monster, nextPos);
+          // const oldKey = `${monster.x},${monster.y}`;
+          // this.state.world.delete(oldKey);
           
-          // Add monster to new position
-          const newKey = `${nextPos.x},${nextPos.y}`;
-          this.state.world.set(newKey, monster.item);
+          // // Add monster to new position
+          // const newKey = `${nextPos.x},${nextPos.y}`;
+          // this.state.world.set(newKey, monster.item);
           
           console.log(`Monster moved from (${monster.x}, ${monster.y}) to (${nextPos.x}, ${nextPos.y})`);
         }
+      } else {
+          // make the monster wander randomly if player not visible
+          const d = [{x: -1, y: 0}, {x: 1, y: 0}, {x: 0, y: -1}, {x: 0, y: 1}];
+          const n = Math.floor(Math.random() * 3);
+          const r = d[n];
+          const nextPos = { x: monster.x + d[n].x, y: monster.y + d[n].y };
+          if (this.isValidPosition(nextPos.x, nextPos.y, walkableTiles)) {
+            // console.log(`Monster wandered from (${monster.x}, ${monster.y}) to (${nextPos})`);
+            this.moveMonster(monster, nextPos);
+          }
       }
     }
   }
+
+  private moveMonster(monster: {x:number,y:number,item:any}, point: {x:number,y:number}) {
+      const oldKey = `${monster.x},${monster.y}`;
+      this.state.world.delete(oldKey);
+      const newKey = `${point.x},${point.y}`;
+      this.state.world.set(newKey, monster.item);
+  }
+
 
   private getNextPositionTowards(fromX: number, fromY: number, toX: number, toY: number): {x: number, y: number} | null {
     const dx = toX - fromX;

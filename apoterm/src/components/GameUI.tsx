@@ -1,5 +1,6 @@
 import React from "react";
 import { GameState } from "../services/GameClient";
+import { GAME_CONSTANTS } from "../../../shared/constants";
 
 interface GameUIProps {
   gameState: GameState | null;
@@ -165,8 +166,8 @@ export const GameUI: React.FC<GameUIProps> = ({
       }}>
         <div><strong>Controls:</strong></div>
         <div>Arrow Keys/WASD - Move</div>
-        <div>E/Space - Pickup Item</div>
-        <div>Q - Attack/Action</div>
+        <div>E - Pickup Item</div>
+        <div>Space/Q - Melee Attack (AoE)</div>
         <div>I - Toggle Inventory</div>
         <div style={{marginTop: '5px', fontSize: '10px'}}>
           <strong>Legend:</strong><br/>

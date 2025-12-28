@@ -19,7 +19,6 @@ export class PlayerState extends Schema {
 
   @type("number") proficiency_bonus: number = 2;
   @type("number") armor_class: number = 10;
-  @type("number") speed: number = 30;
 
   @type("number") max_hp: number = 100;
   @type("number") temporary_hp: number = 0;

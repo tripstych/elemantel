@@ -1,0 +1,261 @@
+{
+  "player": {
+    "x": 43,
+    "y": 10,
+    "name": "Player",
+    "inventory": [],
+    "strength": 10,
+    "equipment": {
+      "hand_slots": {
+        "main_hand": "",
+        "off_hand": ""
+      },
+      "body_slots": {
+        "head": "",
+        "face": "",
+        "neck": "",
+        "torso": "",
+        "back": "",
+        "waist": "",
+        "wrists": "",
+        "left_finger": "",
+        "right_finger": "",
+        "legs": "",
+        "feet": ""
+      }
+    }
+  },
+  "world": [
+    [
+      "2,16",
+      {
+        "name": "crampon.n.01",
+        "type": "tools",
+        "description": "",
+        "value": 0,
+        "weight": 0
+      }
+    ],
+    [
+      "33,8",
+      {
+        "name": "sawmill.n.01",
+        "type": "tools",
+        "description": "",
+        "value": 0,
+        "weight": 0
+      }
+    ],
+    [
+      "33,11",
+      {
+        "name": "falchion.n.01",
+        "type": "weapons",
+        "description": "",
+        "value": 0,
+        "weight": 0
+      }
+    ],
+    [
+      "42,9",
+      {
+        "name": "scraper.n.01",
+        "type": "tools",
+        "description": "",
+        "value": 0,
+        "weight": 0
+      }
+    ],
+    [
+      "35,23",
+      {
+        "name": "citrine.n.01",
+        "type": "gems",
+        "description": "",
+        "value": 0,
+        "weight": 0
+      }
+    ],
+    [
+      "43,22",
+      {
+        "name": "gem.n.02",
+        "type": "gems",
+        "description": "",
+        "value": 0,
+        "weight": 0
+      }
+    ],
+    [
+      "44,14",
+      {
+        "name": "citrine.n.01",
+        "type": "gems",
+        "description": "",
+        "value": 0,
+        "weight": 0
+      }
+    ],
+    [
+      "38,23",
+      {
+        "name": "diamond.n.02",
+        "type": "gems",
+        "description": "",
+        "value": 0,
+        "weight": 0
+      }
+    ],
+    [
+      "46,7",
+      {
+        "name": "chalcedony.n.01",
+        "type": "gems",
+        "description": "",
+        "value": 0,
+        "weight": 0
+      }
+    ],
+    [
+      "43,21",
+      {
+        "name": "sapphire.n.01",
+        "type": "gems",
+        "description": "",
+        "value": 0,
+        "weight": 0
+      }
+    ],
+    [
+      "34,14",
+      {
+        "name": "bullet.n.01",
+        "type": "weapons",
+        "description": "",
+        "value": 0,
+        "weight": 0
+      }
+    ],
+    [
+      "31,21",
+      {
+        "name": "crossbow.n.01",
+        "type": "weapons",
+        "description": "",
+        "value": 0,
+        "weight": 0
+      }
+    ],
+    [
+      "31,20",
+      {
+        "name": "tomahawk.n.01",
+        "type": "weapons",
+        "description": "",
+        "value": 0,
+        "weight": 0
+      }
+    ],
+    [
+      "35,8",
+      {
+        "name": "sword.n.01",
+        "type": "weapons",
+        "description": "",
+        "value": 0,
+        "weight": 0
+      }
+    ],
+    [
+      "50,8",
+      {
+        "name": "cutlas.n.01",
+        "type": "weapons",
+        "description": "",
+        "value": 0,
+        "weight": 0
+      }
+    ],
+    [
+      "3,13",
+      {
+        "name": "goblin",
+        "type": "monster",
+        "description": "goblin lurking in the dungeon",
+        "value": 0,
+        "weight": 0
+      }
+    ],
+    [
+      "2,15",
+      {
+        "name": "slime",
+        "type": "monster",
+        "description": "slime lurking in the dungeon",
+        "value": 0,
+        "weight": 0
+      }
+    ],
+    [
+      "5,18",
+      {
+        "name": "skeleton",
+        "type": "monster",
+        "description": "skeleton lurking in the dungeon",
+        "value": 0,
+        "weight": 0
+      }
+    ],
+    [
+      "12,13",
+      {
+        "name": "slime",
+        "type": "monster",
+        "description": "slime lurking in the dungeon",
+        "value": 0,
+        "weight": 0
+      }
+    ],
+    [
+      "9,1",
+      {
+        "name": "skeleton",
+        "type": "monster",
+        "description": "skeleton lurking in the dungeon",
+        "value": 0,
+        "weight": 0
+      }
+    ],
+    [
+      "36,13",
+      {
+        "name": "goblin",
+        "type": "monster",
+        "description": "goblin lurking in the dungeon",
+        "value": 0,
+        "weight": 0
+      }
+    ],
+    [
+      "39,14",
+      {
+        "name": "orc",
+        "type": "monster",
+        "description": "orc lurking in the dungeon",
+        "value": 0,
+        "weight": 0
+      }
+    ],
+    [
+      "38,13",
+      {
+        "name": "orc",
+        "type": "monster",
+        "description": "orc lurking in the dungeon",
+        "value": 0,
+        "weight": 0
+      }
+    ]
+  ],
+  "timestamp": "2025-12-28T05:31:46.657Z"
+}

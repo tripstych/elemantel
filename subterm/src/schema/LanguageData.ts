@@ -42,6 +42,7 @@ export class LanguageData extends Schema {
   
   // Helper method to load from JSON
   loadFromJSON(jsonData: any) {
+    const shouldLog = (typeof process !== "undefined" && process.env && process.env.NODE_ENV !== "test");
     // Clear existing entries
     this.entries.clear();
     
@@ -60,14 +61,18 @@ export class LanguageData extends Schema {
         entry.origin.water = (value as any).origin.water || 0;
         entry.origin.earth = (value as any).origin.earth || 0;
         entry.origin.air = (value as any).origin.air || 0;
-        console.log(`LanguageData: Loaded origin for ${key}:`, {
-          fire: entry.origin.fire,
-          water: entry.origin.water,
-          earth: entry.origin.earth,
-          air: entry.origin.air
-        });
+        if (shouldLog) {
+          console.log(`LanguageData: Loaded origin for ${key}:`, {
+            fire: entry.origin.fire,
+            water: entry.origin.water,
+            earth: entry.origin.earth,
+            air: entry.origin.air
+          });
+        }
       } else {
-        console.log(`LanguageData: No origin data for ${key}`);
+        if (shouldLog) {
+          console.log(`LanguageData: No origin data for ${key}`);
+        }
       }
       
       // Optional fields
@@ -86,7 +91,9 @@ export class LanguageData extends Schema {
       if ((value as any).spell_effect) {
         entry.spell_effect.type = (value as any).spell_effect.type || "";
         entry.spell_effect.target = (value as any).spell_effect.target || "";
-        entry.spell_effect.amount = (value as any).spell_effect.amount || "";
+        // Coerce numeric amounts to string to satisfy schema type
+        const amt = (value as any).spell_effect.amount;
+        entry.spell_effect.amount = (typeof amt === "number") ? String(amt) : (amt || "");
         entry.spell_effect.element = (value as any).spell_effect.element || "";
         entry.spell_effect.description = (value as any).spell_effect.description || "";
       }
