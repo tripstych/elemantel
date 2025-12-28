@@ -61,7 +61,7 @@ export class ItemData extends Schema {
           itemEntry.type = type; // Use the type from the item file
           
           // Handle origin field
-          console.log(`ItemData: Processing ${itemKey}, languageEntry.origin exists:`, !!languageEntry.origin);
+          // console.log(`ItemData: Processing ${itemKey}, languageEntry.origin exists:`, !!languageEntry.origin);
           if (languageEntry.origin) {
             itemEntry.origin.fire = languageEntry.origin.fire || 0;
             itemEntry.origin.water = languageEntry.origin.water || 0;

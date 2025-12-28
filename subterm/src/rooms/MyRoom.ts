@@ -3,6 +3,7 @@ import { MyRoomState, Item, PlayerState } from "./schema/MyRoomState";
 import { ArraySchema, Schema, type, MapSchema, Encoder } from "@colyseus/schema";
 import { CombatCommand, CombatLog } from "../commands/CombatCommand";
 import { ItemData } from "../schema/ItemData";
+import { WorldGenerationCommand } from "../commands/WorldGenerationCommand";
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -191,7 +192,13 @@ export class MyRoom extends Room<MyRoomState> {
     // Scatter items throughout the world (like main.py)
     this.scatterItems();
 
+    // Spawn monsters
+    this.spawnMonsters();
+
     console.log("Room ready with full functionality");
+
+    // Start monster AI loop
+    this.startMonsterAI();
 
     this.onMessage("move", (client, message) => {
       const player = this.state.player; // Fixed: player is stored directly, not in players Map
@@ -805,39 +812,52 @@ export class MyRoom extends Room<MyRoomState> {
       return;
     }
 
-    // Scatter items near player for testing
-    const nearCount = 5; // Increased count for better testing
-    const offsets = [
-      { dx: 1, dy: 0 }, { dx: 0, dy: 1 }, { dx: -1, dy: 0 }, { dx: 0, dy: -1 },
-      { dx: 1, dy: 1 }, { dx: -1, dy: 1 }, { dx: 1, dy: -1 }, { dx: -1, dy: -1 }
-    ];
-
-    let placed = 0;
-    for (const offset of offsets) {
-      if (placed >= nearCount) break;
-
-      const x = this.state.player.x + offset.dx;
-      const y = this.state.player.y + offset.dy;
-
-      if (x >= 0 && x < this.state.map.width && 
-          y >= 0 && y < this.state.map.height) {
+    // Create a stack of empty tiles for random placement
+    const emptyTiles: Array<{x: number, y: number}> = [];
+    const walkableTiles = new Set([0, 3, 4, 5, 6]); // floor, corridor, room_floor, entrance, exit
+    
+    // Search entire map for empty, walkable tiles
+    for (let y = 0; y < this.state.map.height; y++) {
+      for (let x = 0; x < this.state.map.width; x++) {
+        // Skip player position
+        if (x === this.state.player.x && y === this.state.player.y) continue;
         
-        // Check if tile is walkable using flat array
+        // Check if tile is walkable using flat array structure
         const tileIndex = y * this.state.map.width + x;
-        if (tileIndex >= 0 && tileIndex < this.state.map.tiles.length && 
-            this.state.map.tiles[tileIndex] === 0) { // 0 = floor
+        if (tileIndex >= 0 && tileIndex < this.state.map.tiles.length &&
+            walkableTiles.has(this.state.map.tiles[tileIndex])) {
           
-          // Select random item from available items
-          const randomItem = availableItems[Math.floor(Math.random() * availableItems.length)];
-          addItem(x, y, randomItem.key, randomItem.entry);
-          placed++;
-          
-          console.log(`Placed ${randomItem.entry.word} (${randomItem.entry.type}) at (${x}, ${y})`);
+          // Check if position is not occupied by another item
+          const key = `${x},${y}`;
+          if (!this.state.world.has(key)) {
+            emptyTiles.push({ x, y });
+          }
         }
       }
     }
     
-    console.log(`Scattered ${placed} items near player from ${availableItems.length} available items`);
+    // Shuffle empty tiles for random placement
+    for (let i = emptyTiles.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [emptyTiles[i], emptyTiles[j]] = [emptyTiles[j], emptyTiles[i]];
+    }
+    
+    // Place items randomly on empty tiles
+    const itemsToPlace = Math.min(15, emptyTiles.length); // Place up to 15 items
+    let placed = 0;
+    
+    for (let i = 0; i < itemsToPlace && i < emptyTiles.length; i++) {
+      const tile = emptyTiles[i];
+      
+      // Select random item from available items
+      const randomItem = availableItems[Math.floor(Math.random() * availableItems.length)];
+      addItem(tile.x, tile.y, randomItem.key, randomItem.entry);
+      placed++;
+      
+      console.log(`Placed ${randomItem.entry.word} (${randomItem.entry.type}) at (${tile.x}, ${tile.y})`);
+    }
+    
+    console.log(`Scattered ${placed} items from ${availableItems.length} available items using ${emptyTiles.length} empty tiles`);
   }
 
   private handleAttack(client: Client, message: any) {
@@ -1234,5 +1254,143 @@ export class MyRoom extends Room<MyRoomState> {
     
     console.log(`${player.name} unequipped ${currentItem} from ${slotPath}`);
     client.send("unequip_result", { message: `Unequipped ${currentItem} from ${slotName}!`, item: currentItem, slotPath });
+  }
+
+  private spawnMonsters() {
+    const monsterTypes = ['goblin', 'slime', 'orc', 'skeleton', 'troll'];
+    const walkableTiles = new Set([0, 3, 4, 5, 6]); // floor, corridor, room_floor, entrance, exit
+    let monsterCount = 0;
+    
+    // Try to spawn monsters in random locations
+    for (let attempts = 0; attempts < 50; attempts++) {
+      const x = Math.floor(Math.random() * this.state.map.width);
+      const y = Math.floor(Math.random() * this.state.map.height);
+      
+      // Check if tile is walkable
+      const tileIndex = y * this.state.map.width + x;
+      if (tileIndex >= 0 && tileIndex < this.state.map.tiles.length &&
+          walkableTiles.has(this.state.map.tiles[tileIndex])) {
+        
+        // Check if position is not occupied by player
+        if (x === this.state.player.x && y === this.state.player.y) continue;
+        
+        // Check if position is not occupied by another monster
+        const key = `${x},${y}`;
+        if (this.state.world.has(key)) continue;
+        
+        // Create monster
+        const monsterType = monsterTypes[Math.floor(Math.random() * monsterTypes.length)];
+        const monster = new Item();
+        monster.name = monsterType;
+        monster.type = 'monster';
+        
+        this.state.world.set(key, monster);
+        monsterCount++;
+        
+        console.log(`Spawned ${monsterType} at (${x}, ${y})`);
+        
+        // Limit number of monsters
+        if (monsterCount >= 8) break;
+      }
+    }
+    
+    console.log(`Spawned ${monsterCount} monsters on the map`);
+  }
+
+  private startMonsterAI() {
+    // Run monster AI every 2 seconds
+    this.clock.setInterval(() => {
+      this.updateMonsters();
+    }, 2000);
+  }
+
+  private updateMonsters() {
+    if (!this.state.player) return;
+
+    const player = this.state.player;
+    const walkableTiles = new Set([0, 3, 4, 5, 6]); // floor, corridor, room_floor, entrance, exit
+    
+    // Find all monsters in the world
+    const monsters: Array<{x: number, y: number, item: any}> = [];
+    
+    for (const [key, item] of this.state.world) {
+      if (item.type === 'monster') {
+        const [x, y] = key.split(',').map(Number);
+        monsters.push({ x, y, item });
+      }
+    }
+
+    // Move each monster towards player
+    for (const monster of monsters) {
+      // Calculate distance to player
+      const distance = Math.abs(player.x - monster.x) + Math.abs(player.y - monster.y);
+      
+      // Only move if monster is within 10 tiles and not already adjacent
+      if (distance <= 10 && distance > 1) {
+        // Simple pathfinding - move one step towards player
+        const nextPos = this.getNextPositionTowards(monster.x, monster.y, player.x, player.y);
+        
+        if (nextPos && this.isValidPosition(nextPos.x, nextPos.y, walkableTiles)) {
+          // Remove monster from old position
+          const oldKey = `${monster.x},${monster.y}`;
+          this.state.world.delete(oldKey);
+          
+          // Add monster to new position
+          const newKey = `${nextPos.x},${nextPos.y}`;
+          this.state.world.set(newKey, monster.item);
+          
+          console.log(`Monster moved from (${monster.x}, ${monster.y}) to (${nextPos.x}, ${nextPos.y})`);
+        }
+      }
+    }
+  }
+
+  private getNextPositionTowards(fromX: number, fromY: number, toX: number, toY: number): {x: number, y: number} | null {
+    const dx = toX - fromX;
+    const dy = toY - fromY;
+    
+    // Determine primary direction
+    if (Math.abs(dx) > Math.abs(dy)) {
+      // Move horizontally
+      return { x: fromX + Math.sign(dx), y: fromY };
+    } else if (Math.abs(dy) > 0) {
+      // Move vertically
+      return { x: fromX, y: fromY + Math.sign(dy) };
+    }
+    
+    return null;
+  }
+
+  private isValidPosition(x: number, y: number, walkableTiles: Set<number>): boolean {
+    // Check bounds
+    if (x < 0 || x >= this.state.map.width || y < 0 || y >= this.state.map.height) {
+      return false;
+    }
+    
+    // Check if tile is walkable
+    const tileIndex = y * this.state.map.width + x;
+    if (tileIndex < 0 || tileIndex >= this.state.map.tiles.length) {
+      return false;
+    }
+    
+    if (!walkableTiles.has(this.state.map.tiles[tileIndex])) {
+      return false;
+    }
+    
+    // Check if position is occupied by player
+    if (this.state.player.x === x && this.state.player.y === y) {
+      return false;
+    }
+    
+    // Check if position is occupied by another monster
+    const key = `${x},${y}`;
+    if (this.state.world.has(key)) {
+      const item = this.state.world.get(key);
+      if (item.type === 'monster') {
+        return false;
+      }
+    }
+    
+    return true;
   }
 }

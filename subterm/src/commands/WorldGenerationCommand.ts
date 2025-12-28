@@ -5,6 +5,7 @@ import { MonsterState } from "../schema/MonsterState";
 import { Weapon, DamageType } from "../schema/Equipment";
 import { Item } from "../schema/Item";
 import { ArraySchema, MapSchema } from "@colyseus/schema";
+import { LanguageData, WeaponEffect } from "../schema/LanguageData";
 
 export interface Position {
   x: number;
@@ -504,6 +505,163 @@ export class WorldGenerationCommand {
   }
 
   /**
+   * Spawn enemies with weapon effects from LanguageData
+   */
+  static spawnEnemiesWithWeapons(
+    gameState: GameState, 
+    languageData: LanguageData, 
+    rng: () => number,
+    count: number = 3
+  ): void {
+    const candidateOffsets = [
+      { dx: 3, dy: 0 }, { dx: -3, dy: 0 }, { dx: 0, dy: 3 }, { dx: 0, dy: -3 },
+      { dx: 3, dy: 3 }, { dx: -3, dy: 3 }, { dx: 3, dy: -3 }, { dx: -3, dy: -2 },
+      { dx: 4, dy: 0 }, { dx: -4, dy: 0 }, { dx: 0, dy: 4 }, { dx: 0, dy: -4 }
+    ];
+
+    const walkableTiles = new Set([
+      this.TILE_TYPES.FLOOR,
+      this.TILE_TYPES.ROOM_FLOOR,
+      this.TILE_TYPES.CORRIDOR
+    ]);
+
+    const enemyTypes = [
+      { kind: 'goblin', hp: 15, weaponKeys: ['dagger.n.01'] },
+      { kind: 'orc', hp: 25, weaponKeys: ['scimitar.n.01', 'axe.n.01'] },
+      { kind: 'slime', hp: 10, weaponKeys: [] }, // Unarmed enemy
+      { kind: 'skeleton', hp: 20, weaponKeys: ['shortsword.n.01'] },
+      { kind: 'goblin_archer', hp: 15, weaponKeys: ['shortbow.n.01'] }
+    ];
+
+    let enemyId = 1;
+
+    // Shuffle offsets for variety
+    for (let i = candidateOffsets.length - 1; i > 0; i--) {
+      const j = Math.floor(rng() * (i + 1));
+      [candidateOffsets[i], candidateOffsets[j]] = [candidateOffsets[j], candidateOffsets[i]];
+    }
+
+    for (const offset of candidateOffsets) {
+      if (enemyId > count) break;
+
+      const ex = gameState.player.x + offset.dx;
+      const ey = gameState.player.y + offset.dy;
+
+      if (ex >= 0 && ex < gameState.map.width && 
+          ey >= 0 && ey < gameState.map.height &&
+          gameState.map.tiles[ey] && gameState.map.tiles[ey].values &&
+          walkableTiles.has(gameState.map.tiles[ey].values[ex])) {
+        
+        // Select enemy type
+        const enemyType = enemyTypes[Math.floor(rng() * enemyTypes.length)];
+        
+        const enemy = new MonsterState();
+        enemy.id = enemyId++;
+        enemy.kind = enemyType.kind;
+        enemy.x = ex;
+        enemy.y = ey;
+        enemy.hp = enemyType.hp;
+
+        // Add weapon data from LanguageData
+        if (enemyType.weaponKeys.length > 0) {
+          const weaponKey = enemyType.weaponKeys[Math.floor(rng() * enemyType.weaponKeys.length)];
+          const weaponEntry = languageData.getEntry(weaponKey);
+          
+          if (weaponEntry && weaponEntry.weapon_effect) {
+            // Store weapon effect data in monster's data map
+            enemy.data.set('weapon_name', weaponEntry.weapon_effect.name);
+            enemy.data.set('weapon_damage', weaponEntry.weapon_effect.damage);
+            enemy.data.set('weapon_cost', weaponEntry.weapon_effect.cost);
+            enemy.data.set('weapon_properties', JSON.stringify(weaponEntry.weapon_effect.properties));
+          }
+        }
+
+        gameState.entities.push(enemy);
+      }
+    }
+  }
+
+  /**
+   * Plain data version of spawnEnemiesWithWeapons
+   */
+  static spawnEnemiesWithWeaponsPlain(
+    gameState: any, 
+    languageData: LanguageData, 
+    rng: () => number,
+    count: number = 3
+  ): void {
+    const candidateOffsets = [
+      { dx: 3, dy: 0 }, { dx: -3, dy: 0 }, { dx: 0, dy: 3 }, { dx: 0, dy: -3 },
+      { dx: 3, dy: 3 }, { dx: -3, dy: 3 }, { dx: 3, dy: -3 }, { dx: -3, dy: -2 },
+      { dx: 4, dy: 0 }, { dx: -4, dy: 0 }, { dx: 0, dy: 4 }, { dx: 0, dy: -4 }
+    ];
+
+    const walkableTiles = new Set([
+      this.TILE_TYPES.FLOOR,
+      this.TILE_TYPES.ROOM_FLOOR,
+      this.TILE_TYPES.CORRIDOR
+    ]);
+
+    const enemyTypes = [
+      { kind: 'goblin', hp: 15, weaponKeys: ['dagger.n.01'] },
+      { kind: 'orc', hp: 25, weaponKeys: ['scimitar.n.01', 'axe.n.01'] },
+      { kind: 'slime', hp: 10, weaponKeys: [] }, // Unarmed enemy
+      { kind: 'skeleton', hp: 20, weaponKeys: ['shortsword.n.01'] },
+      { kind: 'goblin_archer', hp: 15, weaponKeys: ['shortbow.n.01'] }
+    ];
+
+    let enemyId = 1;
+
+    // Shuffle offsets for variety
+    for (let i = candidateOffsets.length - 1; i > 0; i--) {
+      const j = Math.floor(rng() * (i + 1));
+      [candidateOffsets[i], candidateOffsets[j]] = [candidateOffsets[j], candidateOffsets[i]];
+    }
+
+    for (const offset of candidateOffsets) {
+      if (enemyId > count) break;
+
+      const ex = gameState.player.x + offset.dx;
+      const ey = gameState.player.y + offset.dy;
+
+      if (ex >= 0 && ex < gameState.map.width && 
+          ey >= 0 && ey < gameState.map.height &&
+          gameState.map.tiles[ey] && gameState.map.tiles[ey].values &&
+          walkableTiles.has(gameState.map.tiles[ey].values[ex])) {
+        
+        // Select enemy type
+        const enemyType = enemyTypes[Math.floor(rng() * enemyTypes.length)];
+        
+        const enemy = {
+          id: enemyId++,
+          kind: enemyType.kind,
+          x: ex,
+          y: ey,
+          hp: enemyType.hp,
+          hostile: true,
+          data: {}
+        };
+
+        // Add weapon data from LanguageData
+        if (enemyType.weaponKeys.length > 0) {
+          const weaponKey = enemyType.weaponKeys[Math.floor(rng() * enemyType.weaponKeys.length)];
+          const weaponEntry = languageData.getEntry(weaponKey);
+          
+          if (weaponEntry && weaponEntry.weapon_effect) {
+            // Store weapon effect data in enemy's data object
+            enemy.data.weapon_name = weaponEntry.weapon_effect.name;
+            enemy.data.weapon_damage = weaponEntry.weapon_effect.damage;
+            enemy.data.weapon_cost = weaponEntry.weapon_effect.cost;
+            enemy.data.weapon_properties = JSON.stringify(weaponEntry.weapon_effect.properties);
+          }
+        }
+
+        gameState.entities.push(enemy);
+      }
+    }
+  }
+
+  /**
    * Plain data version of spawnInitialMonsters
    */
   private static spawnInitialMonstersPlain(gameState: any, mapData: GameMap, rng: () => number): void {
@@ -556,108 +714,6 @@ export class WorldGenerationCommand {
     player.inventory.push("Shortbow");
   }
 
-  /**
-   * Plain data version of scatterItems
-   */
-  private static scatterItemsPlain(gameState: any, mapData: GameMap, rng: () => number): void {
-    const walkableTiles = new Set([
-      this.TILE_TYPES.FLOOR,
-      this.TILE_TYPES.ROOM_FLOOR,
-      this.TILE_TYPES.CORRIDOR,
-      this.TILE_TYPES.DOOR,
-      this.TILE_TYPES.ENTRANCE,
-      this.TILE_TYPES.EXIT
-    ]);
+  /* Removed useless scatter items plan */
 
-    const catalog = [
-      { name: "Potion", type: "consumable" },
-      { name: "Scroll", type: "consumable" },
-      { name: "Gold", type: "currency" },
-      { name: "Gem", type: "treasure" },
-      { name: "Arrow", type: "ammunition" },
-      { name: "Dagger", type: "weapon" },
-      { name: "Torch", type: "tool" }
-    ];
-
-    // Helper to add item at position
-    const addItem = (x: number, y: number, itemData: any) => {
-      const key = `${x},${y}`;
-      if (!gameState.world[key]) {
-        gameState.world[key] = [];
-      }
-      
-      const item = {
-        name: itemData.name,
-        type: itemData.type,
-        description: "",
-        value: 0,
-        weight: 0
-      };
-      
-      gameState.world[key].push(item);
-    };
-
-    // Scatter items near player
-    const nearCount = 4;
-    const offsets = [
-      { dx: -2, dy: -2 }, { dx: 2, dy: -2 }, { dx: -2, dy: 2 }, { dx: 2, dy: 2 },
-      { dx: 1, dy: 0 }, { dx: 0, dy: 1 }, { dx: -1, dy: 0 }, { dx: 0, dy: -1 }
-    ];
-
-    // Shuffle offsets
-    for (let i = offsets.length - 1; i > 0; i--) {
-      const j = Math.floor(rng() * (i + 1));
-      [offsets[i], offsets[j]] = [offsets[j], offsets[i]];
-    }
-
-    let placed = 0;
-    for (const offset of offsets) {
-      if (placed >= nearCount) break;
-
-      const x = gameState.player.x + offset.dx;
-      const y = gameState.player.y + offset.dy;
-
-      if (x >= 0 && x < mapData.width && 
-          y >= 0 && y < mapData.height &&
-          mapData.tiles[y] && mapData.tiles[y].values &&
-          walkableTiles.has(mapData.tiles[y].values[x])) {
-        
-        // Add 1-3 items
-        const itemCount = 1 + Math.floor(rng() * 3);
-        for (let i = 0; i < itemCount; i++) {
-          addItem(x, y, catalog[Math.floor(rng() * catalog.length)]);
-        }
-        placed++;
-      }
-    }
-
-    // Scatter random items throughout the map
-    const randomCount = 20;
-    const walkablePositions: Position[] = [];
-
-    for (let y = 0; y < mapData.height; y++) {
-      for (let x = 0; x < mapData.width; x++) {
-        if (mapData.tiles[y] && mapData.tiles[y].values &&
-            walkableTiles.has(mapData.tiles[y].values[x]) &&
-            !(x === gameState.player.x && y === gameState.player.y)) {
-          walkablePositions.push({ x, y });
-        }
-      }
-    }
-
-    // Shuffle positions
-    for (let i = walkablePositions.length - 1; i > 0; i--) {
-      const j = Math.floor(rng() * (i + 1));
-      [walkablePositions[i], walkablePositions[j]] = [walkablePositions[j], walkablePositions[i]];
-    }
-
-    for (let i = 0; i < Math.min(randomCount, walkablePositions.length); i++) {
-      const pos = walkablePositions[i];
-      const itemCount = 1 + Math.floor(rng() * 2);
-      
-      for (let j = 0; j < itemCount; j++) {
-        addItem(pos.x, pos.y, catalog[Math.floor(rng() * catalog.length)]);
-      }
-    }
-  }
 }

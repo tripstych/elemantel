@@ -176,6 +176,8 @@ const DungeonRenderer: React.FC<{ gameState: any }> = ({ gameState }) => {
         // Check for items at this position
         const itemKey = `${worldX},${worldY}`;
         const hasItem = world && world.has(itemKey);
+        const item = hasItem && world ? world.get(itemKey) : null;
+        const isMonster = item && item.type === 'monster';
         
         // Determine tile appearance
         let backgroundColor = '#1a1a1a'; // default unknown
@@ -185,6 +187,11 @@ const DungeonRenderer: React.FC<{ gameState: any }> = ({ gameState }) => {
         if (isPlayer) {
           backgroundColor = '#ff4444';
           border = '2px solid #ff0000';
+          borderRadius = '50%';
+        } else if (isMonster) {
+          // Render monsters as green triangles/circles
+          backgroundColor = '#44ff44';
+          border = '2px solid #00ff00';
           borderRadius = '50%';
         } else if (hasItem) {
           backgroundColor = '#4444ff';
