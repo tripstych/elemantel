@@ -1,21 +1,25 @@
 import { Room, Client } from "@colyseus/core";
 import { ClientMessages } from "../utils/ClientSend";
 import { PlayerCommands } from "../commands/PlayerCommands";
-import { MyRoomState, WorldItem, PlayerSchema } from "./schema/MyRoomState";
-import { ArraySchema, Encoder } from "@colyseus/schema";
+import { MyRoomState, PlayerSchema } from "./schema/MyRoomState";
+import { PlayerState } from "../schema/PlayerState";
+import { WorldItem } from "../schema/Item";
+import { Schema, type, MapSchema, ArraySchema } from "@colyseus/schema";
 import { CombatCommand, CombatLog } from "../commands/CombatCommand";
 import { Weapon } from "../schema/Equipment";
 import { ItemData } from "../schema/ItemData";
 import { WorldGenerationCommand } from "../commands/WorldGenerationCommand";
 import { LanguageData } from "../schema/LanguageData";
 import { DataService } from "../services/DataService";
-import { promises as fsp } from "fs";
-import path from "path";
 import { GAME_CONSTANTS } from "../../../shared/constants";
-
+import { Tile, TileRow } from "../schema/GameMap";
+import { MonsterState } from "../schema/MonsterState";
+import * as path from "path";
+import * as fsp from "fs/promises";
+import { Encoder } from "@colyseus/schema";
 
 // Increase buffer size for large language data
-Encoder.BUFFER_SIZE = 16 * 1024; // 16 KB
+Encoder.BUFFER_SIZE = 64 * 1024; // 64 KB
 
 // Use the shared schema `LanguageData` and preload via DataService
 const shouldLog = !(typeof process !== "undefined" && process.env && process.env.NODE_ENV === "test");
@@ -64,7 +68,7 @@ export class MyRoom extends Room<MyRoomState> {
     // Get dungeon generation options
     const width = options.width || 60;
     const height = options.height || 30;
-    const algorithm = options.algorithm || 'bsp'; // 'bsp', 'cellular', 'drunkard', 'rooms_corridors'
+    const algorithm = options.algorithm || 'rooms_corridors'; // 'bsp', 'cellular', 'drunkard', 'rooms_corridors'
 
     // Generate dungeon using specified algorithm
     this.generateDungeon(width, height, algorithm);
@@ -128,22 +132,17 @@ export class MyRoom extends Room<MyRoomState> {
       // Boundary check
       if (newX >= 0 && newX < this.state.map.width && 
           newY >= 0 && newY < this.state.map.height) {
-        // Check if tile is walkable (0 = floor) using flat array index
-        const tileIndex = newY * this.state.map.width + newX;
-        if (tileIndex >= 0 && tileIndex < this.state.map.tiles.length && 
-            this.state.map.tiles[tileIndex] === 0) {
+        // Check if tile is walkable (0 = floor) using new tile structure
+        const tile = this.state.map.tiles[newY].tiles[newX];
+        if (tile && tile.terrain === 0) {
           
           // Check for collision with monsters
-          const targetKey = `${newX},${newY}`;
-          if (this.state.world.has(targetKey)) {
-            const item = this.state.world.get(targetKey);
-            if (item.type === 'monster') {
-              console.log(`[DEBUG] Backend - Collision with monster ${item.name} at (${newX}, ${newY})`);
-              // Stop player movement - don't allow moving into monster
-              return;
-            }
+          if (tile.monsters.length > 0) {
+            const monster = tile.monsters[0];
+            console.log(`[DEBUG] Backend - Collision with monster ${monster.name} at (${newX}, ${newY})`);
+            // Stop player movement - don't allow moving into monster
+            return;
           }
-          
           player.x = newX;
           player.y = newY;
           this.playerMoveTimes.set(client.sessionId, now);
@@ -311,6 +310,7 @@ export class MyRoom extends Room<MyRoomState> {
       
       // First check ItemData (for physical items)
       const itemEntry = this.itemData.getEntry(key);
+      console.log(`ItemData.getEntry(${key}) returned:`, itemEntry);
       if (itemEntry) {
         console.log(`Found item in ItemData: ${itemEntry.word}`, {
           origin: {
@@ -319,8 +319,7 @@ export class MyRoom extends Room<MyRoomState> {
             earth: itemEntry.origin.earth,
             air: itemEntry.origin.air
           },
-          type: itemEntry.type,
-          weight: itemEntry.weight
+          type: itemEntry.type
         });
         client.send("language_entry_result", { key, entry: itemEntry });
         return;
@@ -363,8 +362,14 @@ export class MyRoom extends Room<MyRoomState> {
     this.state.map.tiles.clear();
     
     // Initialize with walls (1 = wall)
-    for (let i = 0; i < width * height; i++) {
-      this.state.map.tiles.push(1);
+    for (let y = 0; y < height; y++) {
+      const row = new TileRow();
+      for (let x = 0; x < width; x++) {
+        const tile = new Tile();
+        tile.terrain = 1; // wall
+        row.tiles.push(tile);
+      }
+      this.state.map.tiles.push(row);
     }
     
     console.log(`Generating ${width}x${height} dungeon using ${algorithm} algorithm`);
@@ -457,50 +462,54 @@ export class MyRoom extends Room<MyRoomState> {
     // Start with random noise
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
-        const index = y * width + x;
-        // 45% chance of being a wall initially
-        this.state.map.tiles[index] = Math.random() < 0.45 ? 1 : 0;
+        const tile = this.state.map.tiles[y].tiles[x];
+        tile.terrain = Math.random() < 0.45 ? 1 : 0; // 45% chance of being a wall initially
       }
     }
     
     // Apply cellular automata rules
     for (let iteration = 0; iteration < 5; iteration++) {
-      const newTiles = new Array(width * height);
+      const newTerrain = new Array(height);
+      for (let y = 0; y < height; y++) {
+        newTerrain[y] = new Array(width);
+      }
       
       for (let y = 0; y < height; y++) {
         for (let x = 0; x < width; x++) {
-          const index = y * width + x;
           const neighbors = this.countWallNeighbors(x, y);
+          const currentTile = this.state.map.tiles[y].tiles[x];
           
           // If tile is a wall and has 4+ wall neighbors, stay a wall
-          if (this.state.map.tiles[index] === 1 && neighbors >= 4) {
-            newTiles[index] = 1;
+          if (currentTile.terrain === 1 && neighbors >= 4) {
+            newTerrain[y][x] = 1;
           }
           // If tile is empty and has 5+ wall neighbors, become a wall
-          else if (this.state.map.tiles[index] === 0 && neighbors >= 5) {
-            newTiles[index] = 1;
+          else if (currentTile.terrain === 0 && neighbors >= 5) {
+            newTerrain[y][x] = 1;
           }
           // Otherwise become empty
           else {
-            newTiles[index] = 0;
+            newTerrain[y][x] = 0;
           }
         }
       }
       
-      // Apply new tiles
-      for (let i = 0; i < width * height; i++) {
-        this.state.map.tiles[i] = newTiles[i];
+      // Apply new terrain
+      for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+          this.state.map.tiles[y].tiles[x].terrain = newTerrain[y][x];
+        }
       }
     }
     
     // Ensure borders are walls
     for (let x = 0; x < width; x++) {
-      this.state.map.tiles[x] = 1; // Top
-      this.state.map.tiles[(height - 1) * width + x] = 1; // Bottom
+      this.state.map.tiles[0].tiles[x].terrain = 1; // Top
+      this.state.map.tiles[height - 1].tiles[x].terrain = 1; // Bottom
     }
     for (let y = 0; y < height; y++) {
-      this.state.map.tiles[y * width] = 1; // Left
-      this.state.map.tiles[y * width + (width - 1)] = 1; // Right
+      this.state.map.tiles[y].tiles[0].terrain = 1; // Left
+      this.state.map.tiles[y].tiles[width - 1].terrain = 1; // Right
     }
   }
 
@@ -520,8 +529,8 @@ export class MyRoom extends Room<MyRoomState> {
       // Walk around carving floors
       for (let step = 0; step < walkLength; step++) {
         if (x >= 0 && x < width && y >= 0 && y < height) {
-          const index = y * width + x;
-          this.state.map.tiles[index] = 0; // Carve floor
+          const tile = this.state.map.tiles[y].tiles[x];
+          tile.terrain = 0; // Carve floor
         }
         
         // Random walk
@@ -602,8 +611,8 @@ export class MyRoom extends Room<MyRoomState> {
         const mapY = y + dy;
         if (mapX >= 0 && mapX < this.state.map.width && 
             mapY >= 0 && mapY < this.state.map.height) {
-          const index = mapY * this.state.map.width + mapX;
-          this.state.map.tiles[index] = 0; // floor
+          const tile = this.state.map.tiles[mapY].tiles[mapX];
+          tile.terrain = 0; // floor
         }
       }
     }
@@ -619,8 +628,8 @@ export class MyRoom extends Room<MyRoomState> {
       for (let y = minY; y <= maxY; y++) {
         if (x >= 0 && x < this.state.map.width && 
             y >= 0 && y < this.state.map.height) {
-          const index = y * this.state.map.width + x;
-          this.state.map.tiles[index] = 0; // floor
+          const tile = this.state.map.tiles[y].tiles[x];
+          tile.terrain = 0; // floor
         }
       }
     }
@@ -639,8 +648,8 @@ export class MyRoom extends Room<MyRoomState> {
             ny < 0 || ny >= this.state.map.height) {
           count++; // Out of bounds counts as wall
         } else {
-          const index = ny * this.state.map.width + nx;
-          if (this.state.map.tiles[index] === 1) count++;
+          const tile = this.state.map.tiles[ny].tiles[nx];
+          if (tile.terrain === 1) count++;
         }
       }
     }
@@ -655,9 +664,9 @@ export class MyRoom extends Room<MyRoomState> {
     for (let attempts = 0; attempts < 1000; attempts++) {
       const x = Math.floor(Math.random() * width);
       const y = Math.floor(Math.random() * height);
-      const index = y * width + x;
+      const tile = this.state.map.tiles[y].tiles[x];
       
-      if (this.state.map.tiles[index] === 0) { // Floor tile
+      if (tile && tile.terrain === 0) { // Floor tile
         this.state.player.x = x;
         this.state.player.y = y;
         console.log(`Placed player at (${x}, ${y})`);
@@ -692,10 +701,13 @@ export class MyRoom extends Room<MyRoomState> {
     this.state.player.inventory.push("Shortbow");
   }
 
-  private getAnEmptyTile() {
-    const tiles = this.getEmptyTiles()
-    const n = Math.floor( Math.random() * tiles.length);
-    return tiles[n];
+  private getAnEmptyTile(): { x: number, y: number } | null {
+    const tiles = this.getEmptyTiles();
+    if (!tiles || tiles.length === 0) {
+      return null;
+    }
+    const n = Math.floor(Math.random() * tiles.length);
+    return tiles[n] || null;
   }
 
   private getEmptyTiles() {
@@ -706,14 +718,12 @@ export class MyRoom extends Room<MyRoomState> {
         // Skip player position
         if (x === this.state.player.x && y === this.state.player.y) continue;
         
-        // Check if tile is walkable using flat array structure
-        const tileIndex = y * this.state.map.width + x;
-        if (tileIndex >= 0 && tileIndex < this.state.map.tiles.length &&
-            walkableTiles.has(this.state.map.tiles[tileIndex])) {
+        // Check if tile is walkable using new tile structure
+        const tile = this.state.map.tiles[y].tiles[x];
+        if (tile && walkableTiles.has(tile.terrain)) {
           
           // Check if position is not occupied by another item
-          const key = `${x},${y}`;
-          if (!this.state.world.has(key)) {
+          if (tile.items.length === 0 && tile.monsters.length === 0) {
             emptyTiles.push({ x, y });
           }
         }
@@ -723,36 +733,50 @@ export class MyRoom extends Room<MyRoomState> {
   }
 
   private scatterItems() {
+    console.log("Starting scatterItems function");
+    
     // Helper to add item at position
-      const addItem = (x: number, y: number, itemKey: string, itemEntry: any) => {
-          const key = `${x},${y}`;
-          
-          // Prevent world from getting too large
-          if (this.state.world.size > 1000) {
-            console.log("World is full, not adding more items");
-            return;
-          }
-          
-          const item = new WorldItem();
-          item.name = itemKey; // Use the synset key for inventory
-          // item.type = itemEntry.type; // Use the type from ItemData ASSHOLE
-          this.state.world.set(key, item);
+    const addItem = (x: number, y: number, itemKey: string, itemEntry: any) => {
+      const tile = this.state.map.tiles[y].tiles[x];
+      
+      // Prevent too many items per tile
+      if (tile.items.length >= 5) {
+        console.log("Tile is full, not adding more items");
+        return;
+      }
+      
+      const item = new WorldItem();
+      item.name = itemKey; // Use the synset key for inventory
+      item.type = itemEntry.type; // Use the type from ItemData
+      tile.items.push(item);
+      console.log(`Added item ${itemKey} at (${x}, ${y})`);
     };
 
     // Get available item types from ItemData
     const itemTypes = ['weapons', 'armor', 'spells']; // Add more types as needed
     const availableItems: Array<{key: string, entry: any}> = [];
     
-    const items = this.itemData.query({ type: 'weapons', limit: 5 })
-    // console.log('ITEMS',items);
-
-    for (let i=0; i<GAME_CONSTANTS.SCATTER_ITEMS; i++) {
-      const randomItem = items[Math.floor(Math.random()*items.length)]; //safely fake an index
-      const tile = this.getAnEmptyTile()
+    const items = this.itemData.query({ type: 'weapons', limit: 5 });
+    if (!items || items.length === 0) {
+      console.log("No items found in ItemData.query");
+      return; // nothing to scatter
+    }
+    
+    console.log(`Found ${items.length} items to scatter`);
+    
+    for (let i = 0; i < GAME_CONSTANTS.SCATTER_ITEMS; i++) {
+      const randomItem = items[Math.floor(Math.random() * items.length)];
+      if (!randomItem) { continue; }
+      const pos = this.getAnEmptyTile();
+      if (!pos) {
+        console.log("No empty tiles available for scattering");
+        break; // no available tiles to scatter items
+      }
       // key property is no longer valid but we need items to have results first
-      addItem(tile.x, tile.y, randomItem.key, randomItem.entry);
+      addItem(pos.x, pos.y, randomItem.key, randomItem.entry);
     }
 
+    console.log(`Scattered ${GAME_CONSTANTS.SCATTER_ITEMS} items`);
   }
 
   private handleSpacebarAttack(client: Client, player: PlayerState) {
@@ -769,31 +793,8 @@ export class MyRoom extends Room<MyRoomState> {
     ];
 
     const hitTargets: Array<{x: number, y: number, type: string, name: string}> = [];
-
-    for (const pos of adjacentPositions) {
-      const key = `${pos.x},${pos.y}`;
-      
-      // Check if there's a monster at this position
-      if (this.state.world.has(key)) {
-        const item = this.state.world.get(key);
-        if (item.type === 'monster') {
-          hitTargets.push({
-            x: pos.x,
-            y: pos.y,
-            type: 'monster',
-            name: item.name
-          });
-          
-          // Remove the monster (simple attack - kills it)
-          this.state.world.delete(key);
-          console.log(`${player.name} killed ${item.name} at (${pos.x}, ${pos.y})`);
-        }
-      }
-    }
-
-    // Send attack result to client
-    client.send("spacebar_attack_result", {
-      success: true,
+    
+    client.send("attack_result", {
       targets: hitTargets,
       message: hitTargets.length > 0 
         ? `Hit ${hitTargets.length} targets!` 
@@ -821,9 +822,8 @@ export class MyRoom extends Room<MyRoomState> {
     if (distance === 1) {
       console.log(`${player.name} attacks position (${targetX}, ${targetY})`);
       // Describe target if present
-      const key = `${targetX},${targetY}`;
-      const occupant = this.state.world.get(key);
-      const targetDesc = occupant && occupant.type === "monster" ? (occupant.name || "monster") : null;
+      const tile = this.state.map.tiles[targetY].tiles[targetX];
+      const targetDesc = tile && tile.monsters.length > 0 ? (tile.monsters[0].name || "monster") : null;
 
       // TODO: Add actual combat logic with CombatCommand
       client.send("combat_result", { 
@@ -882,10 +882,9 @@ export class MyRoom extends Room<MyRoomState> {
       attempts++;
       
       // Check if position is valid floor tile (0 = floor)
-      const tileIndex = spawnY * this.state.map.width + spawnX;
-      const tile = this.state.map.tiles[tileIndex];
+      const tile = this.state.map.tiles[spawnY].tiles[spawnX];
       
-      if (tile === 0 || tile === undefined) {
+      if (tile && tile.terrain === 0) {
         break; // Found valid spawn location
       }
     } while (attempts < maxAttempts);
@@ -992,16 +991,15 @@ export class MyRoom extends Room<MyRoomState> {
   }
   
   private isWalkable(x: number, y: number): boolean {
-    const tileIndex = y * this.state.map.width + x;
-    const tile = this.state.map.tiles[tileIndex];
-    if (tile !== 0 && tile !== undefined) return false; // Not floor or empty
+    if (x < 0 || x >= this.state.map.width || y < 0 || y >= this.state.map.height) {
+      return false;
+    }
+    
+    const tile = this.state.map.tiles[y].tiles[x];
+    if (!tile || tile.terrain !== 0) return false; // Not floor or empty
     
     // Check for monster collision
-    const key = `${x},${y}`;
-    if (this.state.world.has(key)) {
-      const item = this.state.world.get(key);
-      if (item.type === 'monster') return false; // Monster blocks path
-    }
+    if (tile.monsters.length > 0) return false; // Monster blocks path
     
     return true;
   }
@@ -1019,10 +1017,10 @@ export class MyRoom extends Room<MyRoomState> {
     if (tx < 0 || ty < 0 || tx >= width || ty >= height) return false;
 
     const isWall = (x: number, y: number) => {
-      const idx = y * width + x;
-      const val = this.state.map.tiles[idx];
+      if (x < 0 || x >= width || y < 0 || y >= height) return true;
+      const tile = this.state.map.tiles[y].tiles[x];
       // Treat non-floor tiles (e.g., walls=1) as blocking visibility
-      return val === 1;
+      return tile && tile.terrain === 1;
     };
 
     // Bresenham's line algorithm
@@ -1160,25 +1158,32 @@ export class MyRoom extends Room<MyRoomState> {
     const player = this.state.player; // Fixed: player is stored directly
     if (!player) return;
 
-    const key = `${player.x},${player.y}`;
-    const item = this.state.world.get(key);
-    
-    console.log(`Pickup attempt at ${key}, item found:`, !!item);
-    
-    if (item) {
-      // Check if inventory has space (optional limit)
-      if (player.inventory.length < 50) { // Reasonable inventory limit
-        player.inventory.push(item.name);
-        this.state.world.delete(key);
-        console.log(`${player.name} picked up ${item.name}`);
-        client.send("pickup_result", { message: `Picked up ${item.name}!`, item: item.name });
-      } else {
-        console.log(`${player.name} inventory is full`);
-        client.send("error", { message: "Inventory is full!" });
-      }
-    } else {
-      console.log(`No item at position ${key}`);
+    // Get items from new tile structure
+    const tile = this.state.map.tiles[player.y]?.tiles[player.x];
+    if (!tile || tile.items.length === 0) {
+      console.log(`No items at position (${player.x}, ${player.y})`);
       client.send("pickup_result", { message: "No item here to pick up." });
+      return;
+    }
+
+    // Pick up the first item on the tile
+    const item = tile.items[0];
+    const itemIndex = 0;
+    
+    console.log(`Pickup attempt at (${player.x}, ${player.y}), item found:`, item);
+    console.log(`Item name:`, item.name);
+    console.log(`Item type:`, item.type);
+    
+    // Check if inventory has space (optional limit)
+    if (player.inventory.length < 50) { // Reasonable inventory limit
+      player.inventory.push(item.name);
+      tile.items.splice(itemIndex, 1); // Remove from tile
+      console.log(`${player.name} picked up ${item.name}`);
+      console.log(`Inventory now contains:`, player.inventory);
+      client.send("pickup_result", { message: `Picked up ${item.name}!`, item: item.name });
+    } else {
+      console.log(`${player.name} inventory is full`);
+      client.send("error", { message: "Inventory is full!" });
     }
   }
 
@@ -1193,15 +1198,20 @@ export class MyRoom extends Room<MyRoomState> {
       // Remove from inventory
       player.inventory.splice(itemIndex, 1);
       
-      // Add to world at player's position
-      const key = `${player.x},${player.y}`;
-      const item = new WorldItem();
-      item.name = itemName;
-      item.type = "weapon"; // Default type, could be enhanced
-      this.state.world.set(key, item);
-      
-      console.log(`${player.name} dropped ${itemName}`);
-      client.send("drop_result", { message: `Dropped ${itemName}!`, item: itemName });
+      // Add to tile at player's position using new structure
+      const tile = this.state.map.tiles[player.y]?.tiles[player.x];
+      if (tile) {
+        const item = new WorldItem();
+        item.name = itemName;
+        item.type = "weapon"; // Default type, could be enhanced
+        tile.items.push(item);
+        
+        console.log(`${player.name} dropped ${itemName}`);
+        client.send("drop_result", { message: `Dropped ${itemName}!`, item: itemName });
+      } else {
+        console.log(`Cannot drop item - no valid tile at (${player.x}, ${player.y})`);
+        client.send("error", { message: "Cannot drop item here!" });
+      }
     } else {
       client.send("error", { message: "Item not found in inventory!" });
     }
@@ -1286,35 +1296,43 @@ export class MyRoom extends Room<MyRoomState> {
     client.send("unequip_result", { message: `Unequipped ${currentItem} from ${slotName}!`, item: currentItem, slotPath });
   }
 
-  private monsterMash() {
+    private monsterMash() {
       const monsterTypes = ['goblin', 'slime', 'orc', 'skeleton', 'troll'];
       const monsterType = monsterTypes[Math.floor(Math.random() * monsterTypes.length)];
-      const monster = new WorldItem();
-      monster.name = monsterType;
-      monster.type = 'monster';
-      monster.info = {}
-      monster.description = `${monsterType} lurking in the dungeon`;
-      monster.value = 64;
-      monster.weight = 4500;
+      const monster = new MonsterState();
+      monster.kind = monsterType;
+      monster.info = {};
+      monster.hp = 20;
+      monster.hostile = true;
       return monster;
-  }
+    }
 
   private spawnMonsters() {
     const walkableTiles = new Set([0, 3, 4, 5, 6]); // floor, corridor, room_floor, entrance, exit
     let monsterCount = 0;
     
     let emptyTiles = this.getEmptyTiles();
+    if (!emptyTiles || emptyTiles.length === 0) {
+      console.log("No empty tiles for monster spawning");
+      return; // no places to spawn monsters
+    }
+
+    console.log(`Spawning ${GAME_CONSTANTS.SPAWN_MONSTERS} monsters on ${emptyTiles.length} empty tiles`);
 
     for (let i =0; i<GAME_CONSTANTS.SPAWN_MONSTERS; i++) {
       //randomly selected an emptyTiles
       const randomIndex = Math.floor(Math.random() * emptyTiles.length);
       const tile = emptyTiles[randomIndex];
+      if (!tile) { continue; }
       
-      const monster = this.monsterMash()
-      const key = `${tile.x},${tile.y}`;
-      this.state.world.set(key, monster);
+      const monster = this.monsterMash();
+      const mapTile = this.state.map.tiles[tile.y].tiles[tile.x];
+      mapTile.monsters.push(monster);
+      monsterCount++;
+      console.log(`Spawned monster ${i+1} at (${tile.x}, ${tile.y})`);
     }
 
+    console.log(`Successfully spawned ${monsterCount} monsters`);
     return;
   }
 
@@ -1331,43 +1349,57 @@ export class MyRoom extends Room<MyRoomState> {
     const player = this.state.player;
     const walkableTiles = new Set([0, 3, 4, 5, 6]); // floor, corridor, room_floor, entrance, exit
     
-    // Find all monsters in the world
+    // Find all monsters in the world using new tile structure
     const monsters: Array<{x: number, y: number, item: any}> = [];
     
-    for (const [key, item] of this.state.world) {
-      if (item.type === 'monster') {
-        const [x, y] = key.split(',').map(Number);
-        monsters.push({ x, y, item });
+    for (let y = 0; y < this.state.map.height; y++) {
+      for (let x = 0; x < this.state.map.width; x++) {
+        const tile = this.state.map.tiles[y].tiles[x];
+        for (const monster of tile.monsters) {
+          monsters.push({ x, y, item: monster });
+        }
       }
     }
+
+    console.log(`Monster AI: Found ${monsters.length} monsters to update`);
+
+    console.log(`Found ${monsters.length} monsters to update`);
 
     // Move each monster towards player
     for (const monster of monsters) {
       // Calculate distance to player
+      const distance = Math.abs(monster.x - player.x) + Math.abs(monster.y - player.y);
+      
+      console.log(`Monster at (${monster.x}, ${monster.y}) is ${distance} tiles from player at (${player.x}, ${player.y})`);
       
       // Only move if monster is within 10 tiles and not already adjacent
-      // Simple pathfinding - move one step towards player
-
-      if (this.isVisible(monster.x, monster.y, player.x, player.y) === true) {
-
-        const nextPos = this.getNextPositionTowards(monster.x, monster.y, player.x, player.y);
+      if (distance <= 10 && distance > 1) {
+        console.log(`Monster at (${monster.x}, ${monster.y}) is in range and will try to move`);
         
-        if (nextPos && this.isValidPosition(nextPos.x, nextPos.y, walkableTiles)) {
-          // Remove monster from old position
-          this.moveMonster(monster, nextPos);
-          // const oldKey = `${monster.x},${monster.y}`;
-          // this.state.world.delete(oldKey);
+        // Simple pathfinding - move one step towards player
+        if (this.isVisible(monster.x, monster.y, player.x, player.y) === true) {
+          const nextPos = this.getNextPositionTowards(monster.x, monster.y, player.x, player.y);
           
-          // // Add monster to new position
-          // const newKey = `${nextPos.x},${nextPos.y}`;
-          // this.state.world.set(newKey, monster.item);
+          console.log(`Next position for monster:`, nextPos);
           
-          console.log(`Monster moved from (${monster.x}, ${monster.y}) to (${nextPos.x}, ${nextPos.y})`);
+          if (nextPos && this.isValidPosition(nextPos.x, nextPos.y, walkableTiles)) {
+            // Remove monster from old position
+            this.moveMonster(monster, nextPos);
+            console.log(`Monster moved from (${monster.x}, ${monster.y}) to (${nextPos.x}, ${nextPos.y})`);
+          } else {
+            console.log(`Monster cannot move to next position - invalid or blocked`);
+          }
+        } else {
+          console.log(`Monster cannot see player - no line of sight`);
         }
+      } else {
+        console.log(`Monster at (${monster.x}, ${monster.y}) is out of range (${distance}) or adjacent`);
+        
         // If adjacent after move, notify player
         const dx = Math.abs(monster.x - player.x);
         const dy = Math.abs(monster.y - player.y);
         const adjacent = Math.max(dx, dy) === 1;
+        
         if (adjacent && this.playerClient) {
           const name = monster.item.name || "monster";
 
@@ -1429,8 +1461,7 @@ export class MyRoom extends Room<MyRoomState> {
           if (this.state.player.hp <= 0) {
             ClientMessages.error(this.playerClient, "You fall unconscious!");
           }
-        }
-      } else {
+        } else {
           // make the monster wander randomly if player not visible
           const d = [{x: -1, y: 0}, {x: 1, y: 0}, {x: 0, y: -1}, {x: 0, y: 1}];
           const n = Math.floor(Math.random() * 3);
@@ -1440,19 +1471,27 @@ export class MyRoom extends Room<MyRoomState> {
             // console.log(`Monster wandered from (${monster.x}, ${monster.y}) to (${nextPos})`);
             this.moveMonster(monster, nextPos);
           }
+        }
       }
     }
   }
 
   private moveMonster(monster: {x:number,y:number,item:any}, point: {x:number,y:number}) {
-      const oldKey = `${monster.x},${monster.y}`;
-      this.state.world.delete(oldKey);
-      const newKey = `${point.x},${point.y}`;
-      this.state.world.set(newKey, monster.item);
+      // Remove monster from old position
+      const oldTile = this.state.map.tiles[monster.y].tiles[monster.x];
+      const monsterIndex = oldTile.monsters.indexOf(monster.item);
+      if (monsterIndex !== -1) {
+        oldTile.monsters.splice(monsterIndex, 1);
+      }
+      
+      // Add monster to new position
+      const newTile = this.state.map.tiles[point.y].tiles[point.x];
+      newTile.monsters.push(monster.item);
+      
       // Update local monster coordinates
       monster.x = point.x;
       monster.y = point.y;
-  }
+    }
 
 
   private getNextPositionTowards(fromX: number, fromY: number, toX: number, toY: number): {x: number, y: number} | null {
@@ -1477,13 +1516,12 @@ export class MyRoom extends Room<MyRoomState> {
       return false;
     }
     
-    // Check if tile is walkable
-    const tileIndex = y * this.state.map.width + x;
-    if (tileIndex < 0 || tileIndex >= this.state.map.tiles.length) {
+    // Check if tile exists and is walkable using new tile structure
+    if (!this.state.map.tiles[y] || !this.state.map.tiles[y].tiles[x]) {
       return false;
     }
     
-    if (!walkableTiles.has(this.state.map.tiles[tileIndex])) {
+    if (!walkableTiles.has(this.state.map.tiles[y].tiles[x].terrain)) {
       return false;
     }
     
@@ -1493,12 +1531,9 @@ export class MyRoom extends Room<MyRoomState> {
     }
     
     // Check if position is occupied by another monster
-    const key = `${x},${y}`;
-    if (this.state.world.has(key)) {
-      const item = this.state.world.get(key);
-      if (item.type === 'monster') {
-        return false;
-      }
+    const tile = this.state.map.tiles[y].tiles[x];
+    if (tile.monsters.length > 0) {
+      return false;
     }
     
     return true;

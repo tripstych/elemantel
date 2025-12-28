@@ -1,11 +1,25 @@
 import { Client, Room } from "colyseus.js";
 import { GAME_CONSTANTS } from "../../../shared/constants";
 
+export interface Tile {
+  terrain: number;
+  items: any[];
+  monsters: any[];
+  visible: boolean;
+  explored: boolean;
+  light: number;
+  feature: string;
+}
+
+export interface TileRow {
+  tiles: Tile[];
+}
+
 export interface GameState {
   map: {
     width: number;
     height: number;
-    tiles: number[]; // Flat array as used in MyRoomState
+    tiles: TileRow[]; // New tile structure with nested arrays
   };
   player: {
     name: string;
@@ -26,7 +40,6 @@ export interface GameState {
     inventory: string[];
   };
   players: Map<string, any>;
-  world: Map<string, any>;
 }
 
 export class GameClient {
@@ -70,13 +83,7 @@ export class GameClient {
         if (GAME_CONSTANTS.DEBUG) console.log("Player position in state:", plainState.player?.x, plainState.player?.y);
         if (GAME_CONSTANTS.DEBUG) console.log("Full player object:", plainState.player);
         
-        // Check if this is actually a different state
-        if (this.lastPlayerX !== plainState.player?.x || this.lastPlayerY !== plainState.player?.y) {
-          if (GAME_CONSTANTS.DEBUG) console.log("PLAYER POSITION CHANGED from", this.lastPlayerX, this.lastPlayerY, "to", plainState.player?.x, plainState.player?.y);
-        }
-        this.lastPlayerX = plainState.player?.x;
-        this.lastPlayerY = plainState.player?.y;
-        
+        console.log("About to notify state change, plainState.map exists:", !!plainState.map);
         this.notifyStateChange(plainState);
       });
 
@@ -363,18 +370,9 @@ export class GameClient {
       return plainMap;
     }
 
-    // Handle ArraySchema (convert to plain array)
-    if (obj.items && typeof obj.items === 'object' && (
-        obj.items.constructor.name.includes('ArraySchema') || 
-        obj.constructor.name.includes('ArraySchema')
-    )) {
+    // Handle ArraySchema (convert to plain array) - check for Colyseus ArraySchema properties
+    if (obj.items && Array.isArray(obj.items) && typeof obj.length === 'number') {
       if (GAME_CONSTANTS.DEBUG) console.log("Converting ArraySchema to array, length:", obj.items.length);
-      return Array.from(obj.items).map(item => this.convertToPlainObject(item));
-    }
-
-    // Handle ArraySchema by checking for ArraySchema-like properties
-    if (obj.items && typeof obj.items === 'object' && typeof obj.items.length === 'number') {
-      if (GAME_CONSTANTS.DEBUG) console.log("Converting ArraySchema-like object to array, length:", obj.items.length);
       return Array.from(obj.items).map(item => this.convertToPlainObject(item));
     }
 

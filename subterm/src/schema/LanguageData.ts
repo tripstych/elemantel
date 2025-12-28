@@ -1,4 +1,4 @@
-import { Schema, type, MapSchema } from "@colyseus/schema";
+import { Schema, type, MapSchema, ArraySchema } from "@colyseus/schema";
 
 import { GAME_CONSTANTS } from '../../../shared/constants';
 
@@ -22,7 +22,7 @@ export class WeaponEffect extends Schema {
   @type("string") name: string = "";
   @type("string") cost: string = "";
   @type("string") damage: string = "";
-  @type(["string"]) properties: string[] = [];
+  @type(["string"]) properties: ArraySchema<string> = new ArraySchema<string>();
 }
 
 export class LanguageEntry extends Schema {
@@ -31,11 +31,11 @@ export class LanguageEntry extends Schema {
   @type(ElementalOrigin) origin: ElementalOrigin = new ElementalOrigin();
   @type("string") type: string = "";
   @type("number") weight: number = 0;
-  @type("object") item: object = {};
+  item: any = {};
 }
 
 export class LanguageData extends Schema {
-  // @type({ map: LanguageEntry }) entries: MapSchema<LanguageEntry> = new MapSchema<LanguageEntry>();
+  @type({ map: LanguageEntry }) entries: MapSchema<LanguageEntry> = new MapSchema<LanguageEntry>();
   
   // Helper method to load from JSON
   loadFromJSON(jsonData: any) {
@@ -66,6 +66,12 @@ export class LanguageData extends Schema {
           console.log(`LanguageData: No origin data for ${key}`);
         }
       }
+      
+      // Type (optional)
+      entry.type = (value as any).type || "";
+      
+      // Weight (optional)
+      entry.weight = (value as any).weight || 0;
       
       this.entries.set(key, entry);
     }

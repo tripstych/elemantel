@@ -1,20 +1,8 @@
 import { Schema, type, MapSchema, ArraySchema } from "@colyseus/schema";
+import { GameMap } from "../../schema/GameMap";
+import { WorldItem } from "../../schema/Item";
 
-// Flat tile map to match generation logic in MyRoom
-export class FlatGameMap extends Schema {
-  @type("number") width: number = 0;
-  @type("number") height: number = 0;
-  @type(["number"]) tiles: ArraySchema<number> = new ArraySchema<number>();
-}
-
-// Minimal world item representation for map drops
-export class WorldItem extends Schema {
-  @type("string") name: string = "";
-  @type("string") type: string = "";
-  @type("string") description: string = "";
-  @type("number") value: number = 0;
-  @type("number") weight: number = 0;
-}
+// Use shared GameMap schema to match MyRoom logic
 
 // Equipment slots schema
 class HandSlots extends Schema {
@@ -64,7 +52,7 @@ export class PlayerSchema extends Schema {
 }
 
 export class MyRoomState extends Schema {
-  @type(FlatGameMap) map: FlatGameMap = new FlatGameMap();
+  @type(GameMap) map: GameMap = new GameMap();
   @type(PlayerSchema) player: PlayerSchema = new PlayerSchema();
   @type({ map: WorldItem }) world: MapSchema<WorldItem> = new MapSchema<WorldItem>();
 }

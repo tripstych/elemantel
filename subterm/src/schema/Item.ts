@@ -7,3 +7,7 @@ export class Item extends Schema {
   @type("number") value: number = 0;
   @type("number") weight: number = 0;
 }
+
+export class WorldItem extends Item {
+  info: any = {};
+}

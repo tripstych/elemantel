@@ -1,12 +1,24 @@
 import { Schema, type, ArraySchema, MapSchema } from "@colyseus/schema";
+import { Item } from "./Item";
+import { MonsterState } from "./MonsterState";
 
 export class Position extends Schema {
   @type("number") x: number = 0;
   @type("number") y: number = 0;
 }
 
+export class Tile extends Schema {
+  @type("number") terrain: number = 0;
+  @type([Item]) items: ArraySchema<Item> = new ArraySchema<Item>();
+  @type([MonsterState]) monsters: ArraySchema<MonsterState> = new ArraySchema<MonsterState>();
+  @type("boolean") visible: boolean = false;
+  @type("boolean") explored: boolean = false;
+  @type("number") light: number = 0;
+  @type("string") feature: string = ""; // e.g., door, trap, stairs
+}
+
 export class TileRow extends Schema {
-  @type(["number"]) values: ArraySchema<number> = new ArraySchema<number>();
+  @type([Tile]) tiles: ArraySchema<Tile> = new ArraySchema<Tile>();
 }
 
 export class GameMap extends Schema {

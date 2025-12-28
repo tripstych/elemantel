@@ -1,6 +1,176 @@
 import React from "react";
-import { GameState } from "../services/GameClient";
+import { GameState, gameClient } from "../services/GameClient";
 import { GAME_CONSTANTS } from "../../../shared/constants";
+
+// Simple CSS-based dungeon renderer (copied from App.tsx)
+const DungeonRenderer: React.FC<{ gameState: any }> = ({ gameState }) => {
+  if (!gameState || !gameState.map) return null;
+
+  const { map, player } = gameState;
+  const tileSize = GAME_CONSTANTS.TILE_SIZE;
+  const viewportWidth = 40; // tiles visible horizontally
+  const viewportHeight = 25; // tiles visible vertically
+  
+  // Debug: Check tile structure
+  if (GAME_CONSTANTS.DEBUG && player) {
+    const tile = map.tiles[player.y]?.tiles[player.x];
+    console.log(`=== RENDER DEBUG ===`);
+    console.log(`Player at (${player.x}, ${player.y}) on tile:`, tile);
+    console.log(`Tile terrain:`, tile?.terrain);
+    console.log(`Map dimensions: ${map.width}x${map.height}`);
+    console.log(`Map tiles structure:`, map.tiles);
+    console.log(`First few tiles:`, map.tiles.slice(0, 3));
+  }
+  
+  const handleTileClick = (worldX: number, worldY: number) => {
+    if (GAME_CONSTANTS.DEBUG) console.log(`[DEBUG] CSS Tile clicked at (${worldX}, ${worldY})`);
+    
+    // Check if tile is walkable
+    const tile = map.tiles[worldY]?.tiles[worldX];
+    if (!tile || tile.terrain !== 0) {
+      if (GAME_CONSTANTS.DEBUG) console.log(`Cannot navigate to wall or invalid tile at (${worldX}, ${worldY})`);
+      return;
+    }
+    
+    gameClient.autoNavigate(worldX, worldY);
+  };
+
+  // Calculate viewport offset to center on player
+  const viewportOffsetX = Math.max(0, Math.min(player.x - Math.floor(viewportWidth / 2), map.width - viewportWidth));
+  const viewportOffsetY = Math.max(0, Math.min(player.y - Math.floor(viewportHeight / 2), map.height - viewportHeight));
+
+  const renderTile = (worldX: number, worldY: number) => {
+    // Check if tile is within viewport
+    if (worldX < viewportOffsetX || worldX >= viewportOffsetX + viewportWidth ||
+        worldY < viewportOffsetY || worldY >= viewportOffsetY + viewportHeight) {
+      return null;
+    }
+
+    // Check if we have tile data
+    if (!map.tiles[worldY]) {
+      console.log(`No tile row at y=${worldY}`);
+      return null;
+    }
+    
+    if (!map.tiles[worldY].tiles[worldX]) {
+      console.log(`No tile at x=${worldX}, y=${worldY}`);
+      return null;
+    }
+
+    const tile = map.tiles[worldY].tiles[worldX];
+    const screenX = (worldX - viewportOffsetX) * tileSize;
+    const screenY = (worldY - viewportOffsetY) * tileSize;
+
+    // Debug: Log first few tiles
+    if (worldX < 3 && worldY < 3) {
+      console.log(`Tile at (${worldX}, ${worldY}):`, tile);
+      console.log(`Tile keys:`, Object.keys(tile));
+      console.log(`Tile terrain:`, tile.terrain);
+      console.log(`Tile.terrain type:`, typeof tile.terrain);
+    }
+
+    // Determine tile type and color
+    let tileColor = '#000000'; // default black
+    let tileContent = null;
+
+    if (tile.terrain === 0) {
+      tileColor = '#8b7355'; // floor (brown)
+    } else if (tile.terrain === 1) {
+      tileColor = '#2a2a2a'; // wall (dark gray)
+    } else {
+      tileColor = '#ff00ff'; // bright pink for unknown terrain
+      console.log(`Unknown terrain value: ${tile.terrain} at (${worldX}, ${worldY})`);
+    }
+
+    // Render items on tile
+    if (tile.items && tile.items.length > 0) {
+      tileContent = (
+        <div
+          style={{
+            position: 'absolute',
+            top: '2px',
+            left: '2px',
+            width: '6px',
+            height: '6px',
+            backgroundColor: '#4444ff',
+            borderRadius: '1px'
+          }}
+        />
+      );
+    }
+
+    // Render monsters on tile
+    if (tile.monsters && tile.monsters.length > 0) {
+      tileContent = (
+        <div
+          style={{
+            position: 'absolute',
+            top: '2px',
+            left: '2px',
+            width: '6px',
+            height: '6px',
+            backgroundColor: '#ffaa00',
+            borderRadius: '50%'
+          }}
+        />
+      );
+    }
+
+    // Render player
+    if (player.x === worldX && player.y === worldY) {
+      tileContent = (
+        <div
+          style={{
+            position: 'absolute',
+            top: '1px',
+            left: '1px',
+            width: '8px',
+            height: '8px',
+            backgroundColor: '#ff4444',
+            borderRadius: '50%'
+          }}
+        />
+      );
+    }
+
+    return (
+      <div
+        key={`${worldX}-${worldY}`}
+        style={{
+          position: 'absolute',
+          left: `${screenX}px`,
+          top: `${screenY}px`,
+          width: `${tileSize}px`,
+          height: `${tileSize}px`,
+          backgroundColor: tileColor,
+          border: '1px solid rgba(0,0,0,0.2)',
+          cursor: 'pointer',
+          boxSizing: 'border-box'
+        }}
+        onClick={() => handleTileClick(worldX, worldY)}
+      >
+        {tileContent}
+      </div>
+    );
+  };
+
+  return (
+    <div
+      style={{
+        position: 'relative',
+        width: `${viewportWidth * tileSize}px`,
+        height: `${viewportHeight * tileSize}px`,
+        backgroundColor: '#000000',
+        border: '2px solid #444444',
+        margin: '20px auto'
+      }}
+    >
+      {Array.from({ length: map.height }, (_, y) =>
+        Array.from({ length: map.width }, (_, x) => renderTile(x, y))
+      )}
+    </div>
+  );
+};
 
 interface GameUIProps {
   gameState: GameState | null;
@@ -90,6 +260,9 @@ export const GameUI: React.FC<GameUIProps> = ({
 
   return (
     <>
+      {/* Dungeon Map */}
+      <DungeonRenderer gameState={gameState} />
+      
       {/* Player Stats Panel */}
       <div style={{
         position: 'absolute',

@@ -33,28 +33,44 @@ export class ItemData extends Schema {
   query(filters: {
     type?: string;
     limit?: number;
-    minWeight?: number;
-    maxWeight?: number;
     element?: string;
     hasSpellEffect?: boolean;
     customFilter?: (key: string, entry: LanguageEntry) => boolean;
   } = {}): Array<{key: string, entry: LanguageEntry}> {
 
+    const limit = filters.limit ?? 10000;
+    const results: Array<{ key: string, entry: LanguageEntry }> = [];
 
-    let count = 0;
-    let limit = filters.limit || 10000;
-    let matches = [];
     for (const key in this.elementalDictionary) {
-      const entry = this.elementalDictionary[key];
-      for (const ki in filters) {
-        if (entry[ki] == filters[ki] && count<limit) {
-          matches.push(entry);
-          count++;
-        } 
+      const entry = this.elementalDictionary[key] as LanguageEntry;
+
+      let matches = true;
+      if (filters.type && entry.type !== filters.type) {
+        matches = false;
+      }
+      if (filters.element) {
+        const elementalValue = (entry.origin as any)[filters.element];
+        if (!(typeof elementalValue === 'number' && elementalValue > 0)) {
+          matches = false;
+        }
+      }
+      if (filters.hasSpellEffect !== undefined) {
+        const hasEffect = !!(entry as any).spell_effect?.type;
+        if (filters.hasSpellEffect !== hasEffect) {
+          matches = false;
+        }
+      }
+      if (filters.customFilter && !filters.customFilter(key, entry)) {
+        matches = false;
+      }
+
+      if (matches) {
+        results.push({ key, entry });
+        if (results.length >= limit) { break; }
       }
     }
-    console.log(matches)
-    return matches;
+
+    return results;
     
   }
   
@@ -72,17 +88,6 @@ export class ItemData extends Schema {
     
     return results;
   }  
-  getItemsByWeight(minWeight: number, maxWeight?: number): Array<{key: string, entry: LanguageEntry}> {
-    const results: Array<{key: string, entry: LanguageEntry}> = [];
-    
-    for (const [key, entry] of this.entries.entries()) {
-      if (entry.weight >= minWeight && (!maxWeight || entry.weight <= maxWeight)) {
-        results.push({ key, entry });
-      }
-    }
-    
-    return results;
-  }
   
   getItemsByElement(element: string): Array<{key: string, entry: LanguageEntry}> {
     const results: Array<{key: string, entry: LanguageEntry}> = [];

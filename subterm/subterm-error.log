@@ -1,0 +1,23 @@
+Error: a 'LanguageEntry' was expected, but 'Object' was provided in MapSchema#bone_shortbow.n.01
+    at assertInstanceType (F:\elemantel\subterm\node_modules\@colyseus\schema\src\encoding\assert.ts:65:15)
+    at MapSchema.set (F:\elemantel\subterm\node_modules\@colyseus\schema\src\types\custom\MapSchema.ts:88:13)
+    at ItemData.getEntry (F:\elemantel\subterm\src\schema\ItemData.ts:25:20)
+    at Object.callback (F:\elemantel\subterm\src\rooms\MyRoom.ts:312:39)
+    at MyRoom._onMessage (F:\elemantel\subterm\node_modules\@colyseus\core\build\Room.js:748:28)
+    at WebSocket.emit (node:events:518:28)
+    at Receiver.receiverOnMessage (F:\elemantel\subterm\node_modules\@colyseus\ws-transport\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:518:28)
+    at Receiver.dataMessage (F:\elemantel\subterm\node_modules\@colyseus\ws-transport\node_modules\ws\lib\receiver.js:569:14)
+    at Receiver.getData (F:\elemantel\subterm\node_modules\@colyseus\ws-transport\node_modules\ws\lib\receiver.js:496:10)
+EncodeSchemaError: a 'LanguageEntry' was expected, but 'Object' was provided in MapSchema#bone_shortbow.n.01
+    at assertInstanceType (F:\elemantel\subterm\node_modules\@colyseus\schema\src\encoding\assert.ts:65:15)
+    at MapSchema.set (F:\elemantel\subterm\node_modules\@colyseus\schema\src\types\custom\MapSchema.ts:88:13)
+    at ItemData.getEntry (F:\elemantel\subterm\src\schema\ItemData.ts:25:20)
+    at Object.callback (F:\elemantel\subterm\src\rooms\MyRoom.ts:312:39)
+    at MyRoom._onMessage (F:\elemantel\subterm\node_modules\@colyseus\core\build\Room.js:748:28)
+    at WebSocket.emit (node:events:518:28)
+    at Receiver.receiverOnMessage (F:\elemantel\subterm\node_modules\@colyseus\ws-transport\node_modules\ws\lib\websocket.js:1220:20)
+    at Receiver.emit (node:events:518:28)
+    at Receiver.dataMessage (F:\elemantel\subterm\node_modules\@colyseus\ws-transport\node_modules\ws\lib\receiver.js:569:14)
+    at Receiver.getData (F:\elemantel\subterm\node_modules\@colyseus\ws-transport\node_modules\ws\lib\receiver.js:496:10)
+^C

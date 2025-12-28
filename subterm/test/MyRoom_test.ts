@@ -27,7 +27,7 @@ describe("testing your Colyseus app", () => {
     const serverState = room.state as MyRoomState;
     assert.ok(serverState.map.width > 0, "server map.width should be initialized");
     assert.ok(serverState.map.height > 0, "server map.height should be initialized");
-    assert.strictEqual(serverState.map.tiles.length, serverState.map.width * serverState.map.height, "server tiles length should equal width*height");
+    assert.strictEqual(serverState.map.tiles.length, serverState.map.height, "server tiles row count should equal map height");
 
     // wait until client's state has map defined (event-based)
     const state: MyRoomState = await new Promise((resolve, reject) => {
@@ -42,7 +42,7 @@ describe("testing your Colyseus app", () => {
     });
     assert.ok(!!state.map, "client state.map should be defined");
     assert.ok(state.map.width > 0 && state.map.height > 0, "client map dimensions should be initialized");
-    assert.strictEqual(state.map.tiles.length, state.map.width * state.map.height, "client tiles length should equal width*height");
+    assert.strictEqual(state.map.tiles.length, state.map.height, "client tiles row count should equal map height");
     assert.strictEqual(state.player.name, "Player");
     assert.ok(typeof state.player.x === "number" && typeof state.player.y === "number", "client player position should be numeric");
   });

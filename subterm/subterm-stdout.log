@@ -1,0 +1,3279 @@
+
+> my-app@1.0.0 start
+> tsx watch src/index.ts
+
+[dotenv@17.2.3] injecting env (1) from .env.development -- tip: ⚙️  override existing env vars with { override: true }
+✅ .env.development loaded.
+✅ Express initialized
+calling ensureLoaded--------------
+READING JSON elemental_light_alphabet.json
+READING JSON elemental_dark_alphabet.json
+READING JSON elemental_dictionary.json
+
+       ___      _
+      / __\___ | |_   _ ___  ___ _   _ ___
+     / /  / _ \| | | | / __|/ _ \ | | / __|
+    / /__| (_) | | |_| \__ \  __/ |_| \__ \
+    \____/\___/|_|\__, |___/\___|\__,_|___/
+                  |___/
+
+     · Multiplayer Framework for Node.js ·
+
+💖 Consider becoming a Sponsor on GitHub → https://github.com/sponsors/endel
+🌟 Give us a star on GitHub → https://github.com/colyseus/colyseus
+☁️  Deploy and scale your project on Colyseus Cloud → https://cloud.colyseus.io
+
+
+⚔️  Listening on http://localhost:2567
+Creating room with full main.py functionality
+MY ROOM onCreate
+calling ensureLoaded--------------
+READING JSON elemental_light_alphabet.json
+READING JSON elemental_dark_alphabet.json
+READING JSON elemental_dictionary.json
+ENSURE LOADED CALLED
+Game data loaded: [
+  'elementalDarkAlphabet',
+  'elementalDictionary',
+  'elementalLightAlphabet'
+]
+Generating 60x30 dungeon using rooms_corridors algorithm
+Placed player at (38, 8)
+Generated 60x30 dungeon using rooms_corridors
+Starting scatterItems function
+Found 5 items to scatter
+Added item gnome-engineered_hand_crossbow.n.01 at (21, 20)
+Added item gnome-engineered_hand_crossbow.n.01 at (12, 14)
+Added item gnome-engineered_hand_crossbow.n.01 at (42, 15)
+Added item gnome-engineered_hand_crossbow.n.01 at (44, 21)
+Added item peasants_sling.n.01 at (50, 2)
+Added item peasants_sling.n.01 at (36, 8)
+Added item gnome-engineered_hand_crossbow.n.01 at (37, 10)
+Added item elven_hunting_longbow.n.01 at (42, 10)
+Added item ironwood_recurve.n.01 at (47, 19)
+Added item gnome-engineered_hand_crossbow.n.01 at (44, 15)
+Added item gnome-engineered_hand_crossbow.n.01 at (25, 23)
+Added item ironwood_recurve.n.01 at (48, 4)
+Added item gnome-engineered_hand_crossbow.n.01 at (30, 14)
+Added item elven_hunting_longbow.n.01 at (21, 10)
+Added item gnome-engineered_hand_crossbow.n.01 at (46, 24)
+Added item elven_hunting_longbow.n.01 at (49, 4)
+Added item bone_shortbow.n.01 at (49, 21)
+Added item gnome-engineered_hand_crossbow.n.01 at (34, 21)
+Added item ironwood_recurve.n.01 at (31, 10)
+Added item peasants_sling.n.01 at (27, 12)
+Scattered 20 items
+Spawning 10 monsters on 435 empty tiles
+Spawned monster 1 at (7, 8)
+Spawned monster 2 at (42, 18)
+Spawned monster 3 at (18, 14)
+Spawned monster 4 at (42, 24)
+Spawned monster 5 at (16, 20)
+Spawned monster 6 at (17, 12)
+Spawned monster 7 at (22, 19)
+Spawned monster 8 at (3, 9)
+Spawned monster 9 at (12, 9)
+Spawned monster 10 at (50, 22)
+Successfully spawned 10 monsters
+Room ready with full functionality
+Client joined: NvGw2RHvL
+Placed player at (3, 9) after 3 attempts
+Created player: Player
+[DEBUG] Backend - Final movement interval: 100ms
+[DEBUG] Backend - Player moved to (4, 9)
+Player moved to (4, 9)
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (7, 8) is 4 tiles from player at (4, 9)
+Monster at (7, 8) is in range and will try to move
+Next position for monster: { x: 6, y: 8 }
+Monster moved from (6, 8) to (6, 8)
+Monster at (3, 9) is 1 tiles from player at (4, 9)
+Monster at (3, 9) is out of range (1) or adjacent
+Monster at (12, 9) is 8 tiles from player at (4, 9)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (17, 12) is 16 tiles from player at (4, 9)
+Monster at (17, 12) is out of range (16) or adjacent
+Monster at (18, 14) is 19 tiles from player at (4, 9)
+Monster at (18, 14) is out of range (19) or adjacent
+Monster at (42, 18) is 47 tiles from player at (4, 9)
+Monster at (42, 18) is out of range (47) or adjacent
+Monster at (22, 19) is 28 tiles from player at (4, 9)
+Monster at (22, 19) is out of range (28) or adjacent
+Monster at (16, 20) is 23 tiles from player at (4, 9)
+Monster at (16, 20) is out of range (23) or adjacent
+Monster at (50, 22) is 59 tiles from player at (4, 9)
+Monster at (50, 22) is out of range (59) or adjacent
+Monster at (42, 24) is 53 tiles from player at (4, 9)
+Monster at (42, 24) is out of range (53) or adjacent
+[DEBUG] Backend - Final movement interval: 100ms
+[DEBUG] Backend - Player moved to (4, 10)
+Player moved to (4, 10)
+[DEBUG] Backend - Final movement interval: 100ms
+[DEBUG] Backend - Player moved to (4, 11)
+Player moved to (4, 11)
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (6, 8) is 5 tiles from player at (4, 11)
+Monster at (6, 8) is in range and will try to move
+Next position for monster: { x: 6, y: 9 }
+Monster moved from (6, 9) to (6, 9)
+Monster at (3, 9) is 3 tiles from player at (4, 11)
+Monster at (3, 9) is in range and will try to move
+Next position for monster: { x: 3, y: 10 }
+Monster moved from (3, 10) to (3, 10)
+Monster at (12, 9) is 10 tiles from player at (4, 11)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (16, 12) is 13 tiles from player at (4, 11)
+Monster at (16, 12) is out of range (13) or adjacent
+Monster at (17, 14) is 16 tiles from player at (4, 11)
+Monster at (17, 14) is out of range (16) or adjacent
+Monster at (22, 18) is 25 tiles from player at (4, 11)
+Monster at (22, 18) is out of range (25) or adjacent
+Monster at (42, 18) is 45 tiles from player at (4, 11)
+Monster at (42, 18) is out of range (45) or adjacent
+Monster at (16, 20) is 21 tiles from player at (4, 11)
+Monster at (16, 20) is out of range (21) or adjacent
+Monster at (50, 21) is 56 tiles from player at (4, 11)
+Monster at (50, 21) is out of range (56) or adjacent
+Monster at (42, 24) is 51 tiles from player at (4, 11)
+Monster at (42, 24) is out of range (51) or adjacent
+[DEBUG] Backend - Final movement interval: 100ms
+[DEBUG] Backend - Player moved to (4, 12)
+Player moved to (4, 12)
+[DEBUG] Backend - Final movement interval: 100ms
+[DEBUG] Backend - Player moved to (4, 11)
+Player moved to (4, 11)
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (6, 9) is 4 tiles from player at (4, 11)
+Monster at (6, 9) is in range and will try to move
+Next position for monster: { x: 6, y: 10 }
+Monster moved from (6, 10) to (6, 10)
+Monster at (12, 9) is 10 tiles from player at (4, 11)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (3, 10) is 2 tiles from player at (4, 11)
+Monster at (3, 10) is in range and will try to move
+Next position for monster: { x: 3, y: 11 }
+Monster moved from (3, 11) to (3, 11)
+Monster at (16, 11) is 12 tiles from player at (4, 11)
+Monster at (16, 11) is out of range (12) or adjacent
+Monster at (17, 14) is 16 tiles from player at (4, 11)
+Monster at (17, 14) is out of range (16) or adjacent
+Monster at (21, 18) is 24 tiles from player at (4, 11)
+Monster at (21, 18) is out of range (24) or adjacent
+Monster at (42, 18) is 45 tiles from player at (4, 11)
+Monster at (42, 18) is out of range (45) or adjacent
+Monster at (16, 19) is 20 tiles from player at (4, 11)
+Monster at (16, 19) is out of range (20) or adjacent
+Monster at (50, 20) is 55 tiles from player at (4, 11)
+Monster at (50, 20) is out of range (55) or adjacent
+Monster at (42, 24) is 51 tiles from player at (4, 11)
+Monster at (42, 24) is out of range (51) or adjacent
+[DEBUG] Backend - Final movement interval: 100ms
+[DEBUG] Backend - Player moved to (4, 10)
+Player moved to (4, 10)
+[DEBUG] Backend - Final movement interval: 100ms
+[DEBUG] Backend - Player moved to (4, 11)
+Player moved to (4, 11)
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (12, 9) is 10 tiles from player at (4, 11)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (6, 10) is 3 tiles from player at (4, 11)
+Monster at (6, 10) is in range and will try to move
+Next position for monster: { x: 5, y: 10 }
+Monster moved from (5, 10) to (5, 10)
+Monster at (3, 11) is 1 tiles from player at (4, 11)
+Monster at (3, 11) is out of range (1) or adjacent
+Monster at (15, 11) is 11 tiles from player at (4, 11)
+Monster at (15, 11) is out of range (11) or adjacent
+Monster at (16, 14) is 15 tiles from player at (4, 11)
+Monster at (16, 14) is out of range (15) or adjacent
+Monster at (16, 18) is 19 tiles from player at (4, 11)
+Monster at (16, 18) is out of range (19) or adjacent
+Monster at (22, 18) is 25 tiles from player at (4, 11)
+Monster at (22, 18) is out of range (25) or adjacent
+Monster at (42, 18) is 45 tiles from player at (4, 11)
+Monster at (42, 18) is out of range (45) or adjacent
+Monster at (50, 20) is 55 tiles from player at (4, 11)
+Monster at (50, 20) is out of range (55) or adjacent
+Monster at (42, 23) is 50 tiles from player at (4, 11)
+Monster at (42, 23) is out of range (50) or adjacent
+[DEBUG] Received auto_navigate message: { targetX: 12, targetY: 14 }
+[DEBUG] Extracted target: (12, 14), interval: 1000
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (5, 10) is 11 tiles from player at (12, 14)
+Monster at (5, 10) is out of range (11) or adjacent
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (3, 11) is 12 tiles from player at (12, 14)
+Monster at (3, 11) is out of range (12) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (22, 17) is 13 tiles from player at (12, 14)
+Monster at (22, 17) is out of range (13) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (50, 19) is 43 tiles from player at (12, 14)
+Monster at (50, 19) is out of range (43) or adjacent
+Monster at (43, 23) is 40 tiles from player at (12, 14)
+Monster at (43, 23) is out of range (40) or adjacent
+Pickup attempt at (12, 14), item found: WorldItem {
+  name: [Getter/Setter],
+  type: [Getter/Setter],
+  description: [Getter/Setter],
+  value: [Getter/Setter],
+  weight: [Getter/Setter],
+  info: {}
+}
+Item name: gnome-engineered_hand_crossbow.n.01
+Item type: weapons
+Player picked up gnome-engineered_hand_crossbow.n.01
+Inventory now contains: ArraySchema {
+  items: [ 'gnome-engineered_hand_crossbow.n.01' ],
+  tmpItems: [ 'gnome-engineered_hand_crossbow.n.01' ],
+  deletedIndexes: {},
+  isMovingItems: false
+}
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (5, 9) is 12 tiles from player at (12, 14)
+Monster at (5, 9) is out of range (12) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (2, 11) is 13 tiles from player at (12, 14)
+Monster at (2, 11) is out of range (13) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (22, 16) is 12 tiles from player at (12, 14)
+Monster at (22, 16) is out of range (12) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster at (50, 19) is 43 tiles from player at (12, 14)
+Monster at (50, 19) is out of range (43) or adjacent
+Monster at (43, 22) is 39 tiles from player at (12, 14)
+Monster at (43, 22) is out of range (39) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (5, 8) is 13 tiles from player at (12, 14)
+Monster at (5, 8) is out of range (13) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (2, 10) is 14 tiles from player at (12, 14)
+Monster at (2, 10) is out of range (14) or adjacent
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (22, 16) is 12 tiles from player at (12, 14)
+Monster at (22, 16) is out of range (12) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (50, 18) is 42 tiles from player at (12, 14)
+Monster at (50, 18) is out of range (42) or adjacent
+Monster at (43, 21) is 38 tiles from player at (12, 14)
+Monster at (43, 21) is out of range (38) or adjacent
+Looking for language entry: gnome-engineered_hand_crossbow.n.01
+ItemData.getEntry(gnome-engineered_hand_crossbow.n.01) returned: undefined
+Entry not found: gnome-engineered_hand_crossbow.n.01
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (5, 8) is 13 tiles from player at (12, 14)
+Monster at (5, 8) is out of range (13) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (2, 10) is 14 tiles from player at (12, 14)
+Monster at (2, 10) is out of range (14) or adjacent
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (22, 16) is 12 tiles from player at (12, 14)
+Monster at (22, 16) is out of range (12) or adjacent
+Monster at (50, 17) is 41 tiles from player at (12, 14)
+Monster at (50, 17) is out of range (41) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (44, 21) is 39 tiles from player at (12, 14)
+Monster at (44, 21) is out of range (39) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (4, 8) is 14 tiles from player at (12, 14)
+Monster at (4, 8) is out of range (14) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (2, 10) is 14 tiles from player at (12, 14)
+Monster at (2, 10) is out of range (14) or adjacent
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (22, 16) is 12 tiles from player at (12, 14)
+Monster at (22, 16) is out of range (12) or adjacent
+Monster at (49, 17) is 40 tiles from player at (12, 14)
+Monster at (49, 17) is out of range (40) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (45, 21) is 40 tiles from player at (12, 14)
+Monster at (45, 21) is out of range (40) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (5, 8) is 13 tiles from player at (12, 14)
+Monster at (5, 8) is out of range (13) or adjacent
+Monster at (2, 9) is 15 tiles from player at (12, 14)
+Monster at (2, 9) is out of range (15) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (22, 15) is 11 tiles from player at (12, 14)
+Monster at (22, 15) is out of range (11) or adjacent
+Monster at (49, 16) is 39 tiles from player at (12, 14)
+Monster at (49, 16) is out of range (39) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (46, 21) is 41 tiles from player at (12, 14)
+Monster at (46, 21) is out of range (41) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (4, 8) is 14 tiles from player at (12, 14)
+Monster at (4, 8) is out of range (14) or adjacent
+Monster at (3, 9) is 14 tiles from player at (12, 14)
+Monster at (3, 9) is out of range (14) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (22, 15) is 11 tiles from player at (12, 14)
+Monster at (22, 15) is out of range (11) or adjacent
+Monster at (50, 16) is 40 tiles from player at (12, 14)
+Monster at (50, 16) is out of range (40) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (46, 20) is 40 tiles from player at (12, 14)
+Monster at (46, 20) is out of range (40) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (2, 9) is 15 tiles from player at (12, 14)
+Monster at (2, 9) is out of range (15) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (22, 15) is 11 tiles from player at (12, 14)
+Monster at (22, 15) is out of range (11) or adjacent
+Monster at (51, 16) is 41 tiles from player at (12, 14)
+Monster at (51, 16) is out of range (41) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster at (46, 19) is 39 tiles from player at (12, 14)
+Monster at (46, 19) is out of range (39) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (4, 8) is 14 tiles from player at (12, 14)
+Monster at (4, 8) is out of range (14) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (22, 15) is 11 tiles from player at (12, 14)
+Monster at (22, 15) is out of range (11) or adjacent
+Monster at (52, 16) is 42 tiles from player at (12, 14)
+Monster at (52, 16) is out of range (42) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (45, 19) is 38 tiles from player at (12, 14)
+Monster at (45, 19) is out of range (38) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (5, 8) is 13 tiles from player at (12, 14)
+Monster at (5, 8) is out of range (13) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (22, 15) is 11 tiles from player at (12, 14)
+Monster at (22, 15) is out of range (11) or adjacent
+Monster at (52, 16) is 42 tiles from player at (12, 14)
+Monster at (52, 16) is out of range (42) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (5, 8) is 13 tiles from player at (12, 14)
+Monster at (5, 8) is out of range (13) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (22, 15) is 11 tiles from player at (12, 14)
+Monster at (22, 15) is out of range (11) or adjacent
+Monster at (51, 16) is 41 tiles from player at (12, 14)
+Monster at (51, 16) is out of range (41) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (5, 8) is 13 tiles from player at (12, 14)
+Monster at (5, 8) is out of range (13) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (22, 15) is 11 tiles from player at (12, 14)
+Monster at (22, 15) is out of range (11) or adjacent
+Monster at (51, 15) is 40 tiles from player at (12, 14)
+Monster at (51, 15) is out of range (40) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (6, 8) is 12 tiles from player at (12, 14)
+Monster at (6, 8) is out of range (12) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (22, 15) is 11 tiles from player at (12, 14)
+Monster at (22, 15) is out of range (11) or adjacent
+Monster at (50, 15) is 39 tiles from player at (12, 14)
+Monster at (50, 15) is out of range (39) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (22, 14) is 10 tiles from player at (12, 14)
+Monster at (22, 14) is in range and will try to move
+Next position for monster: { x: 21, y: 14 }
+Monster moved from (21, 14) to (21, 14)
+Monster at (49, 15) is 38 tiles from player at (12, 14)
+Monster at (49, 15) is out of range (38) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (21, 14) is 9 tiles from player at (12, 14)
+Monster at (21, 14) is in range and will try to move
+Next position for monster: { x: 20, y: 14 }
+Monster moved from (20, 14) to (20, 14)
+Monster at (50, 15) is 39 tiles from player at (12, 14)
+Monster at (50, 15) is out of range (39) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (46, 18) is 38 tiles from player at (12, 14)
+Monster at (46, 18) is out of range (38) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (6, 8) is 12 tiles from player at (12, 14)
+Monster at (6, 8) is out of range (12) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (20, 14) is 8 tiles from player at (12, 14)
+Monster at (20, 14) is in range and will try to move
+Next position for monster: { x: 19, y: 14 }
+Monster moved from (19, 14) to (19, 14)
+Monster at (50, 14) is 38 tiles from player at (12, 14)
+Monster at (50, 14) is out of range (38) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (19, 14) is 7 tiles from player at (12, 14)
+Monster at (19, 14) is in range and will try to move
+Next position for monster: { x: 18, y: 14 }
+Monster moved from (18, 14) to (18, 14)
+Monster at (51, 14) is 39 tiles from player at (12, 14)
+Monster at (51, 14) is out of range (39) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (18, 14) is 6 tiles from player at (12, 14)
+Monster at (18, 14) is in range and will try to move
+Next position for monster: { x: 17, y: 14 }
+Monster moved from (17, 14) to (17, 14)
+Monster at (52, 14) is 40 tiles from player at (12, 14)
+Monster at (52, 14) is out of range (40) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (6, 8) is 12 tiles from player at (12, 14)
+Monster at (6, 8) is out of range (12) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (52, 13) is 41 tiles from player at (12, 14)
+Monster at (52, 13) is out of range (41) or adjacent
+Monster at (17, 14) is 5 tiles from player at (12, 14)
+Monster at (17, 14) is in range and will try to move
+Next position for monster: { x: 16, y: 14 }
+Monster moved from (16, 14) to (16, 14)
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (46, 18) is 38 tiles from player at (12, 14)
+Monster at (46, 18) is out of range (38) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (52, 12) is 42 tiles from player at (12, 14)
+Monster at (52, 12) is out of range (42) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (16, 14) is 4 tiles from player at (12, 14)
+Monster at (16, 14) is in range and will try to move
+Next position for monster: { x: 15, y: 14 }
+Monster moved from (15, 14) to (15, 14)
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (52, 12) is 42 tiles from player at (12, 14)
+Monster at (52, 12) is out of range (42) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 14) is 3 tiles from player at (12, 14)
+Monster at (15, 14) is in range and will try to move
+Next position for monster: { x: 14, y: 14 }
+Monster moved from (14, 14) to (14, 14)
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (46, 18) is 38 tiles from player at (12, 14)
+Monster at (46, 18) is out of range (38) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (52, 12) is 42 tiles from player at (12, 14)
+Monster at (52, 12) is out of range (42) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (14, 14) is 2 tiles from player at (12, 14)
+Monster at (14, 14) is in range and will try to move
+Next position for monster: { x: 13, y: 14 }
+Monster moved from (13, 14) to (13, 14)
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (46, 18) is 38 tiles from player at (12, 14)
+Monster at (46, 18) is out of range (38) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (52, 12) is 42 tiles from player at (12, 14)
+Monster at (52, 12) is out of range (42) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (46, 18) is 38 tiles from player at (12, 14)
+Monster at (46, 18) is out of range (38) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (52, 12) is 42 tiles from player at (12, 14)
+Monster at (52, 12) is out of range (42) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (47, 18) is 39 tiles from player at (12, 14)
+Monster at (47, 18) is out of range (39) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (4, 8) is 14 tiles from player at (12, 14)
+Monster at (4, 8) is out of range (14) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (52, 12) is 42 tiles from player at (12, 14)
+Monster at (52, 12) is out of range (42) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (48, 18) is 40 tiles from player at (12, 14)
+Monster at (48, 18) is out of range (40) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (4, 8) is 14 tiles from player at (12, 14)
+Monster at (4, 8) is out of range (14) or adjacent
+Monster at (6, 8) is 12 tiles from player at (12, 14)
+Monster at (6, 8) is out of range (12) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (52, 12) is 42 tiles from player at (12, 14)
+Monster at (52, 12) is out of range (42) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (48, 18) is 40 tiles from player at (12, 14)
+Monster at (48, 18) is out of range (40) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (51, 12) is 41 tiles from player at (12, 14)
+Monster at (51, 12) is out of range (41) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (49, 18) is 41 tiles from player at (12, 14)
+Monster at (49, 18) is out of range (41) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (4, 8) is 14 tiles from player at (12, 14)
+Monster at (4, 8) is out of range (14) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (52, 12) is 42 tiles from player at (12, 14)
+Monster at (52, 12) is out of range (42) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (48, 18) is 40 tiles from player at (12, 14)
+Monster at (48, 18) is out of range (40) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (5, 8) is 13 tiles from player at (12, 14)
+Monster at (5, 8) is out of range (13) or adjacent
+Monster at (6, 8) is 12 tiles from player at (12, 14)
+Monster at (6, 8) is out of range (12) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (51, 12) is 41 tiles from player at (12, 14)
+Monster at (51, 12) is out of range (41) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster at (48, 18) is 40 tiles from player at (12, 14)
+Monster at (48, 18) is out of range (40) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (5, 8) is 13 tiles from player at (12, 14)
+Monster at (5, 8) is out of range (13) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (52, 12) is 42 tiles from player at (12, 14)
+Monster at (52, 12) is out of range (42) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster at (47, 18) is 39 tiles from player at (12, 14)
+Monster at (47, 18) is out of range (39) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (5, 8) is 13 tiles from player at (12, 14)
+Monster at (5, 8) is out of range (13) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (52, 12) is 42 tiles from player at (12, 14)
+Monster at (52, 12) is out of range (42) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster at (47, 18) is 39 tiles from player at (12, 14)
+Monster at (47, 18) is out of range (39) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (5, 8) is 13 tiles from player at (12, 14)
+Monster at (5, 8) is out of range (13) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (51, 12) is 41 tiles from player at (12, 14)
+Monster at (51, 12) is out of range (41) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster at (47, 18) is 39 tiles from player at (12, 14)
+Monster at (47, 18) is out of range (39) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (5, 8) is 13 tiles from player at (12, 14)
+Monster at (5, 8) is out of range (13) or adjacent
+Monster at (6, 8) is 12 tiles from player at (12, 14)
+Monster at (6, 8) is out of range (12) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (50, 12) is 40 tiles from player at (12, 14)
+Monster at (50, 12) is out of range (40) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster at (48, 18) is 40 tiles from player at (12, 14)
+Monster at (48, 18) is out of range (40) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (5, 8) is 13 tiles from player at (12, 14)
+Monster at (5, 8) is out of range (13) or adjacent
+Monster at (6, 8) is 12 tiles from player at (12, 14)
+Monster at (6, 8) is out of range (12) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (50, 12) is 40 tiles from player at (12, 14)
+Monster at (50, 12) is out of range (40) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster at (49, 18) is 41 tiles from player at (12, 14)
+Monster at (49, 18) is out of range (41) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (5, 8) is 13 tiles from player at (12, 14)
+Monster at (5, 8) is out of range (13) or adjacent
+Monster at (6, 8) is 12 tiles from player at (12, 14)
+Monster at (6, 8) is out of range (12) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster at (48, 18) is 40 tiles from player at (12, 14)
+Monster at (48, 18) is out of range (40) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (4, 8) is 14 tiles from player at (12, 14)
+Monster at (4, 8) is out of range (14) or adjacent
+Monster at (6, 8) is 12 tiles from player at (12, 14)
+Monster at (6, 8) is out of range (12) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (50, 12) is 40 tiles from player at (12, 14)
+Monster at (50, 12) is out of range (40) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (47, 18) is 39 tiles from player at (12, 14)
+Monster at (47, 18) is out of range (39) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (5, 8) is 13 tiles from player at (12, 14)
+Monster at (5, 8) is out of range (13) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (47, 18) is 39 tiles from player at (12, 14)
+Monster at (47, 18) is out of range (39) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (4, 8) is 14 tiles from player at (12, 14)
+Monster at (4, 8) is out of range (14) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (46, 18) is 38 tiles from player at (12, 14)
+Monster at (46, 18) is out of range (38) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (5, 8) is 13 tiles from player at (12, 14)
+Monster at (5, 8) is out of range (13) or adjacent
+Monster at (6, 8) is 12 tiles from player at (12, 14)
+Monster at (6, 8) is out of range (12) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (4, 8) is 14 tiles from player at (12, 14)
+Monster at (4, 8) is out of range (14) or adjacent
+Monster at (6, 8) is 12 tiles from player at (12, 14)
+Monster at (6, 8) is out of range (12) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (6, 8) is 12 tiles from player at (12, 14)
+Monster at (6, 8) is out of range (12) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (5, 8) is 13 tiles from player at (12, 14)
+Monster at (5, 8) is out of range (13) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (4, 8) is 14 tiles from player at (12, 14)
+Monster at (4, 8) is out of range (14) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (5, 8) is 13 tiles from player at (12, 14)
+Monster at (5, 8) is out of range (13) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (50, 12) is 40 tiles from player at (12, 14)
+Monster at (50, 12) is out of range (40) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (5, 8) is 13 tiles from player at (12, 14)
+Monster at (5, 8) is out of range (13) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (5, 8) is 13 tiles from player at (12, 14)
+Monster at (5, 8) is out of range (13) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (6, 8) is 12 tiles from player at (12, 14)
+Monster at (6, 8) is out of range (12) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (50, 12) is 40 tiles from player at (12, 14)
+Monster at (50, 12) is out of range (40) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (50, 12) is 40 tiles from player at (12, 14)
+Monster at (50, 12) is out of range (40) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (50, 12) is 40 tiles from player at (12, 14)
+Monster at (50, 12) is out of range (40) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (6, 8) is 12 tiles from player at (12, 14)
+Monster at (6, 8) is out of range (12) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (6, 8) is 12 tiles from player at (12, 14)
+Monster at (6, 8) is out of range (12) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (6, 8) is 12 tiles from player at (12, 14)
+Monster at (6, 8) is out of range (12) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (6, 8) is 12 tiles from player at (12, 14)
+Monster at (6, 8) is out of range (12) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (50, 12) is 40 tiles from player at (12, 14)
+Monster at (50, 12) is out of range (40) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (4, 8) is 14 tiles from player at (12, 14)
+Monster at (4, 8) is out of range (14) or adjacent
+Monster at (6, 8) is 12 tiles from player at (12, 14)
+Monster at (6, 8) is out of range (12) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (50, 12) is 40 tiles from player at (12, 14)
+Monster at (50, 12) is out of range (40) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (6, 8) is 12 tiles from player at (12, 14)
+Monster at (6, 8) is out of range (12) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (50, 12) is 40 tiles from player at (12, 14)
+Monster at (50, 12) is out of range (40) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (4, 8) is 14 tiles from player at (12, 14)
+Monster at (4, 8) is out of range (14) or adjacent
+Monster at (6, 8) is 12 tiles from player at (12, 14)
+Monster at (6, 8) is out of range (12) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (5, 8) is 13 tiles from player at (12, 14)
+Monster at (5, 8) is out of range (13) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (6, 8) is 12 tiles from player at (12, 14)
+Monster at (6, 8) is out of range (12) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (5, 8) is 13 tiles from player at (12, 14)
+Monster at (5, 8) is out of range (13) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (50, 12) is 40 tiles from player at (12, 14)
+Monster at (50, 12) is out of range (40) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (4, 8) is 14 tiles from player at (12, 14)
+Monster at (4, 8) is out of range (14) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (50, 12) is 40 tiles from player at (12, 14)
+Monster at (50, 12) is out of range (40) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (50, 12) is 40 tiles from player at (12, 14)
+Monster at (50, 12) is out of range (40) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (51, 12) is 41 tiles from player at (12, 14)
+Monster at (51, 12) is out of range (41) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (4, 8) is 14 tiles from player at (12, 14)
+Monster at (4, 8) is out of range (14) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (50, 12) is 40 tiles from player at (12, 14)
+Monster at (50, 12) is out of range (40) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (5, 8) is 13 tiles from player at (12, 14)
+Monster at (5, 8) is out of range (13) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (51, 12) is 41 tiles from player at (12, 14)
+Monster at (51, 12) is out of range (41) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (4, 8) is 14 tiles from player at (12, 14)
+Monster at (4, 8) is out of range (14) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (50, 12) is 40 tiles from player at (12, 14)
+Monster at (50, 12) is out of range (40) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (5, 8) is 13 tiles from player at (12, 14)
+Monster at (5, 8) is out of range (13) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (6, 8) is 12 tiles from player at (12, 14)
+Monster at (6, 8) is out of range (12) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (50, 12) is 40 tiles from player at (12, 14)
+Monster at (50, 12) is out of range (40) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (51, 12) is 41 tiles from player at (12, 14)
+Monster at (51, 12) is out of range (41) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster at (46, 18) is 38 tiles from player at (12, 14)
+Monster at (46, 18) is out of range (38) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (52, 12) is 42 tiles from player at (12, 14)
+Monster at (52, 12) is out of range (42) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster at (46, 18) is 38 tiles from player at (12, 14)
+Monster at (46, 18) is out of range (38) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (4, 8) is 14 tiles from player at (12, 14)
+Monster at (4, 8) is out of range (14) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (51, 12) is 41 tiles from player at (12, 14)
+Monster at (51, 12) is out of range (41) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster at (47, 18) is 39 tiles from player at (12, 14)
+Monster at (47, 18) is out of range (39) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (4, 8) is 14 tiles from player at (12, 14)
+Monster at (4, 8) is out of range (14) or adjacent
+Monster at (6, 8) is 12 tiles from player at (12, 14)
+Monster at (6, 8) is out of range (12) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (50, 12) is 40 tiles from player at (12, 14)
+Monster at (50, 12) is out of range (40) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster at (46, 18) is 38 tiles from player at (12, 14)
+Monster at (46, 18) is out of range (38) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (4, 8) is 14 tiles from player at (12, 14)
+Monster at (4, 8) is out of range (14) or adjacent
+Monster at (6, 8) is 12 tiles from player at (12, 14)
+Monster at (6, 8) is out of range (12) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (50, 12) is 40 tiles from player at (12, 14)
+Monster at (50, 12) is out of range (40) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster at (47, 18) is 39 tiles from player at (12, 14)
+Monster at (47, 18) is out of range (39) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (5, 8) is 13 tiles from player at (12, 14)
+Monster at (5, 8) is out of range (13) or adjacent
+Monster at (6, 8) is 12 tiles from player at (12, 14)
+Monster at (6, 8) is out of range (12) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster at (46, 18) is 38 tiles from player at (12, 14)
+Monster at (46, 18) is out of range (38) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (5, 8) is 13 tiles from player at (12, 14)
+Monster at (5, 8) is out of range (13) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster at (46, 18) is 38 tiles from player at (12, 14)
+Monster at (46, 18) is out of range (38) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (6, 8) is 12 tiles from player at (12, 14)
+Monster at (6, 8) is out of range (12) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster at (46, 18) is 38 tiles from player at (12, 14)
+Monster at (46, 18) is out of range (38) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (5, 8) is 13 tiles from player at (12, 14)
+Monster at (5, 8) is out of range (13) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (4, 8) is 14 tiles from player at (12, 14)
+Monster at (4, 8) is out of range (14) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (50, 12) is 40 tiles from player at (12, 14)
+Monster at (50, 12) is out of range (40) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (4, 8) is 14 tiles from player at (12, 14)
+Monster at (4, 8) is out of range (14) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (51, 12) is 41 tiles from player at (12, 14)
+Monster at (51, 12) is out of range (41) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (4, 8) is 14 tiles from player at (12, 14)
+Monster at (4, 8) is out of range (14) or adjacent
+Monster at (6, 8) is 12 tiles from player at (12, 14)
+Monster at (6, 8) is out of range (12) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (50, 12) is 40 tiles from player at (12, 14)
+Monster at (50, 12) is out of range (40) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (50, 12) is 40 tiles from player at (12, 14)
+Monster at (50, 12) is out of range (40) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster at (46, 18) is 38 tiles from player at (12, 14)
+Monster at (46, 18) is out of range (38) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (50, 12) is 40 tiles from player at (12, 14)
+Monster at (50, 12) is out of range (40) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (4, 8) is 14 tiles from player at (12, 14)
+Monster at (4, 8) is out of range (14) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (50, 12) is 40 tiles from player at (12, 14)
+Monster at (50, 12) is out of range (40) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster at (46, 18) is 38 tiles from player at (12, 14)
+Monster at (46, 18) is out of range (38) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (7, 8) is 11 tiles from player at (12, 14)
+Monster at (7, 8) is out of range (11) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (51, 12) is 41 tiles from player at (12, 14)
+Monster at (51, 12) is out of range (41) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (6, 8) is 12 tiles from player at (12, 14)
+Monster at (6, 8) is out of range (12) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (52, 12) is 42 tiles from player at (12, 14)
+Monster at (52, 12) is out of range (42) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (46, 18) is 38 tiles from player at (12, 14)
+Monster at (46, 18) is out of range (38) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (5, 8) is 13 tiles from player at (12, 14)
+Monster at (5, 8) is out of range (13) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (52, 12) is 42 tiles from player at (12, 14)
+Monster at (52, 12) is out of range (42) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (47, 18) is 39 tiles from player at (12, 14)
+Monster at (47, 18) is out of range (39) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (5, 8) is 13 tiles from player at (12, 14)
+Monster at (5, 8) is out of range (13) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (52, 12) is 42 tiles from player at (12, 14)
+Monster at (52, 12) is out of range (42) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (48, 18) is 40 tiles from player at (12, 14)
+Monster at (48, 18) is out of range (40) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (4, 8) is 14 tiles from player at (12, 14)
+Monster at (4, 8) is out of range (14) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (52, 12) is 42 tiles from player at (12, 14)
+Monster at (52, 12) is out of range (42) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster at (47, 18) is 39 tiles from player at (12, 14)
+Monster at (47, 18) is out of range (39) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (4, 8) is 14 tiles from player at (12, 14)
+Monster at (4, 8) is out of range (14) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (51, 12) is 41 tiles from player at (12, 14)
+Monster at (51, 12) is out of range (41) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (47, 18) is 39 tiles from player at (12, 14)
+Monster at (47, 18) is out of range (39) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (52, 12) is 42 tiles from player at (12, 14)
+Monster at (52, 12) is out of range (42) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (47, 18) is 39 tiles from player at (12, 14)
+Monster at (47, 18) is out of range (39) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (51, 12) is 41 tiles from player at (12, 14)
+Monster at (51, 12) is out of range (41) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (42, 18) is 34 tiles from player at (12, 14)
+Monster at (42, 18) is out of range (34) or adjacent
+Monster at (46, 18) is 38 tiles from player at (12, 14)
+Monster at (46, 18) is out of range (38) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (4, 8) is 14 tiles from player at (12, 14)
+Monster at (4, 8) is out of range (14) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (50, 12) is 40 tiles from player at (12, 14)
+Monster at (50, 12) is out of range (40) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster at (46, 18) is 38 tiles from player at (12, 14)
+Monster at (46, 18) is out of range (38) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (51, 12) is 41 tiles from player at (12, 14)
+Monster at (51, 12) is out of range (41) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (52, 12) is 42 tiles from player at (12, 14)
+Monster at (52, 12) is out of range (42) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (51, 12) is 41 tiles from player at (12, 14)
+Monster at (51, 12) is out of range (41) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster at (46, 18) is 38 tiles from player at (12, 14)
+Monster at (46, 18) is out of range (38) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (50, 12) is 40 tiles from player at (12, 14)
+Monster at (50, 12) is out of range (40) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (43, 18) is 35 tiles from player at (12, 14)
+Monster at (43, 18) is out of range (35) or adjacent
+Monster at (46, 18) is 38 tiles from player at (12, 14)
+Monster at (46, 18) is out of range (38) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (50, 12) is 40 tiles from player at (12, 14)
+Monster at (50, 12) is out of range (40) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (44, 18) is 36 tiles from player at (12, 14)
+Monster at (44, 18) is out of range (36) or adjacent
+Monster at (46, 18) is 38 tiles from player at (12, 14)
+Monster at (46, 18) is out of range (38) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (4, 8) is 14 tiles from player at (12, 14)
+Monster at (4, 8) is out of range (14) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster at (46, 18) is 38 tiles from player at (12, 14)
+Monster at (46, 18) is out of range (38) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (4, 8) is 14 tiles from player at (12, 14)
+Monster at (4, 8) is out of range (14) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster at (46, 18) is 38 tiles from player at (12, 14)
+Monster at (46, 18) is out of range (38) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (2, 8) is 16 tiles from player at (12, 14)
+Monster at (2, 8) is out of range (16) or adjacent
+Monster at (5, 8) is 13 tiles from player at (12, 14)
+Monster at (5, 8) is out of range (13) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster at (46, 18) is 38 tiles from player at (12, 14)
+Monster at (46, 18) is out of range (38) or adjacent
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (3, 8) is 15 tiles from player at (12, 14)
+Monster at (3, 8) is out of range (15) or adjacent
+Monster at (6, 8) is 12 tiles from player at (12, 14)
+Monster at (6, 8) is out of range (12) or adjacent
+Monster at (12, 9) is 5 tiles from player at (12, 14)
+Monster at (12, 9) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (15, 10) is 7 tiles from player at (12, 14)
+Monster at (15, 10) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 12) is 39 tiles from player at (12, 14)
+Monster at (49, 12) is out of range (39) or adjacent
+Monster at (16, 13) is 5 tiles from player at (12, 14)
+Monster at (16, 13) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (13, 14) is 1 tiles from player at (12, 14)
+Monster at (13, 14) is out of range (1) or adjacent
+Monster at (16, 18) is 8 tiles from player at (12, 14)
+Monster at (16, 18) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (45, 18) is 37 tiles from player at (12, 14)
+Monster at (45, 18) is out of range (37) or adjacent
+Monster at (46, 18) is 38 tiles from player at (12, 14)
+Monster at (46, 18) is out of range (38) or adjacent
+11:04:41 AM [tsx] change in ./src\schema\ItemData.ts Restarting...
+c[dotenv@17.2.3] injecting env (1) from .env.development -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+✅ .env.development loaded.
+✅ Express initialized
+calling ensureLoaded--------------
+READING JSON elemental_light_alphabet.json
+READING JSON elemental_dark_alphabet.json
+READING JSON elemental_dictionary.json
+
+       ___      _
+      / __\___ | |_   _ ___  ___ _   _ ___
+     / /  / _ \| | | | / __|/ _ \ | | / __|
+    / /__| (_) | | |_| \__ \  __/ |_| \__ \
+    \____/\___/|_|\__, |___/\___|\__,_|___/
+                  |___/
+
+     · Multiplayer Framework for Node.js ·
+
+💖 Consider becoming a Sponsor on GitHub → https://github.com/sponsors/endel
+🌟 Give us a star on GitHub → https://github.com/colyseus/colyseus
+☁️  Deploy and scale your project on Colyseus Cloud → https://cloud.colyseus.io
+
+
+⚔️  Listening on http://localhost:2567
+Creating room with full main.py functionality
+MY ROOM onCreate
+calling ensureLoaded--------------
+READING JSON elemental_light_alphabet.json
+READING JSON elemental_dark_alphabet.json
+READING JSON elemental_dictionary.json
+ENSURE LOADED CALLED
+Game data loaded: [
+  'elementalDarkAlphabet',
+  'elementalDictionary',
+  'elementalLightAlphabet'
+]
+Generating 60x30 dungeon using rooms_corridors algorithm
+Placed player at (29, 23)
+Generated 60x30 dungeon using rooms_corridors
+Starting scatterItems function
+Found 5 items to scatter
+Added item peasants_sling.n.01 at (17, 15)
+Added item elven_hunting_longbow.n.01 at (46, 9)
+Added item bone_shortbow.n.01 at (27, 23)
+Added item elven_hunting_longbow.n.01 at (34, 12)
+Added item elven_hunting_longbow.n.01 at (38, 8)
+Added item gnome-engineered_hand_crossbow.n.01 at (15, 5)
+Added item elven_hunting_longbow.n.01 at (32, 19)
+Added item gnome-engineered_hand_crossbow.n.01 at (10, 18)
+Added item gnome-engineered_hand_crossbow.n.01 at (19, 22)
+Added item bone_shortbow.n.01 at (18, 23)
+Added item ironwood_recurve.n.01 at (31, 12)
+Added item elven_hunting_longbow.n.01 at (37, 16)
+Added item ironwood_recurve.n.01 at (41, 12)
+Added item bone_shortbow.n.01 at (13, 21)
+Added item bone_shortbow.n.01 at (41, 13)
+Added item bone_shortbow.n.01 at (36, 7)
+Added item peasants_sling.n.01 at (51, 16)
+Added item bone_shortbow.n.01 at (13, 8)
+Added item ironwood_recurve.n.01 at (37, 19)
+Added item elven_hunting_longbow.n.01 at (6, 21)
+Scattered 20 items
+Spawning 10 monsters on 454 empty tiles
+Spawned monster 1 at (48, 13)
+Spawned monster 2 at (12, 5)
+Spawned monster 3 at (28, 11)
+Spawned monster 4 at (11, 6)
+Spawned monster 5 at (13, 14)
+Spawned monster 6 at (17, 17)
+Spawned monster 7 at (14, 5)
+Spawned monster 8 at (44, 16)
+Spawned monster 9 at (17, 17)
+Spawned monster 10 at (18, 18)
+Successfully spawned 10 monsters
+Room ready with full functionality
+Client joined: l7VE2MHUn
+Placed player at (25, 7) after 1 attempts
+Created player: Player
+[DEBUG] Backend - Final movement interval: 100ms
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (12, 5) is 15 tiles from player at (25, 7)
+Monster at (12, 5) is out of range (15) or adjacent
+Monster at (14, 5) is 13 tiles from player at (25, 7)
+Monster at (14, 5) is out of range (13) or adjacent
+Monster at (11, 6) is 15 tiles from player at (25, 7)
+Monster at (11, 6) is out of range (15) or adjacent
+Monster at (28, 11) is 7 tiles from player at (25, 7)
+Monster at (28, 11) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (48, 13) is 29 tiles from player at (25, 7)
+Monster at (48, 13) is out of range (29) or adjacent
+Monster at (13, 14) is 19 tiles from player at (25, 7)
+Monster at (13, 14) is out of range (19) or adjacent
+Monster at (44, 16) is 28 tiles from player at (25, 7)
+Monster at (44, 16) is out of range (28) or adjacent
+Monster at (17, 17) is 18 tiles from player at (25, 7)
+Monster at (17, 17) is out of range (18) or adjacent
+Monster at (17, 17) is 18 tiles from player at (25, 7)
+Monster at (17, 17) is out of range (18) or adjacent
+Monster at (18, 18) is 18 tiles from player at (25, 7)
+Monster at (18, 18) is out of range (18) or adjacent
+[DEBUG] Backend - Final movement interval: 100ms
+[DEBUG] Backend - Player moved to (26, 7)
+Player moved to (26, 7)
+[DEBUG] Backend - Final movement interval: 100ms
+[DEBUG] Backend - Player moved to (27, 7)
+Player moved to (27, 7)
+[DEBUG] Backend - Final movement interval: 100ms
+[DEBUG] Backend - Player moved to (28, 7)
+Player moved to (28, 7)
+[DEBUG] Backend - Final movement interval: 100ms
+[DEBUG] Backend - Player moved to (29, 7)
+Player moved to (29, 7)
+[DEBUG] Backend - Final movement interval: 100ms
+[DEBUG] Backend - Player moved to (30, 7)
+Player moved to (30, 7)
+[DEBUG] Backend - Final movement interval: 100ms
+[DEBUG] Backend - Player moved to (31, 7)
+Player moved to (31, 7)
+[DEBUG] Backend - Final movement interval: 100ms
+[DEBUG] Backend - Player moved to (32, 7)
+Player moved to (32, 7)
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (11, 5) is 23 tiles from player at (32, 7)
+Monster at (11, 5) is out of range (23) or adjacent
+Monster at (13, 5) is 21 tiles from player at (32, 7)
+Monster at (13, 5) is out of range (21) or adjacent
+Monster at (14, 5) is 20 tiles from player at (32, 7)
+Monster at (14, 5) is out of range (20) or adjacent
+Monster at (28, 11) is 8 tiles from player at (32, 7)
+Monster at (28, 11) is in range and will try to move
+Monster cannot see player - no line of sight
+Monster at (49, 13) is 23 tiles from player at (32, 7)
+Monster at (49, 13) is out of range (23) or adjacent
+Monster at (12, 14) is 27 tiles from player at (32, 7)
+Monster at (12, 14) is out of range (27) or adjacent
+Monster at (45, 16) is 22 tiles from player at (32, 7)
+Monster at (45, 16) is out of range (22) or adjacent
+Monster at (16, 17) is 26 tiles from player at (32, 7)
+Monster at (16, 17) is out of range (26) or adjacent
+Monster at (17, 17) is 25 tiles from player at (32, 7)
+Monster at (17, 17) is out of range (25) or adjacent
+Monster at (18, 18) is 25 tiles from player at (32, 7)
+Monster at (18, 18) is out of range (25) or adjacent
+[DEBUG] Backend - Final movement interval: 100ms
+[DEBUG] Backend - Player moved to (33, 7)
+Player moved to (33, 7)
+[DEBUG] Backend - Final movement interval: 100ms
+[DEBUG] Backend - Player moved to (34, 7)
+Player moved to (34, 7)
+[DEBUG] Backend - Final movement interval: 100ms
+[DEBUG] Backend - Player moved to (35, 7)
+Player moved to (35, 7)
+[DEBUG] Backend - Final movement interval: 100ms
+[DEBUG] Backend - Player moved to (36, 7)
+Player moved to (36, 7)
+Pickup attempt at (36, 7), item found: WorldItem {
+  name: [Getter/Setter],
+  type: [Getter/Setter],
+  description: [Getter/Setter],
+  value: [Getter/Setter],
+  weight: [Getter/Setter],
+  info: {}
+}
+Item name: bone_shortbow.n.01
+Item type: weapons
+Player picked up bone_shortbow.n.01
+Inventory now contains: ArraySchema {
+  items: [ 'bone_shortbow.n.01' ],
+  tmpItems: [ 'bone_shortbow.n.01' ],
+  deletedIndexes: {},
+  isMovingItems: false
+}
+Monster AI: Found 10 monsters to update
+Found 10 monsters to update
+Monster at (12, 5) is 26 tiles from player at (36, 7)
+Monster at (12, 5) is out of range (26) or adjacent
+Monster at (13, 5) is 25 tiles from player at (36, 7)
+Monster at (13, 5) is out of range (25) or adjacent
+Monster at (14, 5) is 24 tiles from player at (36, 7)
+Monster at (14, 5) is out of range (24) or adjacent
+Monster at (28, 11) is 12 tiles from player at (36, 7)
+Monster at (28, 11) is out of range (12) or adjacent
+Monster at (12, 13) is 30 tiles from player at (36, 7)
+Monster at (12, 13) is out of range (30) or adjacent
+Monster at (48, 13) is 18 tiles from player at (36, 7)
+Monster at (48, 13) is out of range (18) or adjacent
+Monster at (44, 16) is 17 tiles from player at (36, 7)
+Monster at (44, 16) is out of range (17) or adjacent
+Monster at (15, 17) is 31 tiles from player at (36, 7)
+Monster at (15, 17) is out of range (31) or adjacent
+Monster at (18, 17) is 28 tiles from player at (36, 7)
+Monster at (18, 17) is out of range (28) or adjacent
+Monster at (18, 18) is 29 tiles from player at (36, 7)
+Monster at (18, 18) is out of range (29) or adjacent
+Looking for language entry: bone_shortbow.n.01
+Terminate batch job (Y/N)? Terminate batch job (Y/N)? Terminate batch job (Y/N)? 

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Texture } from "pixi.js";
-import { Application, Sprite, Container } from "@pixi/react";
 import { tileManager } from "../services/TileManager";
 import { GameState, gameClient } from "../services/GameClient";
 import { GAME_CONSTANTS } from "../../../shared/constants";
@@ -60,6 +59,7 @@ export const DungeonMap: React.FC<DungeonMapProps> = ({
   gameState, 
   tileSize = TILE_SIZE 
 }) => {
+  console.log("DungeonMap component called with gameState:", !!gameState);
   const [assetsLoaded, setAssetsLoaded] = useState(false);
   const [highlightedPath, setHighlightedPath] = useState<Array<{x: number, y: number}>>([]);
 
@@ -100,23 +100,22 @@ export const DungeonMap: React.FC<DungeonMapProps> = ({
     }
     
     // Only navigate to floor tiles (not walls)
-    const tilesArray = (gameState?.map.tiles as any)?.items || [];
-    console.log(`[DEBUG] tilesArray length:`, tilesArray.length);
+    if (!gameState!.map.tiles[y] || !gameState!.map.tiles[y].tiles[x]) {
+      console.log(`[DEBUG] Invalid tile coordinates at (${x}, ${y})`);
+      return;
+    }
     
-    const tileIndex = y * gameState!.map.width + x;
-    console.log(`[DEBUG] Calculated tileIndex: ${tileIndex} for (${x}, ${y})`);
+    const tile = gameState!.map.tiles[y].tiles[x];
+    console.log(`[DEBUG] Tile at (${x}, ${y}):`, tile);
     
-    const tileValue = tilesArray[tileIndex];
-    console.log(`[DEBUG] Tile value at (${x}, ${y}):`, tileValue);
-    
-    if (tileValue === 1) {
+    if (tile.terrain === 1) {
       console.log(`[DEBUG] Cannot navigate to wall tile at (${x}, ${y})`);
       return;
     }
     
     console.log(`[DEBUG] Starting autonavigation to (${x}, ${y})`);
     // Start autonavigation
-    gameClient.autoNavigate(x, y, 1000);
+    gameClient.autoNavigate(x, y);
     console.log(`[DEBUG] autoNavigate called for (${x}, ${y})`);
   };
 
@@ -170,11 +169,12 @@ export const DungeonMap: React.FC<DungeonMapProps> = ({
     return null;
   }
 
-  const { map, players, world } = gameState;
+  const { map, players } = gameState;
   const floorTexture = tileManager.getAsset("floor");
   const wallTexture = tileManager.getAsset("wall");
   const playerTexture = tileManager.getAsset("player");
   const itemTexture = tileManager.getAsset("item");
+  const enemyTexture = tileManager.getAsset("enemy");
 
   // Find the current player (first player in the map)
   const currentPlayer = players.values().next().value;
@@ -197,28 +197,41 @@ export const DungeonMap: React.FC<DungeonMapProps> = ({
   let wallCount = 0;
   let floorCount = 0;
   
-  // Access the actual tiles array from the nested structure
-  const tilesArray = (map.tiles as any).items || [];
-  
-  console.log("Tiles array:", {
-    length: tilesArray.length,
-    firstFew: tilesArray.slice(0, 20),
-    hasWalls: tilesArray.includes(1),
-    hasFloors: tilesArray.includes(0)
+  console.log("Full map structure:", map);
+  console.log("Map tiles type:", typeof map.tiles);
+  console.log("Map tiles constructor:", map.tiles?.constructor?.name);
+  console.log("First tile row:", map.tiles[0]);
+  console.log("First tile row tiles type:", typeof map.tiles[0]?.tiles);
+  console.log("Rendering map with new tile structure:", {
+    width: map.width,
+    height: map.height,
+    tileRows: map.tiles.length,
+    firstTileRow: map.tiles[0],
+    firstTile: map.tiles[0]?.tiles[0]
   });
   
   for (let y = 0; y < map.height; y++) {
     for (let x = 0; x < map.width; x++) {
-      // Use flat array index calculation
-      const tileIndex = y * map.width + x;
-      const tileValue = tilesArray[tileIndex];
+      // Use new tile structure
+      const tile = map.tiles[y]?.tiles[x];
+      
+      if (!tile) {
+        console.warn(`Missing tile at (${x}, ${y})`);
+        continue;
+      }
       
       // Debug first few tiles
       if (y === 0 && x < 10) {
-        console.log(`Tile at (${x},${y}) index ${tileIndex}: value ${tileValue}`);
+        const isWall = tile.terrain === 1;
+        console.log(`Tile at (${x},${y}):`, {
+          tile: tile,
+          terrain: tile?.terrain,
+          isWall: isWall,
+          texture: isWall ? 'wall' : 'floor'
+        });
       }
       
-      const isWall = tileValue === 1; // 1 = wall, 0 = floor
+      const isWall = tile.terrain === 1; // 1 = wall, 0 = floor
       
       if (isWall) wallCount++;
       else floorCount++;
@@ -243,22 +256,42 @@ export const DungeonMap: React.FC<DungeonMapProps> = ({
   
   console.log(`Frontend rendering: ${wallCount} walls, ${floorCount} floors`);
 
-  // Render items
+  // Render items and monsters from tiles
   const itemEntities: React.ReactElement[] = [];
-  world.forEach((item, key) => {
-    const [x, y] = key.split(',').map(Number);
-    if (!isNaN(x) && !isNaN(y)) {
-      itemEntities.push(
-        <Entity
-          key={`item-${key}`}
-          x={x}
-          y={y}
-          texture={itemTexture}
-          tileSize={tileSize}
-        />
-      );
+  const monsterEntities: React.ReactElement[] = [];
+  
+  for (let y = 0; y < map.height; y++) {
+    for (let x = 0; x < map.width; x++) {
+      const tile = map.tiles[y]?.tiles[x];
+      if (!tile) continue;
+      
+      // Render items
+      tile.items.forEach((item, index) => {
+        itemEntities.push(
+          <Entity
+            key={`item-${x}-${y}-${index}`}
+            x={x}
+            y={y}
+            texture={itemTexture}
+            tileSize={tileSize}
+          />
+        );
+      });
+      
+      // Render monsters
+      tile.monsters.forEach((monster, index) => {
+        monsterEntities.push(
+          <Entity
+            key={`monster-${x}-${y}-${index}`}
+            x={x}
+            y={y}
+            texture={enemyTexture}
+            tileSize={tileSize}
+          />
+        );
+      });
     }
-  });
+  }
 
   // Render players
   const playerEntities: React.ReactElement[] = [];
@@ -285,6 +318,9 @@ export const DungeonMap: React.FC<DungeonMapProps> = ({
       
       {/* Items */}
       {itemEntities}
+      
+      {/* Monsters */}
+      {monsterEntities}
       
       {/* Players */}
       {playerEntities}
