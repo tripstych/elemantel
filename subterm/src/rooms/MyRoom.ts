@@ -2,6 +2,7 @@ import { Room, Client } from "@colyseus/core";
 import { MyRoomState, Item, PlayerState } from "./schema/MyRoomState";
 import { ArraySchema, Schema, type, MapSchema, Encoder } from "@colyseus/schema";
 import { CombatCommand, CombatLog } from "../commands/CombatCommand";
+import { ItemData } from "../schema/ItemData";
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -24,7 +25,7 @@ class SpellEffect extends Schema {
 class LanguageEntry extends Schema {
   @type("string") word: string = "";
   @type("string") definition: string = "";
-  @type(ElementalOrigin) elemental_origin: ElementalOrigin = new ElementalOrigin();
+  @type(ElementalOrigin) origin: ElementalOrigin = new ElementalOrigin();
   @type("string") spirit: string = "";
   @type("number") weight: number = 0;
   @type("string") composition: string = "";
@@ -44,14 +45,24 @@ class LanguageData extends Schema {
       entry.spirit = (value as any).spirit || "";
       entry.weight = (value as any).weight || 0;
       entry.type = (value as any).type || "";
-      
-      // Handle elemental_origin
-      if ((value as any).elemental_origin) {
-        entry.elemental_origin.fire = (value as any).elemental_origin.fire || 0;
-        entry.elemental_origin.water = (value as any).elemental_origin.water || 0;
-        entry.elemental_origin.earth = (value as any).elemental_origin.earth || 0;
-        entry.elemental_origin.air = (value as any).elemental_origin.air || 0;
-      }
+
+      try {      
+      // note:origin data MUST exist or something critical has failed 
+      entry.origin.fire = (value as any).origin.fire || 0;
+      entry.origin.water = (value as any).origin.water || 0;
+      entry.origin.earth = (value as any).origin.earth || 0;
+      entry.origin.air = (value as any).origin.air || 0;
+      /*
+      console.log(`LanguageData: Loaded origin for ${key}:`, {
+        fire: entry.origin.fire,
+        water: entry.origin.water,
+        earth: entry.origin.earth,
+        air: entry.origin.air
+      });
+      */
+    } catch(e) {
+      console.warn(`${key} missing origin data!`);
+    }
       
       // Handle composition as string (JSON object)
       if ((value as any).composition) {
@@ -102,11 +113,36 @@ function loadJsonData(filename: string): any {
   }
 }
 
+function loadItemTypeFiles(): { [type: string]: string[] } {
+  const itemTypes: { [type: string]: string[] } = {};
+  
+  try {
+    // Get all files matching item_*_synsets.json pattern
+    const files = fs.readdirSync(dataPath).filter((file: string) => 
+      file.startsWith('item_') && file.endsWith('_synsets.json')
+    );
+    
+    for (const file of files) {
+      const type = file.replace('item_', '').replace('_synsets.json', '');
+      const itemKeys = loadJsonData(file);
+      if (itemKeys && Array.isArray(itemKeys)) {
+        itemTypes[type] = itemKeys;
+        console.log(`Loaded ${itemKeys.length} ${type} items from ${file}`);
+      }
+    }
+  } catch (error) {
+    console.error('Error loading item type files:', error);
+  }
+  
+  return itemTypes;
+}
+
 export class MyRoom extends Room<MyRoomState> {
   maxClients = 4;
   state = new MyRoomState();
   private gameData: any = {};
   private languageData: LanguageData = new LanguageData();
+  private itemData: ItemData = new ItemData();
   private playerPaths: Map<string, { path: Array<{x: number, y: number}>, currentIndex: number, moveInterval: NodeJS.Timeout | null }> = new Map();
   private playerMoveTimes: Map<string, number> = new Map();
 
@@ -130,6 +166,11 @@ export class MyRoom extends Room<MyRoomState> {
       this.languageData.loadFromJSON(elementalDictionary);
       console.log(`Loaded ${this.languageData.entries.size} language entries`);
     }
+
+    // Load item type data
+    const itemTypes = loadItemTypeFiles();
+    this.itemData.loadFromLanguageData(this.languageData, itemTypes);
+    console.log(`Loaded ItemData with ${this.itemData.entries.size} items`);
 
     console.log("Game data loaded:", Object.keys(this.gameData));
 
@@ -168,7 +209,7 @@ export class MyRoom extends Room<MyRoomState> {
       const currentWeight = player.inventory?.length || 0;
       console.log(`[DEBUG] Backend - Current inventory weight: ${currentWeight}kg`);
       
-      let moveInterval = 200; // Base interval
+      let moveInterval = 100; // Base interval
       if (currentWeight > maxCarryWeight) {
         const excessWeight = currentWeight - maxCarryWeight;
         const penalty = excessWeight * 15; // 15ms per kg over limit
@@ -243,10 +284,146 @@ export class MyRoom extends Room<MyRoomState> {
       client.send("language_search_results", { query, results });
     });
 
+    this.onMessage("save_game", (client, message) => {
+      const player = this.state.player;
+      if (!player) return;
+
+      // Create save data
+      const saveData = {
+        player: {
+          x: player.x,
+          y: player.y,
+          name: player.name,
+          inventory: Array.from(player.inventory),
+          health: player.health,
+          maxHealth: player.maxHealth,
+          strength: player.strength,
+          equipment: {
+            hand_slots: {
+              main_hand: player.equipment.hand_slots.main_hand,
+              off_hand: player.equipment.hand_slots.off_hand
+            },
+            body_slots: {
+              head: player.equipment.body_slots.head,
+              face: player.equipment.body_slots.face,
+              neck: player.equipment.body_slots.neck,
+              torso: player.equipment.body_slots.torso,
+              back: player.equipment.body_slots.back,
+              waist: player.equipment.body_slots.waist,
+              wrists: player.equipment.body_slots.wrists,
+              left_finger: player.equipment.body_slots.left_finger,
+              right_finger: player.equipment.body_slots.right_finger,
+              legs: player.equipment.body_slots.legs,
+              feet: player.equipment.body_slots.feet
+            }
+          }
+        },
+        world: Array.from(this.state.world.entries()),
+        timestamp: new Date().toISOString()
+      };
+
+      // Save to file
+      try {
+        const fs = require('fs');
+        const path = require('path');
+        const savePath = path.join(__dirname, '../../data/save.json');
+        fs.writeFileSync(savePath, JSON.stringify(saveData, null, 2));
+        console.log('Game saved successfully');
+        client.send("save_result", { success: true, message: "Game saved!" });
+      } catch (error) {
+        console.error('Failed to save game:', error);
+        client.send("save_result", { success: false, message: "Failed to save game" });
+      }
+    });
+
+    this.onMessage("load_game", (client, message) => {
+      try {
+        const fs = require('fs');
+        const path = require('path');
+        const savePath = path.join(__dirname, '../../data/save.json');
+        
+        if (!fs.existsSync(savePath)) {
+          client.send("load_result", { success: false, message: "No save file found" });
+          return;
+        }
+
+        const saveData = JSON.parse(fs.readFileSync(savePath, 'utf8'));
+        
+        // Restore player state
+        const player = this.state.player;
+        if (player && saveData.player) {
+          player.x = saveData.player.x;
+          player.y = saveData.player.y;
+          player.name = saveData.player.name;
+          player.health = saveData.player.health;
+          player.maxHealth = saveData.player.maxHealth;
+          player.strength = saveData.player.strength;
+          
+          // Clear and restore inventory
+          player.inventory.clear();
+          saveData.player.inventory.forEach((item: string) => {
+            player.inventory.push(item);
+          });
+          
+          // Restore equipment
+          if (saveData.player.equipment) {
+            player.equipment.hand_slots.main_hand = saveData.player.equipment.hand_slots.main_hand;
+            player.equipment.hand_slots.off_hand = saveData.player.equipment.hand_slots.off_hand;
+            
+            Object.keys(saveData.player.equipment.body_slots).forEach((slot) => {
+              (player.equipment.body_slots as any)[slot] = saveData.player.equipment.body_slots[slot];
+            });
+          }
+        }
+        
+        // Restore world state
+        if (saveData.world) {
+          this.state.world.clear();
+          saveData.world.forEach(([key, item]: [string, any]) => {
+            this.state.world.set(key, item);
+          });
+        }
+        
+        console.log('Game loaded successfully');
+        client.send("load_result", { success: true, message: "Game loaded!" });
+      } catch (error) {
+        console.error('Failed to load game:', error);
+        client.send("load_result", { success: false, message: "Failed to load game" });
+      }
+    });
+
     this.onMessage("get_language_entry", (client, message) => {
       const key = message.key;
-      const entry = this.languageData.getEntry(key);
-      client.send("language_entry_result", { key, entry });
+      console.log(`Looking for language entry: ${key}`);
+      
+      // First check ItemData (for physical items)
+      const itemEntry = this.itemData.getEntry(key);
+      if (itemEntry) {
+        console.log(`Found item in ItemData: ${itemEntry.word}`, {
+          origin: {
+            fire: itemEntry.origin.fire,
+            water: itemEntry.origin.water,
+            earth: itemEntry.origin.earth,
+            air: itemEntry.origin.air
+          },
+          type: itemEntry.type,
+          weight: itemEntry.weight
+        });
+        client.send("language_entry_result", { key, entry: itemEntry });
+        return;
+      }
+      
+      // Fall back to LanguageData (for general language entries)
+      const languageEntry = this.languageData.getEntry(key);
+      if (languageEntry) {
+        console.log(`Found entry in LanguageData: ${languageEntry.word}`);
+        client.send("language_entry_result", { key, entry: languageEntry });
+        return;
+      }
+      
+      // Not found in either
+      console.log(`Entry not found: ${key}`);
+      client.send("language_entry_result", { key, entry: null });
     });
 
     // Autonavigation handler
@@ -596,18 +773,8 @@ export class MyRoom extends Room<MyRoomState> {
   }
 
   private scatterItems() {
-    const catalog = [
-      { name: "Potion", type: "consumable" },
-      { name: "Scroll", type: "consumable" },
-      { name: "Gold", type: "currency" },
-      { name: "Gem", type: "treasure" },
-      { name: "Arrow", type: "ammunition" },
-      { name: "Dagger", type: "weapon" },
-      { name: "Torch", type: "tool" }
-    ];
-
     // Helper to add item at position
-    const addItem = (x: number, y: number, itemData: any) => {
+    const addItem = (x: number, y: number, itemKey: string, itemEntry: any) => {
       const key = `${x},${y}`;
       
       // Prevent world from getting too large
@@ -617,15 +784,32 @@ export class MyRoom extends Room<MyRoomState> {
       }
       
       const item = new Item();
-      item.name = itemData.name;
-      item.type = itemData.type;
+      item.name = itemKey; // Use the synset key for inventory
+      item.type = itemEntry.type; // Use the type from ItemData
       this.state.world.set(key, item);
     };
 
-    // Scatter a few items near player for testing
-    const nearCount = 2;
+    // Get available item types from ItemData
+    const itemTypes = ['weapons', 'tools', 'gems']; // Add more types as needed
+    const availableItems: Array<{key: string, entry: any}> = [];
+    
+    // Collect items from each type
+    for (const type of itemTypes) {
+      const typeItems = this.itemData.getItemsByType(type);
+      availableItems.push(...typeItems);
+      console.log(`Found ${typeItems.length} items of type '${type}'`);
+    }
+    
+    if (availableItems.length === 0) {
+      console.log("No items available in ItemData, using fallback");
+      return;
+    }
+
+    // Scatter items near player for testing
+    const nearCount = 5; // Increased count for better testing
     const offsets = [
-      { dx: 1, dy: 0 }, { dx: 0, dy: 1 }, { dx: -1, dy: 0 }, { dx: 0, dy: -1 }
+      { dx: 1, dy: 0 }, { dx: 0, dy: 1 }, { dx: -1, dy: 0 }, { dx: 0, dy: -1 },
+      { dx: 1, dy: 1 }, { dx: -1, dy: 1 }, { dx: 1, dy: -1 }, { dx: -1, dy: -1 }
     ];
 
     let placed = 0;
@@ -643,13 +827,17 @@ export class MyRoom extends Room<MyRoomState> {
         if (tileIndex >= 0 && tileIndex < this.state.map.tiles.length && 
             this.state.map.tiles[tileIndex] === 0) { // 0 = floor
           
-          addItem(x, y, catalog[Math.floor(Math.random() * catalog.length)]);
+          // Select random item from available items
+          const randomItem = availableItems[Math.floor(Math.random() * availableItems.length)];
+          addItem(x, y, randomItem.key, randomItem.entry);
           placed++;
+          
+          console.log(`Placed ${randomItem.entry.word} (${randomItem.entry.type}) at (${x}, ${y})`);
         }
       }
     }
     
-    console.log(`Scattered ${placed} items near player`);
+    console.log(`Scattered ${placed} items near player from ${availableItems.length} available items`);
   }
 
   private handleAttack(client: Client, message: any) {

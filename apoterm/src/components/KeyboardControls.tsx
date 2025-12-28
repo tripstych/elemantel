@@ -68,6 +68,16 @@ export const KeyboardControls: React.FC<KeyboardControlsProps> = ({
           onToggleInventory();
         }
         break;
+      case 'F5':
+        event.preventDefault();
+        console.log("Quick save");
+        gameClient.saveGame();
+        break;
+      case 'F9':
+        event.preventDefault();
+        console.log("Load game");
+        gameClient.loadGame();
+        break;
     }
   }, [enabled, onToggleInventory]);
 

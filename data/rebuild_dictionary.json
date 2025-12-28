@@ -6197,10 +6197,10 @@
       "word": "tuudu",
       "definition": "edge tool used as a cutting instrument; has a pointed blade with a sharp edge and a handle",
       "origin": {
-         "earth": 20,
-         "air": 24,
-         "fire": 38,
-         "water": 34
+         "earth": 45,
+         "air": 15,
+         "fire": 15,
+         "water": 46
       },
       "derived": false,
       "weight": 113.375,
@@ -6209,7 +6209,6 @@
          "cost": "2 sp",
          "damage": "1d3",
          "damagetype": "Slashing",
-         "weight": "0.25 lb",
          "homebrew": "True",
          "properties": [
             "undersized",
@@ -6910,10 +6909,10 @@
       "word": "siifo",
       "definition": "a long pointed rod used as a tool or weapon",
       "origin": {
-         "earth": 30,
-         "air": 51,
-         "fire": 38,
-         "water": 18
+         "earth": 31,
+         "air": 11,
+         "fire": 33,
+         "water": 30
       },
       "derived": false,
       "weight": 2721.0,
@@ -6923,7 +6922,6 @@
          "name": "Lance",
          "cost": "10 gp",
          "damage": "1d12 piercing",
-         "weight": "6 lb",
          "properties": [
             "reach",
             "special"
@@ -15653,10 +15651,10 @@
       "word": "\u00feus\u0161o",
       "definition": "a team of professional baseball players who play and travel together",
       "origin": {
-         "earth": 11,
-         "air": 13,
-         "fire": 24,
-         "water": 34
+         "earth": 12,
+         "air": 25,
+         "fire": 46,
+         "water": 25
       },
       "derived": false,
       "weight": 907.0,
@@ -15665,7 +15663,6 @@
          "cost": "1 sp",
          "damage": "1d4",
          "damagetype": "Bludgeoning",
-         "weight": "2 lb",
          "homebrew": "False",
          "properties": [
             "light"
@@ -17363,10 +17360,10 @@
       "word": "ese\u00fei",
       "definition": "an instrument with a handle and a flexible lash that is used for whipping",
       "origin": {
-         "earth": 46,
-         "air": 40,
-         "fire": 14,
-         "water": 19
+         "earth": 35,
+         "air": 14,
+         "fire": 15,
+         "water": 38
       },
       "derived": false,
       "weight": 1360.5,
@@ -17374,7 +17371,6 @@
          "name": "Whip",
          "cost": "2 gp",
          "damage": "1d4 slashing",
-         "weight": "3 lb",
          "properties": [
             "reach",
             "finesse"
@@ -18087,10 +18083,10 @@
       "word": "homibo",
       "definition": "(trademark) a liquid that temporarily disables a person; prepared as an aerosol and sprayed in the face, it irritates the eyes and causes dizziness and immobilization",
       "origin": {
-         "earth": 24,
-         "air": 25,
-         "fire": 17,
-         "water": 35
+         "earth": 47,
+         "air": 16,
+         "fire": 10,
+         "water": 24
       },
       "derived": false,
       "weight": 907.0,
@@ -18099,7 +18095,6 @@
          "cost": "5 gp",
          "damage": "1d6",
          "damagetype": "Bludgeoning",
-         "weight": "2 lb",
          "homebrew": "False",
          "properties": []
       }
@@ -21779,10 +21774,10 @@
       "word": "\u00feisuli",
       "definition": "a curved oriental saber; the edge is on the convex side of the blade",
       "origin": {
-         "earth": 49,
-         "air": 16,
-         "fire": 43,
-         "water": 12
+         "earth": 18,
+         "air": 52,
+         "fire": 17,
+         "water": 25
       },
       "derived": false,
       "weight": 1360.5,
@@ -21792,7 +21787,6 @@
          "name": "Scimitar",
          "cost": "25 gp",
          "damage": "1d6 slashing",
-         "weight": "3 lb",
          "properties": [
             "light",
             "finesse"
@@ -30374,10 +30368,10 @@
       "word": "ugugu",
       "definition": "the leaf of a conifer",
       "origin": {
-         "earth": 32,
-         "air": 32,
-         "fire": 36,
-         "water": 29
+         "earth": 26,
+         "air": 19,
+         "fire": 34,
+         "water": 10
       },
       "derived": false,
       "weight": 113.375,
@@ -30386,7 +30380,6 @@
          "cost": "2 sp",
          "damage": "1d4",
          "damagetype": "Piercing",
-         "weight": "0.25 lb",
          "homebrew": "True",
          "properties": [
             "undersized",
@@ -38245,10 +38238,10 @@
       "word": "fohuhothi",
       "definition": "a sword with a broad blade and (usually) two cutting edges; used to cut rather than stab",
       "origin": {
-         "earth": 34,
-         "air": 50,
-         "fire": 31,
-         "water": 31
+         "earth": 19,
+         "air": 36,
+         "fire": 17,
+         "water": 16
       },
       "derived": false,
       "weight": 1360.5,
@@ -38258,7 +38251,6 @@
          "name": "Broadsword",
          "cost": "20 gp",
          "damage": "2d4 piercing",
-         "weight": "3 lb",
          "properties": []
       }
    },
@@ -38539,10 +38531,10 @@
       "word": "ggubu",
       "definition": "a spear with three prongs",
       "origin": {
-         "earth": 10,
-         "air": 32,
-         "fire": 38,
-         "water": 23
+         "earth": 24,
+         "air": 35,
+         "fire": 42,
+         "water": 11
       },
       "derived": false,
       "weight": 1814.0,
@@ -38552,7 +38544,6 @@
          "name": "Trident",
          "cost": "5 gp",
          "damage": "1d6 piercing",
-         "weight": "4 lb",
          "properties": [
             "thrown (20/60)",
             "versatile (1d8)"
@@ -44398,10 +44389,10 @@
       "word": "beno",
       "definition": "an implement consisting of handle with a free swinging stick at the end; used in manual threshing",
       "origin": {
-         "earth": 16,
-         "air": 29,
-         "fire": 36,
-         "water": 48
+         "earth": 11,
+         "air": 10,
+         "fire": 51,
+         "water": 23
       },
       "derived": false,
       "weight": 907.0,
@@ -44409,7 +44400,6 @@
          "name": "Flail",
          "cost": "10 gp",
          "damage": "1d8 bludgeoning",
-         "weight": "2 lb",
          "properties": []
       }
    },
@@ -50927,10 +50917,10 @@
       "word": "tib",
       "definition": "a broad highway designed for high-speed traffic",
       "origin": {
-         "earth": 12,
-         "air": 14,
-         "fire": 45,
-         "water": 47
+         "earth": 52,
+         "air": 24,
+         "fire": 46,
+         "water": 43
       },
       "derived": false,
       "weight": 8163.0,
@@ -50938,7 +50928,6 @@
          "name": "Pike",
          "cost": "5 gp",
          "damage": "1d10 piercing",
-         "weight": "18 lb",
          "properties": [
             "heavy",
             "reach",
@@ -52830,10 +52819,10 @@
       "word": "fyi\u00feu",
       "definition": "an athletic competition in which a javelin is thrown as far as possible",
       "origin": {
-         "earth": 21,
-         "air": 30,
-         "fire": 31,
-         "water": 44
+         "earth": 42,
+         "air": 42,
+         "fire": 29,
+         "water": 19
       },
       "derived": false,
       "weight": 907.0,
@@ -52842,7 +52831,6 @@
          "cost": "5 sp",
          "damage": "1d6",
          "damagetype": "Piercing",
-         "weight": "2 lb",
          "homebrew": "False",
          "properties": [
             "thrown (30/120)"
@@ -53875,10 +53863,10 @@
       "word": "dubes",
       "definition": "a pike fitted with an ax head",
       "origin": {
-         "earth": 13,
-         "air": 48,
+         "earth": 24,
+         "air": 51,
          "fire": 51,
-         "water": 47
+         "water": 23
       },
       "derived": false,
       "weight": 2721.0,
@@ -53888,7 +53876,6 @@
          "name": "Halberd",
          "cost": "20 gp",
          "damage": "1d10 slashing",
-         "weight": "6 lb",
          "properties": [
             "heavy",
             "reach",
@@ -57145,10 +57132,10 @@
       "word": "nonunu",
       "definition": "a watery solution of sugars, salts, and minerals that circulates through the vascular system of a plant",
       "origin": {
-         "earth": 33,
-         "air": 43,
-         "fire": 17,
-         "water": 47
+         "earth": 19,
+         "air": 37,
+         "fire": 30,
+         "water": 38
       },
       "derived": false,
       "weight": 907.0,
@@ -57157,7 +57144,6 @@
          "cost": "1 gp",
          "damage": "1d4",
          "damagetype": "Bludgeoning",
-         "weight": "2 lb",
          "homebrew": "True",
          "properties": [
             "light",
@@ -58964,10 +58950,10 @@
       "word": "soodubu",
       "definition": "an edge tool for cutting grass; has a long handle that must be held with both hands and a curved blade that moves parallel to the ground",
       "origin": {
-         "earth": 43,
-         "air": 25,
-         "fire": 30,
-         "water": 43
+         "earth": 34,
+         "air": 27,
+         "fire": 19,
+         "water": 27
       },
       "derived": false,
       "weight": 2267.5,
@@ -58976,7 +58962,6 @@
          "cost": "5 gp",
          "damage": "2d4",
          "damagetype": "Slashing",
-         "weight": "5 lb",
          "homebrew": "True",
          "properties": [
             "heavy",
@@ -70393,10 +70378,10 @@
       "word": "hehu",
       "definition": "a short broad slightly convex medieval sword with a sharp point",
       "origin": {
-         "earth": 50,
-         "air": 10,
+         "earth": 37,
+         "air": 36,
          "fire": 50,
-         "water": 19
+         "water": 42
       },
       "derived": false,
       "weight": 1360.5,
@@ -70406,7 +70391,6 @@
          "name": "Falchion",
          "cost": "10 gp",
          "damage": "1d8 slashing",
-         "weight": "3 lb",
          "properties": []
       }
    },
@@ -73766,10 +73750,10 @@
       "word": "guluibo",
       "definition": "a heavy long-handled hammer used to drive stakes or wedges",
       "origin": {
-         "earth": 25,
-         "air": 29,
-         "fire": 29,
-         "water": 35
+         "earth": 20,
+         "air": 17,
+         "fire": 48,
+         "water": 52
       },
       "derived": false,
       "weight": 4535.0,
@@ -73779,7 +73763,6 @@
          "name": "Maul",
          "cost": "10 gp",
          "damage": "2d6 bludgeoning",
-         "weight": "10 lb",
          "properties": [
             "heavy",
             "two-handed"
@@ -82031,9 +82014,9 @@
       "definition": "an edge tool for cutting grass or crops; has a curved blade and a short handle",
       "origin": {
          "earth": 19,
-         "air": 21,
-         "fire": 35,
-         "water": 41
+         "air": 47,
+         "fire": 45,
+         "water": 17
       },
       "derived": false,
       "weight": 907.0,
@@ -82042,7 +82025,6 @@
          "cost": "1 gp",
          "damage": "1d4",
          "damagetype": "Slashing",
-         "weight": "2 lb",
          "homebrew": "False",
          "properties": [
             "light"
@@ -86625,10 +86607,10 @@
       "word": "osefi",
       "definition": "a long stout staff used as a weapon",
       "origin": {
-         "earth": 44,
-         "air": 41,
-         "fire": 45,
-         "water": 18
+         "earth": 23,
+         "air": 31,
+         "fire": 52,
+         "water": 42
       },
       "derived": false,
       "weight": 1814.0,
@@ -86637,7 +86619,6 @@
          "cost": "2 sp",
          "damage": "1d6",
          "damagetype": "Bludgeoning",
-         "weight": "4 lb",
          "homebrew": "False",
          "properties": [
             "versatile (1d8)"
@@ -108000,10 +107981,10 @@
       "word": "dni\u0161o",
       "definition": "a playing card in the major suit that has one or more black figures on it",
       "origin": {
-         "earth": 38,
-         "air": 52,
-         "fire": 29,
-         "water": 22
+         "earth": 41,
+         "air": 49,
+         "fire": 17,
+         "water": 15
       },
       "derived": false,
       "weight": 1814.0,
@@ -108012,7 +107993,6 @@
          "cost": "2 gp",
          "damage": "1d4",
          "damagetype": "Bludgeoning",
-         "weight": "4 lb",
          "homebrew": "True",
          "properties": [
             "versatile"
@@ -110689,10 +110669,10 @@
       "word": "shesgi",
       "definition": "a blow that renders the opponent unconscious",
       "origin": {
-         "earth": 32,
-         "air": 12,
-         "fire": 52,
-         "water": 39
+         "earth": 43,
+         "air": 21,
+         "fire": 47,
+         "water": 48
       },
       "derived": false,
       "weight": 453.5,
@@ -110701,7 +110681,6 @@
          "cost": "1 gp",
          "damage": "1d4",
          "damagetype": "Piercing / bludgeoning",
-         "weight": "1 lb",
          "homebrew": "True",
          "properties": [
             "light",
@@ -119784,10 +119763,10 @@
       "word": "feyesihith",
       "definition": "a small mallet used by a presiding officer or a judge",
       "origin": {
-         "earth": 50,
-         "air": 43,
-         "fire": 26,
-         "water": 39
+         "earth": 24,
+         "air": 42,
+         "fire": 19,
+         "water": 17
       },
       "derived": false,
       "weight": 226.75,
@@ -119796,7 +119775,6 @@
          "cost": "5 sp",
          "damage": "1d4",
          "damagetype": "Bludgeoning",
-         "weight": "0.5 lb",
          "homebrew": "True",
          "properties": [
             "undersized"
@@ -127754,10 +127732,10 @@
       "word": "ti\u0161aya",
       "definition": "an Arab country on the peninsula of Qatar; achieved independence from the United Kingdom in 1971; the economy is dominated by oil",
       "origin": {
-         "earth": 31,
-         "air": 13,
-         "fire": 10,
-         "water": 32
+         "earth": 35,
+         "air": 27,
+         "fire": 15,
+         "water": 23
       },
       "derived": false,
       "weight": 453.5,
@@ -127766,7 +127744,6 @@
          "cost": "5 gp",
          "damage": "1d4",
          "damagetype": "Piercing",
-         "weight": "1 lb",
          "homebrew": "True",
          "properties": [
             "light",
@@ -134889,10 +134866,10 @@
       "word": "goudob",
       "definition": "Handaxe",
       "origin": {
-         "earth": 29,
-         "air": 10,
-         "fire": 41,
-         "water": 42
+         "earth": 47,
+         "air": 20,
+         "fire": 31,
+         "water": 26
       },
       "derived": false,
       "weight": 907.0,
@@ -134901,7 +134878,6 @@
          "cost": "5 gp",
          "damage": "1d6",
          "damagetype": "Slashing",
-         "weight": "2 lb",
          "homebrew": "False",
          "properties": [
             "light",
@@ -215921,10 +215897,10 @@
       "word": "oyii\u0161a",
       "definition": "Brandistock",
       "origin": {
-         "earth": 39,
-         "air": 13,
-         "fire": 18,
-         "water": 36
+         "earth": 29,
+         "air": 43,
+         "fire": 25,
+         "water": 44
       },
       "derived": false,
       "weight": 1814.0,
@@ -215933,7 +215909,6 @@
          "cost": "10 gp",
          "damage": "1d8",
          "damagetype": "Piercing",
-         "weight": "4 lb",
          "homebrew": "True",
          "properties": [
             "special",
@@ -215945,10 +215920,10 @@
       "word": "kikak",
       "definition": "Broken Sword",
       "origin": {
-         "earth": 12,
-         "air": 18,
-         "fire": 11,
-         "water": 36
+         "earth": 13,
+         "air": 42,
+         "fire": 18,
+         "water": 31
       },
       "derived": false,
       "weight": 453.5,
@@ -215957,7 +215932,6 @@
          "cost": "5 sp",
          "damage": "1d4",
          "damagetype": "Piercing",
-         "weight": "1 lb",
          "homebrew": "True",
          "properties": [
             "light",
@@ -215969,10 +215943,10 @@
       "word": "tiktaiki",
       "definition": "Double Spear",
       "origin": {
-         "earth": 46,
-         "air": 52,
-         "fire": 33,
-         "water": 51
+         "earth": 10,
+         "air": 19,
+         "fire": 36,
+         "water": 12
       },
       "derived": false,
       "weight": 1814.0,
@@ -215981,7 +215955,6 @@
          "cost": "5 gp",
          "damage": "1d6",
          "damagetype": "Piercing",
-         "weight": "4 lb",
          "homebrew": "True",
          "properties": [
             "versatile (1d8)",
@@ -215993,10 +215966,10 @@
       "word": "kaakat",
       "definition": "Eye Sickle",
       "origin": {
-         "earth": 50,
-         "air": 52,
+         "earth": 12,
+         "air": 36,
          "fire": 41,
-         "water": 15
+         "water": 18
       },
       "derived": false,
       "weight": 1814.0,
@@ -216005,7 +215978,6 @@
          "cost": "10 gp",
          "damage": "1d6",
          "damagetype": "Piercing",
-         "weight": "4 lb",
          "homebrew": "True",
          "properties": [
             "light",
@@ -216017,10 +215989,10 @@
       "word": "vhetaa",
       "definition": "Falx",
       "origin": {
-         "earth": 15,
-         "air": 30,
-         "fire": 16,
-         "water": 17
+         "earth": 14,
+         "air": 10,
+         "fire": 38,
+         "water": 52
       },
       "derived": false,
       "weight": 1360.5,
@@ -216029,7 +216001,6 @@
          "cost": "8 gp",
          "damage": "1d6",
          "damagetype": "Slashing",
-         "weight": "3 lb",
          "homebrew": "True",
          "properties": [
             "versatile (1d8)"
@@ -216040,9 +216011,9 @@
       "word": "noo\u0161",
       "definition": "Fauchard",
       "origin": {
-         "earth": 46,
-         "air": 49,
-         "fire": 43,
+         "earth": 38,
+         "air": 44,
+         "fire": 44,
          "water": 17
       },
       "derived": false,
@@ -216052,7 +216023,6 @@
          "cost": "10 gp",
          "damage": "1d6",
          "damagetype": "Slashing",
-         "weight": "7 lb",
          "homebrew": "True",
          "properties": [
             "heavy",
@@ -216065,10 +216035,10 @@
       "word": "fa\u00feo\u0161",
       "definition": "Flamberge",
       "origin": {
-         "earth": 47,
-         "air": 30,
-         "fire": 12,
-         "water": 15
+         "earth": 31,
+         "air": 25,
+         "fire": 47,
+         "water": 30
       },
       "derived": false,
       "weight": 2721.0,
@@ -216077,7 +216047,6 @@
          "cost": "15 gp",
          "damage": "1d8 + 1d2",
          "damagetype": "Slashing + Ripping",
-         "weight": "6 lb",
          "homebrew": "True",
          "properties": [
             "ripping",
@@ -216089,10 +216058,10 @@
       "word": "\u00feuuzyi",
       "definition": "Greatclub",
       "origin": {
-         "earth": 18,
-         "air": 36,
-         "fire": 30,
-         "water": 11
+         "earth": 49,
+         "air": 46,
+         "fire": 51,
+         "water": 29
       },
       "derived": false,
       "weight": 4535.0,
@@ -216101,7 +216070,6 @@
          "cost": "2 sp",
          "damage": "1d8",
          "damagetype": "Bludgeoning",
-         "weight": "10 lb",
          "homebrew": "False",
          "properties": [
             "two-handed"
@@ -216112,10 +216080,10 @@
       "word": "moviiki",
       "definition": "Greatspear",
       "origin": {
-         "earth": 50,
-         "air": 45,
+         "earth": 33,
+         "air": 40,
          "fire": 14,
-         "water": 27
+         "water": 31
       },
       "derived": false,
       "weight": 3628.0,
@@ -216124,7 +216092,6 @@
          "cost": "25 gp",
          "damage": "1d10",
          "damagetype": "Piercing",
-         "weight": "8 lb",
          "homebrew": "True",
          "properties": [
             "oversized",
@@ -216137,10 +216104,10 @@
       "word": "sheyyiethe",
       "definition": "Karambit",
       "origin": {
-         "earth": 33,
-         "air": 43,
-         "fire": 38,
-         "water": 14
+         "earth": 27,
+         "air": 26,
+         "fire": 33,
+         "water": 30
       },
       "derived": false,
       "weight": 453.5,
@@ -216149,7 +216116,6 @@
          "cost": "4 gp",
          "damage": "1d4",
          "damagetype": "Slashing",
-         "weight": "1 lb",
          "homebrew": "True",
          "properties": [
             "light",
@@ -216161,10 +216127,10 @@
       "word": "sithifesthi",
       "definition": "Kukri",
       "origin": {
-         "earth": 47,
-         "air": 27,
-         "fire": 23,
-         "water": 39
+         "earth": 26,
+         "air": 32,
+         "fire": 43,
+         "water": 34
       },
       "derived": false,
       "weight": 907.0,
@@ -216173,7 +216139,6 @@
          "cost": "6 gp",
          "damage": "1d6",
          "damagetype": "Slashing",
-         "weight": "2 lb",
          "homebrew": "True",
          "properties": [
             "light",
@@ -216185,10 +216150,10 @@
       "word": "ataashika",
       "definition": "Torch Mace",
       "origin": {
-         "earth": 13,
-         "air": 17,
-         "fire": 26,
-         "water": 47
+         "earth": 34,
+         "air": 37,
+         "fire": 16,
+         "water": 19
       },
       "derived": false,
       "weight": 907.0,
@@ -216197,7 +216162,6 @@
          "cost": "6 gp",
          "damage": "1d4",
          "damagetype": "Bludgeoning",
-         "weight": "2 lb",
          "homebrew": "True",
          "properties": [
             "special"
@@ -216208,10 +216172,10 @@
       "word": "akata",
       "definition": "Torch Staff",
       "origin": {
-         "earth": 34,
-         "air": 47,
-         "fire": 20,
-         "water": 47
+         "earth": 29,
+         "air": 36,
+         "fire": 36,
+         "water": 16
       },
       "derived": false,
       "weight": 3174.5,
@@ -216220,7 +216184,6 @@
          "cost": "12 gp",
          "damage": "2d4",
          "damagetype": "Bludgeoning",
-         "weight": "7 lb",
          "homebrew": "True",
          "properties": [
             "heavy",
@@ -216233,10 +216196,10 @@
       "word": "suu",
       "definition": "Zerka",
       "origin": {
-         "earth": 20,
-         "air": 50,
-         "fire": 25,
-         "water": 13
+         "earth": 51,
+         "air": 21,
+         "fire": 12,
+         "water": 24
       },
       "derived": false,
       "weight": 1360.5,
@@ -216245,7 +216208,6 @@
          "cost": "10 sp",
          "damage": "1d8",
          "damagetype": "Piercing",
-         "weight": "3 lb",
          "homebrew": "True",
          "properties": [
             "special",
@@ -216258,10 +216220,10 @@
       "word": "\u0161akita",
       "definition": "Arming Sword",
       "origin": {
-         "earth": 48,
-         "air": 19,
-         "fire": 37,
-         "water": 52
+         "earth": 52,
+         "air": 14,
+         "fire": 14,
+         "water": 39
       },
       "derived": false,
       "weight": 1360.5,
@@ -216269,7 +216231,6 @@
          "name": "Arming Sword",
          "cost": "20 gp",
          "damage": "1d6 piercing",
-         "weight": "3 lb",
          "properties": [
             "light",
             "finesse",
@@ -216281,10 +216242,10 @@
       "word": "\u0161atifi",
       "definition": "Back Sword",
       "origin": {
-         "earth": 31,
-         "air": 52,
-         "fire": 11,
-         "water": 40
+         "earth": 46,
+         "air": 20,
+         "fire": 34,
+         "water": 18
       },
       "derived": false,
       "weight": 1360.5,
@@ -216292,7 +216253,6 @@
          "name": "Back Sword",
          "cost": "10 gp",
          "damage": "1d6 piercing",
-         "weight": "3 lb",
          "properties": []
       }
    },
@@ -216300,10 +216260,10 @@
       "word": "duugo",
       "definition": "Battleaxe",
       "origin": {
-         "earth": 42,
-         "air": 48,
-         "fire": 33,
-         "water": 24
+         "earth": 10,
+         "air": 21,
+         "fire": 36,
+         "water": 23
       },
       "derived": false,
       "weight": 1814.0,
@@ -216311,7 +216271,6 @@
          "name": "Battleaxe",
          "cost": "10 gp",
          "damage": "1d8 slashing",
-         "weight": "4 lb",
          "properties": [
             "versatile (1d10)"
          ]
@@ -216321,10 +216280,10 @@
       "word": "nuwomu",
       "definition": "Bec de Corbin",
       "origin": {
-         "earth": 14,
-         "air": 35,
-         "fire": 26,
-         "water": 30
+         "earth": 10,
+         "air": 37,
+         "fire": 18,
+         "water": 37
       },
       "derived": false,
       "weight": 2721.0,
@@ -216332,7 +216291,6 @@
          "name": "Bec de Corbin",
          "cost": "20 gp",
          "damage": "2d4 piercing",
-         "weight": "6 lb",
          "properties": [
             "heavy",
             "reach",
@@ -216344,10 +216302,10 @@
       "word": "budoggudob",
       "definition": "Boar Spear",
       "origin": {
-         "earth": 48,
-         "air": 27,
-         "fire": 27,
-         "water": 46
+         "earth": 11,
+         "air": 50,
+         "fire": 26,
+         "water": 40
       },
       "derived": false,
       "weight": 2267.5,
@@ -216355,7 +216313,6 @@
          "name": "Boar Spear",
          "cost": "10 gp",
          "damage": "2d6 piercing",
-         "weight": "5 lb",
          "properties": [
             "heavy",
             "two-handed"
@@ -216366,9 +216323,9 @@
       "word": "kashkak",
       "definition": "Buster Sword",
       "origin": {
-         "earth": 44,
-         "air": 10,
-         "fire": 39,
+         "earth": 22,
+         "air": 11,
+         "fire": 45,
          "water": 11
       },
       "derived": false,
@@ -216377,7 +216334,6 @@
          "name": "Buster Sword",
          "cost": "250 gp",
          "damage": "2d8 slashing",
-         "weight": "12 lb",
          "properties": [
             "oversized",
             "two-handed"
@@ -216388,10 +216344,10 @@
       "word": "uguogubo",
       "definition": "Double Axe",
       "origin": {
-         "earth": 31,
-         "air": 52,
-         "fire": 46,
-         "water": 21
+         "earth": 16,
+         "air": 37,
+         "fire": 37,
+         "water": 38
       },
       "derived": false,
       "weight": 4535.0,
@@ -216399,7 +216355,6 @@
          "name": "Double Axe",
          "cost": "30 gp",
          "damage": "1d8 slashing",
-         "weight": "10 lb",
          "properties": [
             "heavy",
             "two-handed",
@@ -216411,10 +216366,10 @@
       "word": "duuboggobu",
       "definition": "Double Flail",
       "origin": {
-         "earth": 24,
-         "air": 52,
-         "fire": 21,
-         "water": 10
+         "earth": 41,
+         "air": 50,
+         "fire": 24,
+         "water": 43
       },
       "derived": false,
       "weight": 1814.0,
@@ -216422,7 +216377,6 @@
          "name": "Double Flail",
          "cost": "20 gp",
          "damage": "1d8 bludgeoning",
-         "weight": "4 lb",
          "properties": [
             "two-handed"
          ]
@@ -216432,10 +216386,10 @@
       "word": "akatikkishi",
       "definition": "Double Sword",
       "origin": {
-         "earth": 42,
-         "air": 52,
-         "fire": 40,
-         "water": 34
+         "earth": 47,
+         "air": 35,
+         "fire": 37,
+         "water": 25
       },
       "derived": false,
       "weight": 2267.5,
@@ -216443,7 +216397,6 @@
          "name": "Double Sword",
          "cost": "20 gp",
          "damage": "1d6 slashing",
-         "weight": "5 lb",
          "properties": [
             "double weapon",
             "two-handed"
@@ -216454,10 +216407,10 @@
       "word": "\u0161aki",
       "definition": "Dueling Shield",
       "origin": {
-         "earth": 26,
-         "air": 31,
-         "fire": 33,
-         "water": 37
+         "earth": 30,
+         "air": 16,
+         "fire": 22,
+         "water": 44
       },
       "derived": false,
       "weight": 4535.0,
@@ -216465,7 +216418,6 @@
          "name": "Dueling Shield",
          "cost": "15 gp",
          "damage": "1d8 bludgeoning",
-         "weight": "10 lb",
          "properties": [
             "heavy",
             "special",
@@ -216477,10 +216429,10 @@
       "word": "dubdugobdu",
       "definition": "Dwarven Ugrosh",
       "origin": {
-         "earth": 26,
-         "air": 22,
-         "fire": 43,
-         "water": 51
+         "earth": 17,
+         "air": 44,
+         "fire": 28,
+         "water": 37
       },
       "derived": false,
       "weight": 4081.5,
@@ -216488,7 +216440,6 @@
          "name": "Dwarven Ugrosh",
          "cost": "50 gp",
          "damage": "1d10 slashing",
-         "weight": "9 lb",
          "properties": [
             "heavy",
             "two-handed"
@@ -216499,10 +216450,10 @@
       "word": "feshshehe",
       "definition": "Elven Lightblade",
       "origin": {
-         "earth": 36,
-         "air": 20,
-         "fire": 33,
-         "water": 18
+         "earth": 26,
+         "air": 25,
+         "fire": 36,
+         "water": 15
       },
       "derived": false,
       "weight": 453.5,
@@ -216510,7 +216461,6 @@
          "name": "Elven Lightblade",
          "cost": "50 gp",
          "damage": "1d6 piercing",
-         "weight": "1 lb",
          "properties": [
             "finesse",
             "light",
@@ -216522,10 +216472,10 @@
       "word": "\u00fei\u0161i\u0161e",
       "definition": "Elven Thinblade",
       "origin": {
-         "earth": 28,
-         "air": 38,
-         "fire": 29,
-         "water": 23
+         "earth": 33,
+         "air": 41,
+         "fire": 36,
+         "water": 27
       },
       "derived": false,
       "weight": 453.5,
@@ -216533,7 +216483,6 @@
          "name": "Elven Thinblade",
          "cost": "100 gp",
          "damage": "1d8 piercing",
-         "weight": "1 lb",
          "properties": [
             "finesse",
             "special"
@@ -216544,10 +216493,10 @@
       "word": "\u0161\u0161ati",
       "definition": "Estoc",
       "origin": {
-         "earth": 32,
-         "air": 17,
-         "fire": 32,
-         "water": 21
+         "earth": 31,
+         "air": 15,
+         "fire": 43,
+         "water": 24
       },
       "derived": false,
       "weight": 1360.5,
@@ -216555,7 +216504,6 @@
          "name": "Estoc",
          "cost": "25 gp",
          "damage": "1d8 piercing",
-         "weight": "3 lb",
          "properties": [
             "versatile (1d10)"
          ]
@@ -216565,10 +216513,10 @@
       "word": "ti\u0161ki",
       "definition": "Glaive",
       "origin": {
-         "earth": 27,
-         "air": 15,
-         "fire": 52,
-         "water": 22
+         "earth": 24,
+         "air": 14,
+         "fire": 29,
+         "water": 44
       },
       "derived": false,
       "weight": 2721.0,
@@ -216576,7 +216524,6 @@
          "name": "Glaive",
          "cost": "20 gp",
          "damage": "1d10 slashing",
-         "weight": "6 lb",
          "properties": [
             "heavy",
             "reach",
@@ -216588,10 +216535,10 @@
       "word": "ashikashaki",
       "definition": "Greataxe",
       "origin": {
-         "earth": 18,
-         "air": 11,
+         "earth": 25,
+         "air": 38,
          "fire": 28,
-         "water": 18
+         "water": 21
       },
       "derived": false,
       "weight": 3174.5,
@@ -216599,7 +216546,6 @@
          "name": "Greataxe",
          "cost": "30 gp",
          "damage": "1d12 slashing",
-         "weight": "7 lb",
          "properties": [
             "heavy",
             "two-handed"
@@ -216610,10 +216556,10 @@
       "word": "\u00feifi\u00fe",
       "definition": "Great Maul",
       "origin": {
-         "earth": 35,
-         "air": 49,
-         "fire": 31,
-         "water": 15
+         "earth": 47,
+         "air": 20,
+         "fire": 12,
+         "water": 42
       },
       "derived": false,
       "weight": 65757.5,
@@ -216621,7 +216567,6 @@
          "name": "Great Maul",
          "cost": "150 gp",
          "damage": "3d6 bludgeoning",
-         "weight": "145 lb",
          "properties": [
             "oversized",
             "two-handed",
@@ -216633,10 +216578,10 @@
       "word": "kikaka",
       "definition": "Greatsword",
       "origin": {
-         "earth": 25,
-         "air": 47,
-         "fire": 13,
-         "water": 10
+         "earth": 23,
+         "air": 44,
+         "fire": 41,
+         "water": 12
       },
       "derived": false,
       "weight": 2721.0,
@@ -216644,7 +216589,6 @@
          "name": "Greatsword",
          "cost": "50 gp",
          "damage": "2d6 slashing",
-         "weight": "6 lb",
          "properties": [
             "heavy",
             "two-handed"
@@ -216655,10 +216599,10 @@
       "word": "faviv",
       "definition": "Guisarme",
       "origin": {
-         "earth": 52,
-         "air": 11,
-         "fire": 45,
-         "water": 51
+         "earth": 15,
+         "air": 30,
+         "fire": 14,
+         "water": 22
       },
       "derived": false,
       "weight": 2721.0,
@@ -216666,7 +216610,6 @@
          "name": "Guisarme",
          "cost": "15 gp",
          "damage": "2d4 slashing",
-         "weight": "6 lb",
          "properties": [
             "heavy",
             "reach",
@@ -216678,10 +216621,10 @@
       "word": "mo\u00fege",
       "definition": "Gythka",
       "origin": {
-         "earth": 33,
-         "air": 39,
-         "fire": 51,
-         "water": 46
+         "earth": 29,
+         "air": 49,
+         "fire": 48,
+         "water": 29
       },
       "derived": false,
       "weight": 4081.5,
@@ -216689,7 +216632,6 @@
          "name": "Gythka",
          "cost": "20 gp",
          "damage": "1d8 slashing",
-         "weight": "9 lb",
          "properties": [
             "heavy",
             "two-handed"
@@ -216700,10 +216642,10 @@
       "word": "oboodubu",
       "definition": "Heavy Flail",
       "origin": {
-         "earth": 13,
-         "air": 45,
-         "fire": 20,
-         "water": 47
+         "earth": 52,
+         "air": 38,
+         "fire": 42,
+         "water": 42
       },
       "derived": false,
       "weight": 3174.5,
@@ -216711,7 +216653,6 @@
          "name": "Heavy Flail",
          "cost": "20 gp",
          "damage": "1d12 bludgeoning",
-         "weight": "7 lb",
          "properties": [
             "heavy",
             "two-handed"
@@ -216722,10 +216663,10 @@
       "word": "s\u00feifi",
       "definition": "Hidden Blade",
       "origin": {
-         "earth": 13,
-         "air": 27,
-         "fire": 14,
-         "water": 24
+         "earth": 46,
+         "air": 44,
+         "fire": 45,
+         "water": 33
       },
       "derived": false,
       "weight": 226.75,
@@ -216733,7 +216674,6 @@
          "name": "Hidden Blade",
          "cost": "100 gp",
          "damage": "1d4 piercing",
-         "weight": "0.5 lb",
          "properties": [
             "light",
             "finesse",
@@ -216745,10 +216685,10 @@
       "word": "shikitikshi",
       "definition": "Katana",
       "origin": {
-         "earth": 15,
-         "air": 18,
-         "fire": 34,
-         "water": 34
+         "earth": 16,
+         "air": 49,
+         "fire": 40,
+         "water": 18
       },
       "derived": false,
       "weight": 1360.5,
@@ -216756,7 +216696,6 @@
          "name": "Katana",
          "cost": "50 gp",
          "damage": "1d8 slashing",
-         "weight": "3 lb",
          "properties": [
             "versatile (1d10)"
          ]
@@ -216766,10 +216705,10 @@
       "word": "yooeeduth",
       "definition": "Lajav",
       "origin": {
-         "earth": 34,
-         "air": 32,
-         "fire": 19,
-         "water": 49
+         "earth": 37,
+         "air": 38,
+         "fire": 49,
+         "water": 30
       },
       "derived": false,
       "weight": 2267.5,
@@ -216777,7 +216716,6 @@
          "name": "Lajav",
          "cost": "30 gp",
          "damage": "1d8 bludgeoning",
-         "weight": "5 lb",
          "properties": [
             "finesse",
             "heavy",
@@ -216790,10 +216728,10 @@
       "word": "witegii",
       "definition": "Longspear",
       "origin": {
-         "earth": 26,
-         "air": 33,
+         "earth": 50,
+         "air": 20,
          "fire": 10,
-         "water": 17
+         "water": 24
       },
       "derived": false,
       "weight": 1814.0,
@@ -216801,7 +216739,6 @@
          "name": "Longspear",
          "cost": "3 gp",
          "damage": "1d6 piercing",
-         "weight": "4 lb",
          "properties": [
             "heavy",
             "reach",
@@ -216813,10 +216750,10 @@
       "word": "booote",
       "definition": "Longstaff",
       "origin": {
-         "earth": 29,
-         "air": 45,
-         "fire": 32,
-         "water": 37
+         "earth": 45,
+         "air": 37,
+         "fire": 19,
+         "water": 19
       },
       "derived": false,
       "weight": 3174.5,
@@ -216824,7 +216761,6 @@
          "name": "Longstaff",
          "cost": "5 sp",
          "damage": "1d8 bludgeoning",
-         "weight": "7 lb",
          "properties": [
             "heavy",
             "reach",
@@ -216837,10 +216773,10 @@
       "word": "i\u0161i\u0161i",
       "definition": "Longsword",
       "origin": {
-         "earth": 36,
-         "air": 31,
-         "fire": 21,
-         "water": 47
+         "earth": 22,
+         "air": 37,
+         "fire": 17,
+         "water": 12
       },
       "derived": false,
       "weight": 1360.5,
@@ -216848,7 +216784,6 @@
          "name": "Longsword",
          "cost": "15 gp",
          "damage": "1d8 slashing",
-         "weight": "3 lb",
          "properties": [
             "versatile (1d10)"
          ]
@@ -216858,10 +216793,10 @@
       "word": "dododogugo",
       "definition": "Main Gauche",
       "origin": {
-         "earth": 31,
-         "air": 20,
-         "fire": 36,
-         "water": 17
+         "earth": 51,
+         "air": 18,
+         "fire": 52,
+         "water": 34
       },
       "derived": false,
       "weight": 453.5,
@@ -216869,7 +216804,6 @@
          "name": "Main Gauche",
          "cost": "5 gp",
          "damage": "1d4 piercing",
-         "weight": "1 lb",
          "properties": [
             "finesse",
             "light",
@@ -216882,10 +216816,10 @@
       "word": "sheheyiyiy",
       "definition": "Monk's Spade",
       "origin": {
-         "earth": 37,
-         "air": 22,
-         "fire": 45,
-         "water": 37
+         "earth": 52,
+         "air": 31,
+         "fire": 18,
+         "water": 17
       },
       "derived": false,
       "weight": 1814.0,
@@ -216893,7 +216827,6 @@
          "name": "Monk's Spade",
          "cost": "10 gp",
          "damage": "1d6 slashing",
-         "weight": "4 lb",
          "properties": [
             "reach",
             "versatile (1d8)"
@@ -216904,10 +216837,10 @@
       "word": "boggu",
       "definition": "Morningstar",
       "origin": {
-         "earth": 35,
-         "air": 46,
-         "fire": 23,
-         "water": 31
+         "earth": 33,
+         "air": 30,
+         "fire": 27,
+         "water": 43
       },
       "derived": false,
       "weight": 1814.0,
@@ -216915,7 +216848,6 @@
          "name": "Morningstar",
          "cost": "15 gp",
          "damage": "1d8 piercing",
-         "weight": "4 lb",
          "properties": []
       }
    },
@@ -216923,10 +216855,10 @@
       "word": "tiifzee",
       "definition": "Pollaxe",
       "origin": {
-         "earth": 21,
-         "air": 18,
-         "fire": 31,
-         "water": 33
+         "earth": 44,
+         "air": 34,
+         "fire": 11,
+         "water": 17
       },
       "derived": false,
       "weight": 2721.0,
@@ -216934,7 +216866,6 @@
          "name": "Pollaxe",
          "cost": "20 gp",
          "damage": "2d4 bludgeoning",
-         "weight": "6 lb",
          "properties": [
             "heavy",
             "reach",
@@ -216946,10 +216877,10 @@
       "word": "tishikshakita",
       "definition": "Shortsword",
       "origin": {
-         "earth": 25,
-         "air": 13,
-         "fire": 21,
-         "water": 38
+         "earth": 39,
+         "air": 47,
+         "fire": 43,
+         "water": 40
       },
       "derived": false,
       "weight": 907.0,
@@ -216957,7 +216888,6 @@
          "name": "Shortsword",
          "cost": "10 gp",
          "damage": "1d6 piercing",
-         "weight": "2 lb",
          "properties": [
             "light",
             "finesse"
@@ -216968,10 +216898,10 @@
       "word": "shikakashaka",
       "definition": "Side Sword",
       "origin": {
-         "earth": 19,
-         "air": 35,
-         "fire": 37,
-         "water": 15
+         "earth": 15,
+         "air": 28,
+         "fire": 16,
+         "water": 37
       },
       "derived": false,
       "weight": 1133.75,
@@ -216979,7 +216909,6 @@
          "name": "Side Sword",
          "cost": "25 gp",
          "damage": "1d6 piercing",
-         "weight": "2.5 lb",
          "properties": [
             "light",
             "special"
@@ -216990,10 +216919,10 @@
       "word": "douboudu",
       "definition": "Small Sword",
       "origin": {
-         "earth": 42,
-         "air": 24,
-         "fire": 26,
-         "water": 34
+         "earth": 23,
+         "air": 39,
+         "fire": 13,
+         "water": 52
       },
       "derived": false,
       "weight": 680.25,
@@ -217001,7 +216930,6 @@
          "name": "Small Sword",
          "cost": "10 gp",
          "damage": "1d6 piercing",
-         "weight": "1.5 lb",
          "properties": [
             "light",
             "finesse"
@@ -217012,10 +216940,10 @@
       "word": "ashashkiisha",
       "definition": "Talwar",
       "origin": {
-         "earth": 21,
-         "air": 51,
-         "fire": 18,
-         "water": 45
+         "earth": 23,
+         "air": 35,
+         "fire": 16,
+         "water": 15
       },
       "derived": false,
       "weight": 1360.5,
@@ -217023,7 +216951,6 @@
          "name": "Talwar",
          "cost": "30 gp",
          "damage": "1d8 slashing",
-         "weight": "3 lb",
          "properties": [
             "finesse"
          ]
@@ -217033,10 +216960,10 @@
       "word": "gogodoboudu",
       "definition": "Two-Handed Morningstar",
       "origin": {
-         "earth": 23,
-         "air": 22,
-         "fire": 42,
-         "water": 25
+         "earth": 33,
+         "air": 10,
+         "fire": 29,
+         "water": 46
       },
       "derived": false,
       "weight": 4535.0,
@@ -217044,7 +216971,6 @@
          "name": "Two-Handed Morningstar",
          "cost": "25 gp",
          "damage": "1d12 piercing",
-         "weight": "10 lb",
          "properties": [
             "heavy",
             "two-handed"
@@ -217055,10 +216981,10 @@
       "word": "akadaka",
       "definition": "War Pick",
       "origin": {
-         "earth": 51,
-         "air": 47,
-         "fire": 35,
-         "water": 24
+         "earth": 42,
+         "air": 33,
+         "fire": 45,
+         "water": 12
       },
       "derived": false,
       "weight": 907.0,
@@ -217066,7 +216992,6 @@
          "name": "War Pick",
          "cost": "5 gp",
          "damage": "1d8 piercing",
-         "weight": "2 lb",
          "properties": []
       }
    },
@@ -218458,10 +218383,10 @@
       "word": "ifot",
       "definition": "a short knife with a pointed blade used for piercing or stabbing",
       "origin": {
-         "earth": 34,
-         "air": 37,
-         "fire": 49,
-         "water": 24
+         "earth": 52,
+         "air": 21,
+         "fire": 43,
+         "water": 29
       },
       "derived": false,
       "weight": 453.5,
@@ -218472,7 +218397,6 @@
          "cost": "2 gp",
          "damage": "1d4",
          "damagetype": "Piercing",
-         "weight": "1 lb",
          "homebrew": "False",
          "properties": [
             "light",
@@ -223803,10 +223727,10 @@
       "word": "dgobi",
       "definition": "a straight sword with a narrow blade and two edges",
       "origin": {
-         "earth": 47,
-         "air": 51,
-         "fire": 21,
-         "water": 13
+         "earth": 44,
+         "air": 16,
+         "fire": 43,
+         "water": 49
       },
       "derived": false,
       "weight": 907.0,
@@ -223816,7 +223740,6 @@
          "name": "Rapier",
          "cost": "25 gp",
          "damage": "1d8 piercing",
-         "weight": "2 lb",
          "properties": [
             "finesse"
          ]
@@ -223991,10 +223914,10 @@
       "word": "ufid",
       "definition": "a fencing sword with a v-shaped blade and a slightly curved handle",
       "origin": {
-         "earth": 36,
-         "air": 23,
-         "fire": 36,
-         "water": 31
+         "earth": 21,
+         "air": 13,
+         "fire": 14,
+         "water": 42
       },
       "derived": false,
       "weight": 1360.5,
@@ -224004,7 +223927,6 @@
          "name": "Saber",
          "cost": "35 gp",
          "damage": "1d8 slashing",
-         "weight": "3 lb",
          "properties": [
             "light",
             "finesse"
@@ -224557,10 +224479,10 @@
       "word": "gudu",
       "definition": "a short heavy curved sword with one edge; formerly used by sailors",
       "origin": {
-         "earth": 15,
-         "air": 13,
-         "fire": 20,
-         "water": 50
+         "earth": 22,
+         "air": 49,
+         "fire": 10,
+         "water": 11
       },
       "derived": false,
       "weight": 907.0,
@@ -224570,7 +224492,6 @@
          "name": "Cutlass",
          "cost": "10 gp",
          "damage": "1d8 slashing",
-         "weight": "2 lb",
          "properties": [
             "light"
          ]
@@ -271451,10 +271372,10 @@
       "word": "dogodgugo",
       "definition": "Barbed Dagger",
       "origin": {
-         "earth": 42,
-         "air": 26,
-         "fire": 21,
-         "water": 50
+         "earth": 13,
+         "air": 48,
+         "fire": 46,
+         "water": 23
       },
       "derived": false,
       "weight": 453.5,
@@ -271463,7 +271384,6 @@
          "cost": "10 gp",
          "damage": "2d4",
          "damagetype": "Piercing",
-         "weight": "1 lb",
          "homebrew": "True",
          "properties": [
             "light",
@@ -271476,10 +271396,10 @@
       "word": "googodo",
       "definition": "Cestus",
       "origin": {
-         "earth": 45,
-         "air": 43,
-         "fire": 14,
-         "water": 31
+         "earth": 49,
+         "air": 45,
+         "fire": 25,
+         "water": 32
       },
       "derived": false,
       "weight": 226.75,
@@ -271488,7 +271408,6 @@
          "cost": "5 sp",
          "damage": "1d4",
          "damagetype": "Bludgeoning",
-         "weight": "0.5 lb",
          "homebrew": "True",
          "properties": [
             "light",
@@ -271501,9 +271420,9 @@
       "definition": "Iron Claws",
       "origin": {
          "earth": 34,
-         "air": 30,
-         "fire": 14,
-         "water": 14
+         "air": 43,
+         "fire": 19,
+         "water": 36
       },
       "derived": false,
       "weight": 907.0,
@@ -271512,7 +271431,6 @@
          "cost": "5 gp",
          "damage": "1d4",
          "damagetype": "Piercing",
-         "weight": "2 lb",
          "homebrew": "True",
          "properties": [
             "light",
@@ -271524,10 +271442,10 @@
       "word": "katta",
       "definition": "Knuckleduster",
       "origin": {
-         "earth": 44,
-         "air": 22,
-         "fire": 52,
-         "water": 36
+         "earth": 24,
+         "air": 52,
+         "fire": 15,
+         "water": 23
       },
       "derived": false,
       "weight": 907.0,
@@ -271536,7 +271454,6 @@
          "cost": "3 sp",
          "damage": "Unarmed Damage + 1",
          "damagetype": "",
-         "weight": "2 lb",
          "homebrew": "True",
          "properties": [
             "light",
@@ -271548,10 +271465,10 @@
       "word": "huyishib",
       "definition": "Light Hammer",
       "origin": {
-         "earth": 29,
-         "air": 44,
-         "fire": 43,
-         "water": 15
+         "earth": 23,
+         "air": 19,
+         "fire": 32,
+         "water": 32
       },
       "derived": false,
       "weight": 907.0,
@@ -271560,7 +271477,6 @@
          "cost": "2 gp",
          "damage": "1d4",
          "damagetype": "Bludgeoning",
-         "weight": "2 lb",
          "homebrew": "False",
          "properties": [
             "light",
@@ -271572,10 +271488,10 @@
       "word": "dudugo",
       "definition": "Chaind, Bladed",
       "origin": {
-         "earth": 39,
-         "air": 36,
-         "fire": 40,
-         "water": 13
+         "earth": 16,
+         "air": 48,
+         "fire": 49,
+         "water": 17
       },
       "derived": false,
       "weight": 4535.0,
@@ -271583,7 +271499,6 @@
          "name": "Chaind, Bladed",
          "cost": "8 gp",
          "damage": "1d6 slashing",
-         "weight": "10 lb",
          "properties": [
             "heavy",
             "finesse",
@@ -271597,10 +271512,10 @@
       "word": "he\u0161ifi",
       "definition": "Chaind, Spiked",
       "origin": {
-         "earth": 21,
-         "air": 35,
-         "fire": 10,
-         "water": 20
+         "earth": 20,
+         "air": 15,
+         "fire": 45,
+         "water": 13
       },
       "derived": false,
       "weight": 4535.0,
@@ -271608,7 +271523,6 @@
          "name": "Chaind, Spiked",
          "cost": "8 gp",
          "damage": "1d6 piercing",
-         "weight": "10 lb",
          "properties": [
             "heavy",
             "finesse",
@@ -271622,10 +271536,10 @@
       "word": "dogoddubo",
       "definition": "Chaind, Weighted",
       "origin": {
-         "earth": 39,
-         "air": 27,
-         "fire": 33,
-         "water": 10
+         "earth": 23,
+         "air": 18,
+         "fire": 21,
+         "water": 24
       },
       "derived": false,
       "weight": 4535.0,
@@ -271633,7 +271547,6 @@
          "name": "Chaind, Weighted",
          "cost": "8 gp",
          "damage": "1d6 bludgeoning",
-         "weight": "10 lb",
          "properties": [
             "heavy",
             "finesse",
@@ -271647,10 +271560,10 @@
       "word": "i\u00feetee",
       "definition": "Faeblades",
       "origin": {
-         "earth": 48,
-         "air": 47,
-         "fire": 51,
-         "water": 44
+         "earth": 44,
+         "air": 24,
+         "fire": 45,
+         "water": 12
       },
       "derived": false,
       "weight": 1133.75,
@@ -271658,7 +271571,6 @@
          "name": "Faeblades",
          "cost": "50 gp",
          "damage": "2d4 slashing",
-         "weight": "2.5 lb",
          "properties": [
             "light",
             "finesse",
@@ -271670,10 +271582,10 @@
       "word": "yesihes",
       "definition": "Man Catcher",
       "origin": {
-         "earth": 50,
-         "air": 46,
-         "fire": 23,
-         "water": 47
+         "earth": 20,
+         "air": 36,
+         "fire": 46,
+         "water": 31
       },
       "derived": false,
       "weight": 907.0,
@@ -271681,7 +271593,6 @@
          "name": "Man Catcher",
          "cost": "25 gp",
          "damage": "1d4 bludgeoning",
-         "weight": "2 lb",
          "properties": [
             "reach",
             "two-handed",
@@ -271693,10 +271604,10 @@
       "word": "si\u0161ata",
       "definition": "Meteor Hammer",
       "origin": {
-         "earth": 10,
-         "air": 31,
-         "fire": 24,
-         "water": 42
+         "earth": 34,
+         "air": 25,
+         "fire": 38,
+         "water": 14
       },
       "derived": false,
       "weight": 2267.5,
@@ -271704,7 +271615,6 @@
          "name": "Meteor Hammer",
          "cost": "30 gp",
          "damage": "1d6 bludgeoning",
-         "weight": "5 lb",
          "properties": [
             "special",
             "two-handed"
@@ -271715,10 +271625,10 @@
       "word": "ashikti",
       "definition": "Parrying Dagger",
       "origin": {
-         "earth": 23,
-         "air": 25,
-         "fire": 46,
-         "water": 35
+         "earth": 28,
+         "air": 30,
+         "fire": 38,
+         "water": 18
       },
       "derived": false,
       "weight": 907.0,
@@ -271726,7 +271636,6 @@
          "name": "Parrying Dagger",
          "cost": "5 gp",
          "damage": "1d4 piercing",
-         "weight": "2 lb",
          "properties": [
             "light",
             "special"
@@ -271737,10 +271646,10 @@
       "word": "shakaashish",
       "definition": "Sword Breaker",
       "origin": {
-         "earth": 21,
-         "air": 11,
-         "fire": 45,
-         "water": 52
+         "earth": 24,
+         "air": 41,
+         "fire": 28,
+         "water": 47
       },
       "derived": false,
       "weight": 907.0,
@@ -271748,7 +271657,6 @@
          "name": "Sword Breaker",
          "cost": "15 gp",
          "damage": "1d4 slashing",
-         "weight": "2 lb",
          "properties": [
             "light",
             "special"
@@ -271759,10 +271667,10 @@
       "word": "ashikik",
       "definition": "War Hammer",
       "origin": {
-         "earth": 11,
-         "air": 48,
-         "fire": 39,
-         "water": 20
+         "earth": 28,
+         "air": 45,
+         "fire": 10,
+         "water": 28
       },
       "derived": false,
       "weight": 907.0,
@@ -271770,7 +271678,6 @@
          "name": "War Hammer",
          "cost": "15 gp",
          "damage": "1d8 bludgeoning",
-         "weight": "2 lb",
          "properties": [
             "versatile (1d10)"
          ]
@@ -271780,10 +271687,10 @@
       "word": "ikee",
       "definition": "Warcleaver",
       "origin": {
-         "earth": 27,
-         "air": 47,
+         "earth": 11,
+         "air": 46,
          "fire": 23,
-         "water": 32
+         "water": 39
       },
       "derived": false,
       "weight": 2267.5,
@@ -271791,7 +271698,6 @@
          "name": "Warcleaver",
          "cost": "25 gp",
          "damage": "1d8 slashing/bludgeoning",
-         "weight": "5 lb",
          "properties": []
       }
    },
@@ -271799,10 +271705,10 @@
       "word": "suba\u00fe",
       "definition": "Zweihander",
       "origin": {
-         "earth": 43,
-         "air": 12,
-         "fire": 22,
-         "water": 36
+         "earth": 13,
+         "air": 49,
+         "fire": 44,
+         "water": 13
       },
       "derived": false,
       "weight": 4081.5,
@@ -271810,7 +271716,6 @@
          "name": "Zweihander",
          "cost": "100 gp",
          "damage": "2d8 slashing",
-         "weight": "9 lb",
          "properties": [
             "heavy",
             "reach",

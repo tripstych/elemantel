@@ -39,6 +39,7 @@ export class GameClient {
   private onLanguageDataInitCallbacks: ((data: any) => void)[] = [];
   private onLanguageSearchResultsCallbacks: ((results: any) => void)[] = [];
   private onLanguageEntryResultCallbacks: ((result: any) => void)[] = [];
+  private onItemInspectCallbacks: ((result: any) => void)[] = [];
   private onAutoNavigateResultCallbacks: ((result: any) => void)[] = [];
   private onAutoNavigateStepCallbacks: ((step: any) => void)[] = [];
   private onAutoNavigateCompleteCallbacks: ((result: any) => void)[] = [];
@@ -244,6 +245,19 @@ export class GameClient {
     }
   }
 
+  // Save/Load functionality
+  saveGame() {
+    if (this.room) {
+      this.room.send("save_game", {});
+    }
+  }
+
+  loadGame() {
+    if (this.room) {
+      this.room.send("load_game", {});
+    }
+  }
+
   // Autonavigation methods
   autoNavigate(targetX: number, targetY: number, moveInterval: number = 1000) {
     console.log(`[DEBUG] GameClient.autoNavigate called with target (${targetX}, ${targetY}), interval: ${moveInterval}`);
@@ -296,6 +310,10 @@ export class GameClient {
 
   onLanguageEntryResult(callback: (result: any) => void) {
     this.onLanguageEntryResultCallbacks.push(callback);
+  }
+
+  onItemInspect(callback: (result: any) => void) {
+    this.onItemInspectCallbacks.push(callback);
   }
 
   onAutoNavigateResult(callback: (result: any) => void) {
@@ -394,6 +412,10 @@ export class GameClient {
 
   private notifyLanguageEntryResult(result: any) {
     this.onLanguageEntryResultCallbacks.forEach(callback => callback(result));
+  }
+
+  private notifyItemInspect(result: any) {
+    this.onItemInspectCallbacks.forEach(callback => callback(result));
   }
 
   private notifyAutoNavigateResult(result: any) {

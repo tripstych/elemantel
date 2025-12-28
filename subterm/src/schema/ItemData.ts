@@ -18,12 +18,12 @@ export class ItemData extends Schema {
       entry.weight = (value as any).weight || 0;
       entry.type = (value as any).type || "";
       
-      // Handle elemental_origin (language_objects.json uses "origin" field)
+      // Handle origin (language_objects.json uses "origin" field)
       if ((value as any).origin) {
-        entry.elemental_origin.fire = (value as any).origin.fire || 0;
-        entry.elemental_origin.water = (value as any).origin.water || 0;
-        entry.elemental_origin.earth = (value as any).origin.earth || 0;
-        entry.elemental_origin.air = (value as any).origin.air || 0;
+        entry.origin.fire = (value as any).origin.fire || 0;
+        entry.origin.water = (value as any).origin.water || 0;
+        entry.origin.earth = (value as any).origin.earth || 0;
+        entry.origin.air = (value as any).origin.air || 0;
       }
       
       // Handle composition as ElementalOrigin object (if present)
@@ -42,6 +42,50 @@ export class ItemData extends Schema {
       
       this.entries.set(key, entry);
     }
+  }
+
+  loadFromLanguageData(languageData: any, itemTypes: { [type: string]: string[] }) {
+    this.entries.clear();
+    
+    // Load items from language data based on type lists
+    for (const [type, itemKeys] of Object.entries(itemTypes)) {
+      for (const itemKey of itemKeys) {
+        const languageEntry = languageData.entries.get(itemKey);
+        if (languageEntry && languageEntry.weight > 0) {
+          // Create a new LanguageEntry for ItemData
+          const itemEntry = new LanguageEntry();
+          itemEntry.word = languageEntry.word;
+          itemEntry.definition = languageEntry.definition;
+          itemEntry.spirit = languageEntry.spirit;
+          itemEntry.weight = languageEntry.weight;
+          itemEntry.type = type; // Use the type from the item file
+          
+          // Handle origin field
+          console.log(`ItemData: Processing ${itemKey}, languageEntry.origin exists:`, !!languageEntry.origin);
+          if (languageEntry.origin) {
+            itemEntry.origin.fire = languageEntry.origin.fire || 0;
+            itemEntry.origin.water = languageEntry.origin.water || 0;
+            itemEntry.origin.earth = languageEntry.origin.earth || 0;
+            itemEntry.origin.air = languageEntry.origin.air || 0;
+          } else {
+            console.warn(`ItemData: No origin data for ${itemKey}`);
+          }
+          
+          // Handle spell_effect field
+          if (languageEntry.spell_effect && typeof languageEntry.spell_effect === 'object') {
+            itemEntry.spell_effect.type = String(languageEntry.spell_effect.type || "");
+            itemEntry.spell_effect.amount = String(languageEntry.spell_effect.amount || "");
+            itemEntry.spell_effect.target = String(languageEntry.spell_effect.target || "");
+            itemEntry.spell_effect.element = String(languageEntry.spell_effect.element || "");
+            itemEntry.spell_effect.description = String(languageEntry.spell_effect.description || "");
+          }
+          
+          this.entries.set(itemKey, itemEntry);
+        }
+      }
+    }
+    
+    console.log(`Loaded ${this.entries.size} items from ${Object.keys(itemTypes).length} type categories`);
   }
   
   getEntry(key: string): LanguageEntry | undefined {
@@ -91,7 +135,7 @@ export class ItemData extends Schema {
     const results: Array<{key: string, entry: LanguageEntry}> = [];
     
     for (const [key, entry] of this.entries.entries()) {
-      const elementalValue = entry.elemental_origin[element as keyof typeof entry.elemental_origin];
+      const elementalValue = entry.origin[element as keyof typeof entry.origin];
       if (typeof elementalValue === 'number' && elementalValue > 0) {
         results.push({ key, entry });
       }

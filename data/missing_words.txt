@@ -1,0 +1,68 @@
+Barbed Dagger
+Brandistock
+Broken Sword
+Cestus
+Double Spear
+Eye Sickle
+Falx
+Fauchard
+Flamberge
+Greatclub
+Greatspear
+Handaxe
+Iron Claws
+Karambit
+Knuckleduster
+Kukri
+Light Hammer
+Torch Mace
+Torch Staff
+Zerka
+Arming Sword
+Back Sword
+Battleaxe
+Bec de Corbin
+Boar Spear
+Buster Sword
+Chaind, Bladed
+Chaind, Spiked
+Chaind, Weighted
+Double Axe
+Double Flail
+Double Sword
+Dueling Shield
+Dwarven Ugrosh
+Elven Lightblade
+Elven Thinblade
+Estoc
+Faeblades
+Glaive
+Greataxe
+Great Maul
+Greatsword
+Guisarme
+Gythka
+Heavy Flail
+Hidden Blade
+Katana
+Lajav
+Longspear
+Longstaff
+Longsword
+Main Gauche
+Man Catcher
+Meteor Hammer
+Monk's Spade
+Morningstar
+Parrying Dagger
+Pollaxe
+Shortsword
+Side Sword
+Small Sword
+Sword Breaker
+Talwar
+Two-Handed Morningstar
+War Pick
+War Hammer
+Warcleaver
+Zweihander

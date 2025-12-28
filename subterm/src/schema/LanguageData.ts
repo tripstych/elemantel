@@ -15,6 +15,13 @@ export class SpellEffect extends Schema {
   @type("string") description: string = "";
 }
 
+export class WeaponEffect extends Schema {
+  @type("string") name: string = "";
+  @type("string") cost: string = "";
+  @type("string") damage: string = "";
+  @type(["string"]) properties: string[] = [];
+}
+
 export class LanguageEntry extends Schema {
   @type("string") word: string = "";
   @type("string") definition: string = "";
@@ -22,10 +29,12 @@ export class LanguageEntry extends Schema {
   @type("boolean") derived: boolean = false;
   
   // Optional properties that may not exist in all entries
+  @type("string") type: string = "";
   @type("string") spirit: string = "";
   @type("number") weight: number = 0;
   @type(ElementalOrigin) composition: ElementalOrigin = new ElementalOrigin();
   @type(SpellEffect) spell_effect: SpellEffect = new SpellEffect();
+  @type(WeaponEffect) weapon_effect: WeaponEffect = new WeaponEffect();
 }
 
 export class LanguageData extends Schema {
@@ -51,6 +60,14 @@ export class LanguageData extends Schema {
         entry.origin.water = (value as any).origin.water || 0;
         entry.origin.earth = (value as any).origin.earth || 0;
         entry.origin.air = (value as any).origin.air || 0;
+        console.log(`LanguageData: Loaded origin for ${key}:`, {
+          fire: entry.origin.fire,
+          water: entry.origin.water,
+          earth: entry.origin.earth,
+          air: entry.origin.air
+        });
+      } else {
+        console.log(`LanguageData: No origin data for ${key}`);
       }
       
       // Optional fields
@@ -72,6 +89,14 @@ export class LanguageData extends Schema {
         entry.spell_effect.amount = (value as any).spell_effect.amount || "";
         entry.spell_effect.element = (value as any).spell_effect.element || "";
         entry.spell_effect.description = (value as any).spell_effect.description || "";
+      }
+      
+      // Weapon effect (optional)
+      if ((value as any).weapon_effect) {
+        entry.weapon_effect.name = (value as any).weapon_effect.name || "";
+        entry.weapon_effect.cost = (value as any).weapon_effect.cost || "";
+        entry.weapon_effect.damage = (value as any).weapon_effect.damage || "";
+        entry.weapon_effect.properties = (value as any).weapon_effect.properties || [];
       }
       
       this.entries.set(key, entry);

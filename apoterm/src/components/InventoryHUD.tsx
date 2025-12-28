@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { gameClient } from '../services/GameClient';
+import { convertToCuneiform } from '../utils/CuneiformUtils';
 
 interface InventoryHUDProps {
   isVisible: boolean;
@@ -10,6 +11,7 @@ interface InventoryHUDProps {
 export const InventoryHUD: React.FC<InventoryHUDProps> = ({ isVisible, onClose, playerState }) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
   const [message, setMessage] = useState<string>('');
+  const [inspectItem, setInspectItem] = useState<any | null>(null);
 
   useEffect(() => {
     // Set up equip/unequip result listeners
@@ -22,6 +24,30 @@ export const InventoryHUD: React.FC<InventoryHUDProps> = ({ isVisible, onClose, 
     gameClient.onUnequipResult((result: any) => {
       setMessage(result.message || 'Item unequipped!');
       setTimeout(() => setMessage(''), 3000);
+    });
+
+    // Set up item inspect listener
+    gameClient.onLanguageEntryResult((result: any) => {
+      if (result.entry) {
+        // Add the synset key to the entry for display purposes
+        setInspectItem({
+          ...result.entry,
+          synsetKey: result.key
+        });
+      } else {
+        // Item not found, show fallback
+        setInspectItem({
+          synsetKey: result.key,
+          word: result.key,
+          type: 'unknown',
+          definition: 'Item not found in database',
+          weight: 0,
+          origin: { fire: 0, water: 0, earth: 0, air: 0 },
+          composition: { fire: 0, water: 0, earth: 0, air: 0 },
+          spell_effect: { type: '', amount: '', target: '', element: '', description: '' },
+          spirit: 'None'
+        });
+      }
     });
 
     return () => {
@@ -76,6 +102,13 @@ export const InventoryHUD: React.FC<InventoryHUDProps> = ({ isVisible, onClose, 
   const handleDrop = (itemName: string) => {
     gameClient.dropItem(itemName);
     setMessage(`Dropping ${itemName}...`);
+  };
+
+  const handleInspect = (itemName: string) => {
+    // Request item details from server
+    gameClient.getLanguageEntry(itemName);
+    setMessage(`Inspecting ${itemName}...`);
+    setTimeout(() => setMessage(''), 2000);
   };
 
   return (
@@ -154,23 +187,42 @@ export const InventoryHUD: React.FC<InventoryHUDProps> = ({ isVisible, onClose, 
                   }}
                 >
                   <span>{item}</span>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDrop(item);
-                    }}
-                    style={{
-                      backgroundColor: '#8B0000',
-                      color: 'white',
-                      border: 'none',
-                      borderRadius: '3px',
-                      padding: '2px 8px',
-                      fontSize: '12px',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    Drop
-                  </button>
+                  <div style={{ display: 'flex', gap: '4px' }}>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleInspect(item);
+                      }}
+                      style={{
+                        backgroundColor: '#4169E1',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '3px',
+                        padding: '2px 6px',
+                        fontSize: '12px',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      Inspect
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDrop(item);
+                      }}
+                      style={{
+                        backgroundColor: '#8B0000',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '3px',
+                        padding: '2px 8px',
+                        fontSize: '12px',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      Drop
+                    </button>
+                  </div>
                 </div>
               ))
             )}
@@ -300,6 +352,81 @@ export const InventoryHUD: React.FC<InventoryHUDProps> = ({ isVisible, onClose, 
           </div>
         </div>
       </div>
+
+      {/* Inspection Modal */}
+      {inspectItem && (
+        <div style={{
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          backgroundColor: '#1a1a1a',
+          border: '2px solid #gold',
+          borderRadius: '8px',
+          padding: '20px',
+          minWidth: '400px',
+          maxWidth: '600px',
+          maxHeight: '80vh',
+          overflowY: 'auto',
+          zIndex: 1000
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+            <h3 style={{ margin: 0, color: '#gold' }}>
+              Item Inspection: {inspectItem.synsetKey ? inspectItem.synsetKey.substr(0, inspectItem.synsetKey.indexOf('.')) : 'Unknown'}
+            </h3>
+            <button 
+              onClick={() => setInspectItem(null)}
+              style={{
+                backgroundColor: '#8B4513',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                padding: '4px 8px',
+                cursor: 'pointer'
+              }}
+            >
+              X
+            </button>
+          </div>
+
+          <div style={{ display: 'grid', gap: '10px' }}>
+            <div style={{ backgroundColor: '#2a2a2a', padding: '10px', borderRadius: '4px' }}>
+              <strong style={{ color: '#gold' }}>Basic Info:</strong>
+              <div style={{ marginTop: '5px' }}>
+                <div><strong>Word:</strong> {inspectItem.word}</div>
+                <div><strong>Type:</strong> {inspectItem.type}</div>
+                <div><strong>Weight:</strong> {inspectItem.weight}</div>
+                <div><strong>Definition:</strong> {inspectItem.definition}</div>
+              </div>
+            </div>
+
+            <div style={{ backgroundColor: '#2a2a2a', padding: '10px', borderRadius: '4px' }}>
+              <strong style={{ color: '#gold' }}>Origin:</strong>
+              <div style={{ marginTop: '5px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '5px' }}>
+                <div><strong>Fire:</strong> {convertToCuneiform(inspectItem.origin?.fire || 0)}</div>
+                <div><strong>Water:</strong> {convertToCuneiform(inspectItem.origin?.water || 0)}</div>
+                <div><strong>Earth:</strong> {convertToCuneiform(inspectItem.origin?.earth || 0)}</div>
+                <div><strong>Air:</strong> {convertToCuneiform(inspectItem.origin?.air || 0)}</div>
+              </div>
+            </div>
+
+            <div style={{ backgroundColor: '#2a2a2a', padding: '10px', borderRadius: '4px' }}>
+              <strong style={{ color: '#gold' }}>Spell Effect:</strong>
+              <div style={{ marginTop: '5px' }}>
+                <div><strong>Type:</strong> {inspectItem.spell_effect?.type || 'None'}</div>
+                <div><strong>Target:</strong> {inspectItem.spell_effect?.target || 'None'}</div>
+                <div><strong>Amount:</strong> {inspectItem.spell_effect?.amount || 'None'}</div>
+                <div><strong>Element:</strong> {inspectItem.spell_effect?.element || 'None'}</div>
+                <div><strong>Description:</strong> {inspectItem.spell_effect?.description || 'None'}</div>
+              </div>
+            </div>
+
+            <div style={{ backgroundColor: '#2a2a2a', padding: '10px', borderRadius: '4px' }}>
+              <strong style={{ color: '#gold' }}>Spirit:</strong> {inspectItem.spirit || 'None'}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
