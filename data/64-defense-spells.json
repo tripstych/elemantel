@@ -1,0 +1,645 @@
+[
+  {
+    "name": "Stone Ward",
+    "mana_cost": 0.01,
+    "armor_class": 1,
+    "element": "earth",
+    "function": "shield_earth",
+    "focus": 0,
+    "turns": 1,
+    "description": "A quick stone barrier that grants a modest increase in armor."
+  },
+  {
+    "name": "Earthen Guard",
+    "mana_cost": 0.02,
+    "armor_class": 2,
+    "element": "earth",
+    "function": "buff_armor",
+    "focus": 0,
+    "turns": 1,
+    "description": "Rough earth forms a protective shield, slightly raising armor."
+  },
+  {
+    "name": "Rock Shield",
+    "mana_cost": 0.03,
+    "armor_class": 3,
+    "element": "earth",
+    "function": "seal_earth",
+    "focus": 0,
+    "turns": 1,
+    "description": "Dense rock encases the caster, offering near‑spectral defense."
+  },
+  {
+    "name": "Boulder Barrier",
+    "mana_cost": 0.04,
+    "armor_class": 4,
+    "element": "earth",
+    "function": "shield_earth",
+    "focus": 1,
+    "turns": 1,
+    "description": "A temporary boulder forms a sturdy wall around the caster."
+  },
+  {
+    "name": "Titanic Brace",
+    "mana_cost": 0.05,
+    "armor_class": 5,
+    "element": "earth",
+    "function": "buff_armor",
+    "focus": 0,
+    "turns": 1,
+    "description": "A massive stone frame that significantly raises armor."
+  },
+  {
+    "name": "Quake Shield",
+    "mana_cost": 0.06,
+    "armor_class": 6,
+    "element": "earth",
+    "function": "shield_earth",
+    "focus": 1,
+    "turns": 1,
+    "description": "The ground shudders, creating a trembling protective barrier."
+  },
+  {
+    "name": "Golem's Grasp",
+    "mana_cost": 0.07,
+    "armor_class": 7,
+    "element": "earth",
+    "function": "seal_earth",
+    "focus": 0,
+    "turns": 1,
+    "description": "The caster summons a golem's strength, sealing their defenses."
+  },
+  {
+    "name": "Granite Cloak",
+    "mana_cost": 0.08,
+    "armor_class": 8,
+    "element": "earth",
+    "function": "buff_armor",
+    "focus": 0,
+    "turns": 1,
+    "description": "A cloak of granite that enhances the caster's defense."
+  },
+  {
+    "name": "Stoneform",
+    "mana_cost": 0.09,
+    "armor_class": 9,
+    "element": "earth",
+    "function": "shield_earth",
+    "focus": 1,
+    "turns": 1,
+    "description": "The caster's body hardens to stone, bolstering armor."
+  },
+  {
+    "name": "Terra Fortress",
+    "mana_cost": 0.10,
+    "armor_class": 10,
+    "element": "earth",
+    "function": "seal_earth",
+    "focus": 1,
+    "turns": 1,
+    "description": "A fortified stone fortress materializes around the caster."
+  },
+  {
+    "name": "Lithic Barrier",
+    "mana_cost": 0.11,
+    "armor_class": 11,
+    "element": "earth",
+    "function": "buff_armor",
+    "focus": 0,
+    "turns": 1,
+    "description": "A layered stone barrier gives a substantial armor boost."
+  },
+  {
+    "name": "Ethereal Rock",
+    "mana_cost": 0.12,
+    "armor_class": 12,
+    "element": "earth",
+    "function": "shield_earth",
+    "focus": 2,
+    "turns": 1,
+    "description": "An otherworldly stone cloud envelops the caster, offering defense."
+  },
+  {
+    "name": "Enduring Bedrock",
+    "mana_cost": 0.13,
+    "armor_class": 13,
+    "element": "earth",
+    "function": "seal_earth",
+    "focus": 2,
+    "turns": 1,
+    "description": "An indestructible bedrock forms around the caster, staving off damage."
+  },
+  {
+    "name": "Stone Shield",
+    "mana_cost": 0.14,
+    "armor_class": 14,
+    "element": "earth",
+    "function": "buff_armor",
+    "focus": 1,
+    "turns": 1,
+    "description": "A shimmering stone shield rises, augmenting armor."
+  },
+  {
+    "name": "Materialized Armor",
+    "mana_cost": 0.15,
+    "armor_class": 15,
+    "element": "earth",
+    "function": "shield_earth",
+    "focus": 0,
+    "turns": 1,
+    "description": "Reality warps to manifest a protective stone armor."
+  },
+  {
+    "name": "Rockskin",
+    "mana_cost": 0.16,
+    "armor_class": 16,
+    "element": "earth",
+    "function": "seal_earth",
+    "focus": 0,
+    "turns": 1,
+    "description": "The caster's skin turns to stone, providing a robust defensive layer."
+  },
+
+  {
+    "name": "Gale Guard",
+    "mana_cost": 0.01,
+    "armor_class": 17,
+    "element": "air",
+    "function": "shield_air",
+    "focus": 0,
+    "turns": 1,
+    "description": "A swift gust surrounds the caster, creating a subtle air shield."
+  },
+  {
+    "name": "Zephyr Shield",
+    "mana_cost": 0.02,
+    "armor_class": 18,
+    "element": "air",
+    "function": "buff_agility",
+    "focus": 0,
+    "turns": 1,
+    "description": "A gentle zephyr enhances the caster's reflexes, raising evasion."
+  },
+  {
+    "name": "Wind Ward",
+    "mana_cost": 0.03,
+    "armor_class": 19,
+    "element": "air",
+    "function": "shield_air",
+    "focus": 0,
+    "turns": 1,
+    "description": "The wind coils into a protective field around the caster."
+  },
+  {
+    "name": "Breeze Barrier",
+    "mana_cost": 0.04,
+    "armor_class": 20,
+    "element": "air",
+    "function": "buff_agility",
+    "focus": 0,
+    "turns": 1,
+    "description": "A light breeze clears the air, boosting the caster's speed."
+  },
+  {
+    "name": "Storm Barrier",
+    "mana_cost": 0.05,
+    "armor_class": 21,
+    "element": "air",
+    "function": "shield_air",
+    "focus": 1,
+    "turns": 1,
+    "description": "Storm winds gather to form a temporary airborne defense."
+  },
+  {
+    "name": "Air Shield",
+    "mana_cost": 0.06,
+    "armor_class": 22,
+    "element": "air",
+    "function": "buff_agility",
+    "focus": 1,
+    "turns": 1,
+    "description": "A swirling vortex increases the caster's agility."
+  },
+  {
+    "name": "Cyclone Shield",
+    "mana_cost": 0.07,
+    "armor_class": 23,
+    "element": "air",
+    "function": "shield_air",
+    "focus": 0,
+    "turns": 1,
+    "description": "Cyclone winds encircle the caster, forming a temporary shield."
+  },
+  {
+    "name": "Tempest Guard",
+    "mana_cost": 0.08,
+    "armor_class": 24,
+    "element": "air",
+    "function": "buff_agility",
+    "focus": 0,
+    "turns": 1,
+    "description": "A fierce tempest grants the caster slight damage resistance."
+  },
+  {
+    "name": "Hurricane Halo",
+    "mana_cost": 0.09,
+    "armor_class": 25,
+    "element": "air",
+    "function": "shield_air",
+    "focus": 2,
+    "turns": 1,
+    "description": "A hurricane forms an invisible halo, protecting the caster from attacks."
+  },
+  {
+    "name": "Wind Ward",
+    "mana_cost": 0.10,
+    "armor_class": 26,
+    "element": "air",
+    "function": "buff_agility",
+    "focus": 0,
+    "turns": 1,
+    "description": "A steady wind gust boosting the caster's nimbleness."
+  },
+  {
+    "name": "Aerial Armor",
+    "mana_cost": 0.11,
+    "armor_class": 27,
+    "element": "air",
+    "function": "shield_air",
+    "focus": 1,
+    "turns": 1,
+    "description": "The air condenses into a lightweight armor around the caster."
+  },
+  {
+    "name": "Sirocco Strength",
+    "mana_cost": 0.12,
+    "armor_class": 28,
+    "element": "air",
+    "function": "buff_agility",
+    "focus": 0,
+    "turns": 1,
+    "description": "A hot Sirocco wind raises the caster's defensive capabilities."
+  },
+  {
+    "name": "Arctic Shield",
+    "mana_cost": 0.13,
+    "armor_class": 29,
+    "element": "air",
+    "function": "shield_air",
+    "focus": 1,
+    "turns": 1,
+    "description": "Cold winds form an icy shield, denying damage to the caster."
+  },
+  {
+    "name": "Breeze Spell",
+    "mana_cost": 0.14,
+    "armor_class": 30,
+    "element": "air",
+    "function": "buff_agility",
+    "focus": 0,
+    "turns": 1,
+    "description": "A soothing breeze gives the caster an extra dodge."
+  },
+  {
+    "name": "Storm Aura",
+    "mana_cost": 0.15,
+    "armor_class": 31,
+    "element": "air",
+    "function": "shield_air",
+    "focus": 2,
+    "turns": 1,
+    "description": "Storms swirl above, creating an aura of protection."
+  },
+  {
+    "name": "Air Bastion",
+    "mana_cost": 0.16,
+    "armor_class": 32,
+    "element": "air",
+    "function": "buff_agility",
+    "focus": 1,
+    "turns": 1,
+    "description": "A sturdy veil of air forms a bastion, raising defense."
+  },
+
+  {
+    "name": "Flame Ward",
+    "mana_cost": 0.01,
+    "armor_class": 33,
+    "element": "fire",
+    "function": "shield_fire",
+    "focus": 0,
+    "turns": 1,
+    "description": "A flurry of embers forms a quick fire shield."
+  },
+  {
+    "name": "Fire Shield",
+    "mana_cost": 0.02,
+    "armor_class": 34,
+    "element": "fire",
+    "function": "buff_armor",
+    "focus": 0,
+    "turns": 1,
+    "description": "Heat raises the caster's armor, providing moderate protection."
+  },
+  {
+    "name": "Heat Barrier",
+    "mana_cost": 0.03,
+    "armor_class": 35,
+    "element": "fire",
+    "function": "shield_fire",
+    "focus": 0,
+    "turns": 1,
+    "description": "A wall of heat deflects incoming damage."
+  },
+  {
+    "name": "Molten Armor",
+    "mana_cost": 0.04,
+    "armor_class": 36,
+    "element": "fire",
+    "function": "buff_armor",
+    "focus": 1,
+    "turns": 1,
+    "description": "Molten lava hardens around the caster, adding armor."
+  },
+  {
+    "name": "Ember Guard",
+    "mana_cost": 0.05,
+    "armor_class": 37,
+    "element": "fire",
+    "function": "shield_fire",
+    "focus": 0,
+    "turns": 1,
+    "description": "Embers swirl in a protective guard."
+  },
+  {
+    "name": "Inferno Shield",
+    "mana_cost": 0.06,
+    "armor_class": 38,
+    "element": "fire",
+    "function": "buff_armor",
+    "focus": 0,
+    "turns": 1,
+    "description": "A searing inferno boosts the caster's armor."
+  },
+  {
+    "name": "Blazing Bastion",
+    "mana_cost": 0.07,
+    "armor_class": 39,
+    "element": "fire",
+    "function": "shield_fire",
+    "focus": 1,
+    "turns": 1,
+    "description": "A blazing bastion deflects attacks with scorching heat."
+  },
+  {
+    "name": "Cinder Shield",
+    "mana_cost": 0.08,
+    "armor_class": 40,
+    "element": "fire",
+    "function": "buff_armor",
+    "focus": 0,
+    "turns": 1,
+    "description": "Cinders form a barrier, adding modest armor."
+  },
+  {
+    "name": "Pyroclasmic Shield",
+    "mana_cost": 0.09,
+    "armor_class": 41,
+    "element": "fire",
+    "function": "shield_fire",
+    "focus": 2,
+    "turns": 1,
+    "description": "A volcanic shield erupts, providing fierce protection."
+  },
+  {
+    "name": "Scorch Armor",
+    "mana_cost": 0.10,
+    "armor_class": 42,
+    "element": "fire",
+    "function": "buff_armor",
+    "focus": 0,
+    "turns": 1,
+    "description": "Scorching heat wraps the caster, granting extra armor."
+  },
+  {
+    "name": "Kindling Shield",
+    "mana_cost": 0.11,
+    "armor_class": 43,
+    "element": "fire",
+    "function": "shield_fire",
+    "focus": 0,
+    "turns": 1,
+    "description": "Kindling sparks create a light defensive field."
+  },
+  {
+    "name": "Flare Protection",
+    "mana_cost": 0.12,
+    "armor_class": 44,
+    "element": "fire",
+    "function": "buff_armor",
+    "focus": 0,
+    "turns": 1,
+    "description": "A flare of light bolsters the caster's resilience."
+  },
+  {
+    "name": "Firewall",
+    "mana_cost": 0.13,
+    "armor_class": 45,
+    "element": "fire",
+    "function": "shield_fire",
+    "focus": 1,
+    "turns": 1,
+    "description": "A thick fireplace barrier blocks incoming blows."
+  },
+  {
+    "name": "Heatwave Cloak",
+    "mana_cost": 0.14,
+    "armor_class": 46,
+    "element": "fire",
+    "function": "buff_armor",
+    "focus": 0,
+    "turns": 1,
+    "description": "Heatwaves cloak the caster, raising defense."
+  },
+  {
+    "name": "Lava Barrier",
+    "mana_cost": 0.15,
+    "armor_class": 47,
+    "element": "fire",
+    "function": "shield_fire",
+    "focus": 2,
+    "turns": 1,
+    "description": "Molten lava forms a barrier of scorching fire."
+  },
+  {
+    "name": "Infernal Armor",
+    "mana_cost": 0.16,
+    "armor_class": 48,
+    "element": "fire",
+    "function": "buff_armor",
+    "focus": 1,
+    "turns": 1,
+    "description": "Infernal flames coat the caster, delivering powerful armor boost."
+  },
+
+  {
+    "name": "Aqua Shield",
+    "mana_cost": 0.01,
+    "armor_class": 49,
+    "element": "water",
+    "function": "shield_water",
+    "focus": 0,
+    "turns": 1,
+    "description": "A ring of water surrounds the caster, deflecting attacks."
+  },
+  {
+    "name": "Healing Waters",
+    "mana_cost": 0.02,
+    "armor_class": 50,
+    "element": "water",
+    "function": "heal",
+    "focus": 0,
+    "turns": 1,
+    "description": "Gentle waters flow through the caster, restoring health."
+  },
+  {
+    "name": "Purifying Rain",
+    "mana_cost": 0.03,
+    "armor_class": 51,
+    "element": "water",
+    "function": "cure_poison",
+    "focus": 0,
+    "turns": 1,
+    "description": "A cleansing rain washes away poison."
+  },
+  {
+    "name": "Mending Mist",
+    "mana_cost": 0.04,
+    "armor_class": 52,
+    "element": "water",
+    "function": "heal",
+    "focus": 0,
+    "turns": 1,
+    "description": "A mist of renewal heals the caster's wounds."
+  },
+  {
+    "name": "Cleanse Stream",
+    "mana_cost": 0.05,
+    "armor_class": 53,
+    "element": "water",
+    "function": "cure_disease",
+    "focus": 0,
+    "turns": 1,
+    "description": "A steady stream cures sickness."
+  },
+  {
+    "name": "Water Form",
+    "mana_cost": 0.06,
+    "armor_class": 54,
+    "element": "water",
+    "function": "shield_water",
+    "focus": 1,
+    "turns": 1,
+    "description": "The caster's form becomes water, raising defense."
+  },
+  {
+    "name": "Healing Wave",
+    "mana_cost": 0.07,
+    "armor_class": 55,
+    "element": "water",
+    "function": "heal",
+    "focus": 0,
+    "turns": 1,
+    "description": "A wave of healing washes over the caster, restoring health."
+  },
+  {
+    "name": "Blessing of the Tides",
+    "mana_cost": 0.08,
+    "armor_class": 56,
+    "element": "water",
+    "function": "bless",
+    "focus": 0,
+    "turns": 1,
+    "description": "Blessings from the sea enhance the caster's attributes."
+  },
+  {
+    "name": "Fountain Shield",
+    "mana_cost": 0.09,
+    "armor_class": 57,
+    "element": "water",
+    "function": "shield_water",
+    "focus": 1,
+    "turns": 1,
+    "description": "A fountain erupts to shield the caster."
+  },
+  {
+    "name": "Saline Sickness Cure",
+    "mana_cost": 0.10,
+    "armor_class": 58,
+    "element": "water",
+    "function": "cure_poison",
+    "focus": 0,
+    "turns": 1,
+    "description": "Saline waters purge poisons."
+  },
+  {
+    "name": "River of Restoration",
+    "mana_cost": 0.11,
+    "armor_class": 59,
+    "element": "water",
+    "function": "heal",
+    "focus": 0,
+    "turns": 1,
+    "description": "A river flows through the caster, mending wounds."
+  },
+  {
+    "name": "Aquatic Aura",
+    "mana_cost": 0.12,
+    "armor_class": 60,
+    "element": "water",
+    "function": "shield_water",
+    "focus": 2,
+    "turns": 1,
+    "description": "An aura of water surrounds, deflecting attacks."
+  },
+  {
+    "name": "Purifying Surge",
+    "mana_cost": 0.13,
+    "armor_class": 61,
+    "element": "water",
+    "function": "cure_disease",
+    "focus": 0,
+    "turns": 1,
+    "description": "A surge cleanses disease from the caster."
+  },
+  {
+    "name": "Flowing Healing",
+    "mana_cost": 0.14,
+    "armor_class": 62,
+    "element": "water",
+    "function": "heal",
+    "focus": 0,
+    "turns": 1,
+    "description": "Flowing waters restore the caster's vitality."
+  },
+  {
+    "name": "Watershield",
+    "mana_cost": 0.15,
+    "armor_class": 63,
+    "element": "water",
+    "function": "shield_water",
+    "focus": 2,
+    "turns": 1,
+    "description": "A steady watershield protects against attacks."
+  },
+  {
+    "name": "Essence of Life",
+    "mana_cost": 1.00,
+    "armor_class": 64,
+    "element": "water",
+    "function": "heal",
+    "focus": 2,
+    "turns": 1,
+    "description": "Life itself flows into the caster, bringing powerful healing."
+  }
+]

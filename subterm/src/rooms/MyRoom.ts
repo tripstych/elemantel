@@ -95,13 +95,9 @@ export class MyRoom extends Room<MyRoomState> {
       // Calculate movement interval based on inventory weight
       const strength = player.strength || 10;
       const maxCarryWeight = strength * 15 * 450;
-      console.log(`[DEBUG] Backend - Strength: ${strength}, Max carry weight: ${maxCarryWeight}`);
-      
-      // Calculate current inventory weight (assuming each item weighs 1kg for now)
       const currentWeight = player.inventory?.length || 0;
-      console.log(`[DEBUG] Backend - Current inventory weight: ${currentWeight}kg`);
-      
       let moveInterval = 100; // Base interval
+
       if (currentWeight > maxCarryWeight) {
         const excessWeight = currentWeight - maxCarryWeight;
         const penalty = excessWeight * 15; // 15ms per kg over limit
@@ -1101,13 +1097,19 @@ export class MyRoom extends Room<MyRoomState> {
     });
     
     // Start movement
-    this.startPlayerMovement(client, moveInterval);
+    this.startPlayerMovement(client);
   }
   
-  private startPlayerMovement(client: Client, moveInterval: number) {
+  private startPlayerMovement(client: Client) {
     const pathData = this.playerPaths.get(client.sessionId);
     if (!pathData) return;
-    
+
+    const player = this.state.player;
+    const strength = player.strength || 10;
+    const maxCarryWeight = strength * 15 * 450;
+    const currentWeight = player.inventory?.length || 0;
+    let moveInterval = 100; // Base interval
+
     pathData.moveInterval = setInterval(() => {
       this.movePlayerAlongPath(client);
     }, moveInterval);

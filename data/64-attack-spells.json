@@ -1,0 +1,683 @@
+[
+    {
+      "name": "Spark",
+      "mana_cost": 0.01,
+      "damage": 1,
+      "element": "fire",
+      "function": "none",
+      "focus": 0,
+      "turns": 1,
+      "description": "A tiny, harmless flicker of flame."
+    },
+    {
+      "name": "Ember",
+      "mana_cost": 0.02,
+      "damage": 2,
+      "element": "fire",
+      "function": "burn_enemy",
+      "focus": 0,
+      "turns": 1,
+      "description": "A small burning coal that singes the target."
+    },
+    {
+      "name": "Gust",
+      "mana_cost": 0.02,
+      "damage": 2,
+      "element": "air",
+      "function": "push_enemy",
+      "focus": 0,
+      "turns": 1,
+      "description": "A sudden burst of wind that staggers the foe."
+    },
+    {
+      "name": "Splash",
+      "mana_cost": 0.02,
+      "damage": 2,
+      "element": "water",
+      "function": "wet_enemy",
+      "focus": 0,
+      "turns": 1,
+      "description": "A jet of water that douses the target."
+    },
+    {
+      "name": "Pebble Toss",
+      "mana_cost": 0.02,
+      "damage": 2,
+      "element": "earth",
+      "function": "none",
+      "focus": 0,
+      "turns": 1,
+      "description": "Conjures and throws a small, sharp stone."
+    },
+    {
+      "name": "Flame Jet",
+      "mana_cost": 0.05,
+      "damage": 5,
+      "element": "fire",
+      "function": "burn_enemy",
+      "focus": 0,
+      "turns": 1,
+      "description": "A continuous stream of fire."
+    },
+    {
+      "name": "Wind Slash",
+      "mana_cost": 0.05,
+      "damage": 5,
+      "element": "air",
+      "function": "armor_pierce",
+      "focus": 0,
+      "turns": 1,
+      "description": "A blade of compressed air that cuts through defenses."
+    },
+    {
+      "name": "Water Whip",
+      "mana_cost": 0.05,
+      "damage": 5,
+      "element": "water",
+      "function": "disarm_enemy",
+      "focus": 0,
+      "turns": 1,
+      "description": "A whip of pressurized water that can knock items loose."
+    },
+    {
+      "name": "Stone Shard",
+      "mana_cost": 0.05,
+      "damage": 5,
+      "element": "earth",
+      "function": "armor_pierce",
+      "focus": 0,
+      "turns": 1,
+      "description": "Fires a sharp, crystalline fragment of rock."
+    },
+    {
+      "name": "Firebolt",
+      "mana_cost": 0.1,
+      "damage": 10,
+      "element": "fire",
+      "function": "burn_enemy",
+      "focus": 0,
+      "turns": 1,
+      "description": "A classic missile of concentrated flame."
+    },
+    {
+      "name": "Shockwave",
+      "mana_cost": 0.1,
+      "damage": 8,
+      "element": "air",
+      "function": "stun_enemy",
+      "focus": 0,
+      "turns": 1,
+      "description": "A concussive blast of air that disorients foes."
+    },
+    {
+      "name": "Ice Spike",
+      "mana_cost": 0.1,
+      "damage": 10,
+      "element": "water",
+      "function": "freeze_enemy",
+      "focus": 0,
+      "turns": 1,
+      "description": "Launches a spear of enchanted ice."
+    },
+    {
+      "name": "Land Spike",
+      "mana_cost": 0.1,
+      "damage": 10,
+      "element": "earth",
+      "function": "trip_enemy",
+      "focus": 0,
+      "turns": 1,
+      "description": "Causes a sharp pillar of earth to erupt under the target."
+    },
+    {
+      "name": "Scorch",
+      "mana_cost": 0.15,
+      "damage": 12,
+      "element": "fire",
+      "function": "ignite_ground",
+      "focus": 0,
+      "turns": 2,
+      "description": "Sears an area, leaving behind damaging flames."
+    },
+    {
+      "name": "Chain Lightning",
+      "mana_cost": 0.15,
+      "damage": 10,
+      "element": "air",
+      "function": "chain_targets",
+      "focus": 0,
+      "turns": 1,
+      "description": "A bolt of lightning that arcs to nearby enemies."
+    },
+    {
+      "name": "Freezing Mist",
+      "mana_cost": 0.15,
+      "damage": 8,
+      "element": "water",
+      "function": "slow_enemy",
+      "focus": 1,
+      "turns": 3,
+      "description": "A cloud of mist that chills and slows those within it."
+    },
+    {
+      "name": "Entangling Roots",
+      "mana_cost": 0.15,
+      "damage": 5,
+      "element": "earth",
+      "function": "root_enemy",
+      "focus": 1,
+      "turns": 2,
+      "description": "Roots burst from the ground to hold a target in place."
+    },
+    {
+      "name": "Fireball",
+      "mana_cost": 0.2,
+      "damage": 20,
+      "element": "fire",
+      "function": "aoe_explosion",
+      "focus": 0,
+      "turns": 1,
+      "description": "An iconic explosion of fire that affects a wide area."
+    },
+    {
+      "name": "Tornado",
+      "mana_cost": 0.2,
+      "damage": 15,
+      "element": "air",
+      "function": "lift_enemy",
+      "focus": 1,
+      "turns": 2,
+      "description": "Summons a small tornado that throws enemies into the air."
+    },
+    {
+      "name": "Geyser",
+      "mana_cost": 0.2,
+      "damage": 18,
+      "element": "water",
+      "function": "lift_enemy",
+      "focus": 1,
+      "turns": 1,
+      "description": "A powerful jet of water erupts from beneath the target."
+    },
+    {
+      "name": "Earthquake",
+      "mana_cost": 0.2,
+      "damage": 15,
+      "element": "earth",
+      "function": "aoe_damage",
+      "focus": 2,
+      "turns": 1,
+      "description": "Shakes the ground, damaging all enemies in a radius."
+    },
+    {
+      "name": "Immolate",
+      "mana_cost": 0.25,
+      "damage": 25,
+      "element": "fire",
+      "function": "burn_enemy",
+      "focus": 0,
+      "turns": 1,
+      "description": "Engulfs a single target in intense, white-hot flames."
+    },
+    {
+      "name": "Suffocate",
+      "mana_cost": 0.25,
+      "damage": 20,
+      "element": "air",
+      "function": "silence_enemy",
+      "focus": 1,
+      "turns": 2,
+      "description": "Creates a vacuum around the target's head, preventing spellcasting."
+    },
+    {
+      "name": "Tsunami Wave",
+      "mana_cost": 0.25,
+      "damage": 22,
+      "element": "water",
+      "function": "push_enemy",
+      "focus": 2,
+      "turns": 1,
+      "description": "A massive wave that crashes into and pushes back enemies."
+    },
+    {
+      "name": "Meteor Shower",
+      "mana_cost": 0.3,
+      "damage": 30,
+      "element": "fire",
+      "function": "aoe_damage",
+      "focus": 2,
+      "turns": 1,
+      "description": "Calls down a rain of fiery meteors from the sky."
+    },
+    {
+      "name": "Thunderstorm",
+      "mana_cost": 0.3,
+      "damage": 28,
+      "element": "air",
+      "function": "stun_enemy",
+      "focus": 2,
+      "turns": 3,
+      "turns": 3,
+      "description": "Summons a localized storm that lashes foes with lightning."
+    },
+    {
+      "name": "Blizzard",
+      "mana_cost": 0.3,
+      "damage": 25,
+      "element": "water",
+      "function": "slow_enemy",
+      "focus": 2,
+      "turns": 3,
+      "description": "A raging blizzard that damages and slows all enemies."
+    },
+    {
+      "name": "Volcanic Eruption",
+      "mana_cost": 0.3,
+      "damage": 32,
+      "element": "earth",
+      "function": "aoe_damage",
+      "focus": 3,
+      "turns": 2,
+      "description": "Causes a miniature volcano to erupt, showering the area in magma."
+    },
+    {
+      "name": "Solar Flare",
+      "mana_cost": 0.35,
+      "damage": 35,
+      "element": "fire",
+      "function": "blind_enemy",
+      "focus": 1,
+      "turns": 1,
+      "description": "A blinding flash of pure solar energy."
+    },
+    {
+      "name": "Vortex",
+      "mana_cost": 0.35,
+      "damage": 30,
+      "element": "air",
+      "function": "pull_enemy",
+      "focus": 1,
+      "turns": 2,
+      "description": "Creates a vacuum vortex that pulls enemies together."
+    },
+    {
+      "name": "Absolute Zero",
+      "mana_cost": 0.35,
+      "damage": 33,
+      "element": "water",
+      "function": "freeze_enemy",
+      "focus": 2,
+      "turns": 1,
+      "description": "Flash-freezes a target to its core."
+    },
+    {
+      "name": "Avalanche",
+      "mana_cost": 0.35,
+      "damage": 34,
+      "element": "earth",
+      "function": "aoe_damage",
+      "focus": 2,
+      "turns": 1,
+      "description": "Summons a cascading wave of rock and snow."
+    },
+    {
+      "name": "Phoenix Dive",
+      "mana_cost": 0.4,
+      "damage": 40,
+      "element": "fire",
+      "function": "aoe_explosion",
+      "focus": 1,
+      "turns": 1,
+      "description": "The caster transforms into a phoenix and dive-bombs the enemy."
+    },
+    {
+      "name": "Sonic Boom",
+      "mana_cost": 0.4,
+      "damage": 36,
+      "element": "air",
+      "function": "stun_enemy",
+      "focus": 0,
+      "turns": 1,
+      "description": "A deafening sound wave that deals damage and stuns."
+    },
+    {
+      "name": "Abyssal Tide",
+      "mana_cost": 0.4,
+      "damage": 38,
+      "element": "water",
+      "function": "aoe_damage",
+      "focus": 2,
+      "turns": 1,
+      "description": "Summons a wave of dark, crushing deep-sea pressure."
+    },
+    {
+      "name": "Quicksand",
+      "mana_cost": 0.4,
+      "damage": 20,
+      "element": "earth",
+      "function": "root_enemy",
+      "focus": 1,
+      "turns": 3,
+      "description": "Turns the ground into quicksand, trapping and damaging foes over time."
+    },
+    {
+      "name": "Inferno",
+      "mana_cost": 0.45,
+      "damage": 45,
+      "element": "fire",
+      "function": "ignite_ground",
+      "focus": 2,
+      "turns": 3,
+      "description": "Creates a massive, persistent inferno that consumes an area."
+    },
+    {
+      "name": "Vacuum Blast",
+      "mana_cost": 0.45,
+      "damage": 42,
+      "element": "air",
+      "function": "aoe_explosion",
+      "focus": 1,
+      "turns": 1,
+      "description": "Creates a sphere of vacuum that implodes violently."
+    },
+    {
+      "name": "Ice Age",
+      "mana_cost": 0.45,
+      "damage": 44,
+      "element": "water",
+      "function": "freeze_enemy",
+      "focus": 3,
+      "turns": 2,
+      "description": "A wave of magical cold that freezes everything in a wide radius."
+    },
+    {
+      "name": "Mountain's Wrath",
+      "mana_cost": 0.45,
+      "damage": 46,
+      "element": "earth",
+      "function": "aoe_damage",
+      "focus": 3,
+      "turns": 1,
+      "description": "The ground erupts in a massive cataclysm of stone and force."
+    },
+    {
+      "name": "Dragon's Breath",
+      "mana_cost": 0.5,
+      "damage": 50,
+      "element": "fire",
+      "function": "burn_enemy",
+      "focus": 0,
+      "turns": 1,
+      "description": "Replicates the cone of fire from an ancient dragon."
+    },
+    {
+      "name": "Lightning Tempest",
+      "mana_cost": 0.5,
+      "damage": 48,
+      "element": "air",
+      "function": "chain_targets",
+      "focus": 2,
+      "turns": 2,
+      "description": "A continuous storm of forking lightning bolts."
+    },
+    {
+      "name": "Tidal Wave",
+      "mana_cost": 0.5,
+      "damage": 52,
+      "element": "water",
+      "function": "aoe_damage",
+      "focus": 2,
+      "turns": 1,
+      "description": "Summons an enormous tidal wave to crash down on foes."
+    },
+    {
+      "name": "Fissure",
+      "mana_cost": 0.5,
+      "damage": 54,
+      "element": "earth",
+      "function": "aoe_damage",
+      "focus": 2,
+      "turns": 1,
+      "description": "Splits the earth open, swallowing enemies."
+    },
+    {
+      "name": "Supernova",
+      "mana_cost": 0.6,
+      "damage": 60,
+      "element": "fire",
+      "function": "aoe_explosion",
+      "focus": 3,
+      "turns": 1,
+      "description": "Creates a miniature star that detonates with immense power."
+    },
+    {
+      "name": "Eye of the Storm",
+      "mana_cost": 0.6,
+      "damage": 58,
+      "element": "air",
+      "function": "stun_enemy",
+      "focus": 3,
+      "turns": 1,
+      "description": "Creates a massive hurricane with a calm, destructive eye."
+    },
+    {
+      "name": "Glacial Lance",
+      "mana_cost": 0.6,
+      "damage": 62,
+      "element": "water",
+      "function": "armor_pierce",
+      "focus": 1,
+      "turns": 1,
+      "description": "Fires a massive, unstoppable lance of glacial ice."
+    },
+    {
+      "name": "Terraform",
+      "mana_cost": 0.6,
+      "damage": 56,
+      "element": "earth",
+      "function": "aoe_damage",
+      "focus": 3,
+      "turns": 1,
+      "description": "Violently reshapes the landscape, crushing enemies within it."
+    },
+    {
+      "name": "Hellfire",
+      "mana_cost": 0.7,
+      "damage": 64,
+      "element": "fire",
+      "function": "burn_enemy",
+      "focus": 2,
+      "turns": 3,
+      "description": "Summons black flames from the underworld that burn unceasingly."
+    },
+    {
+      "name": "Atmospheric Collapse",
+      "mana_cost": 0.7,
+      "damage": 60,
+      "element": "air",
+      "function": "aoe_explosion",
+      "focus": 3,
+      "turns": 1,
+      "description": "Causes the very air to crush inwards upon a large area."
+    },
+    {
+      "name": "Leviathan's Grasp",
+      "mana_cost": 0.7,
+      "damage": 63,
+      "element": "water",
+      "function": "crush_enemy",
+      "focus": 2,
+      "turns": 1,
+      "description": "Tentacles of water with the force of the deep sea crush the target."
+    },
+    {
+      "name": "Planetary Crush",
+      "mana_cost": 0.7,
+      "damage": 64,
+      "element": "earth",
+      "function": "crush_enemy",
+      "focus": 3,
+      "turns": 1,
+      "description": "Focuses gravitational force to crush a target into paste."
+    },
+    {
+      "name": "Cauterize",
+      "mana_cost": 0.1,
+      "damage": 8,
+      "element": "fire",
+      "function": "cure_bleeding",
+      "focus": 1,
+      "turns": 1,
+      "description": "A precise flame that seals wounds, damaging undead and healing allies."
+    },
+    {
+      "name": "Zephyr's Cure",
+      "mana_cost": 0.1,
+      "damage": 0,
+      "element": "air",
+      "function": "cure_poison",
+      "focus": 1,
+      "turns": 1,
+      "description": "A cleansing breeze that blows toxins from a target's body."
+    },
+    {
+      "name": "Purify",
+      "mana_cost": 0.1,
+      "damage": 0,
+      "element": "water",
+      "function": "cure_poison",
+      "focus": 1,
+      "turns": 1,
+      "description": "Washes away poisons and diseases with pure water."
+    },
+    {
+      "name": "Stone mend",
+      "mana_cost": 0.1,
+      "damage": 0,
+      "element": "earth",
+      "function": "mend_armor",
+      "focus": 1,
+      "turns": 1,
+      "description": "Uses mineral energy to repair damaged armor on an ally."
+    },
+    {
+      "name": "Flame Ward",
+      "mana_cost": 0.15,
+      "damage": 0,
+      "element": "fire",
+      "function": "absorb_fire",
+      "focus": 1,
+      "turns": 3,
+      "description": "Grants an ally temporary immunity to fire damage."
+    },
+    {
+      "name": "Wind Wall",
+      "mana_cost": 0.15,
+      "damage": 0,
+      "element": "air",
+      "function": "deflect_projectiles",
+      "focus": 1,
+      "turns": 2,
+      "description": "Creates a wall of swirling wind that blocks arrows and spells."
+    },
+    {
+      "name": "Water Shield",
+      "mana_cost": 0.15,
+      "damage": 0,
+      "element": "water",
+      "function": "absorb_water",
+      "focus": 1,
+      "turns": 3,
+      "description": "Encases an ally in a shield of swirling water that mitigates damage."
+    },
+    {
+      "name": "Stone Skin",
+      "mana_cost": 0.15,
+      "damage": 0,
+      "element": "earth",
+      "function": "boost_armor",
+      "focus": 1,
+      "turns": 3,
+      "description": "Hardens the skin of an ally, granting a significant armor bonus."
+    },
+    {
+      "name": "Combust",
+      "mana_cost": 0.08,
+      "damage": 15,
+      "element": "fire",
+      "function": "burn_enemy",
+      "focus": 0,
+      "turns": 1,
+      "description": "Causes a target to spontaneously ignite from within."
+    },
+    {
+      "name": "Dust Devil",
+      "mana_cost": 0.08,
+      "damage": 12,
+      "element": "air",
+      "function": "blind_enemy",
+      "focus": 0,
+      "turns": 1,
+      "description": "A small, sharp whirlwind that scours the target's eyes."
+    },
+    {
+      "name": "Steam Blast",
+      "mana_cost": 0.08,
+      "damage": 14,
+      "element": "water",
+      "function": "burn_enemy",
+      "focus": 0,
+      "turns": 1,
+      "description": "Super-heated steam scalds the target."
+    },
+    {
+      "name": "Sand Blast",
+      "mana_cost": 0.08,
+      "damage": 13,
+      "element": "earth",
+      "function": "blind_enemy",
+      "focus": 0,
+      "turns": 1,
+      "description": "Fires a high-pressure stream of abrasive sand."
+    },
+    {
+      "name": "Searing Ray",
+      "mana_cost": 0.25,
+      "damage": 28,
+      "element": "fire",
+      "function": "armor_pierce",
+      "focus": 1,
+      "turns": 1,
+      "description": "A concentrated beam of heat that melts through armor."
+    },
+    {
+      "name": "Cyclone",
+      "mana_cost": 0.25,
+      "damage": 24,
+      "element": "air",
+      "function": "lift_enemy",
+      "focus": 1,
+      "turns": 2,
+      "description": "Traps a target in a spinning cyclone of wind."
+    },
+    {
+      "name": "Frostbite",
+      "mana_cost": 0.25,
+      "damage": 26,
+      "element": "water",
+      "function": "slow_enemy",
+      "focus": 0,
+      "turns": 2,
+      "description": "A touch of extreme cold that slows and damages the target."
+    },
+    {
+      "name": "Petrify",
+      "mana_cost": 0.25,
+      "damage": 0,
+      "element": "earth",
+      "function": "stone_enemy",
+      "focus": 2,
+      "turns": 4,
+      "description": "Slowly turns an enemy to stone, immobilizing them completely."
+    }
+]
