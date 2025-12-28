@@ -11,12 +11,19 @@ import { LanguageData } from "../schema/LanguageData";
 import { DataService } from "../services/DataService";
 import { promises as fsp } from "fs";
 import path from "path";
+import { GAME_CONSTANTS } from "../../../shared/constants";
+
 
 // Increase buffer size for large language data
 Encoder.BUFFER_SIZE = 16 * 1024; // 16 KB
 
 // Use the shared schema `LanguageData` and preload via DataService
 const shouldLog = !(typeof process !== "undefined" && process.env && process.env.NODE_ENV === "test");
+
+/* why the fuck was this not here */
+const walkableTiles = new Set([0, 3, 4, 5, 6]); // floor, corridor, room_floor, entrance, exit
+
+
 
 export class MyRoom extends Room<MyRoomState> {
   maxClients = 4;
@@ -36,23 +43,23 @@ export class MyRoom extends Room<MyRoomState> {
 
     // Initialize data service and preload datasets
     this.dataService = options?.dataService || new DataService();
-    await this.dataService.ensureLoaded();
+    console.log('MY ROOM onCreate');
+    this.dataService.ensureLoaded();
+    console.log('ENSURE LOADED CALLED');
     const { elementalDarkAlphabet, elementalDictionary, elementalLightAlphabet, itemTypes } = this.dataService.getData();
 
+    // console.log(Object.keys(elementalDictionary).length,'DICTIONARY ENTRIES');
+
     this.gameData = { elementalDarkAlphabet, elementalDictionary, elementalLightAlphabet };
+    this.itemData.elementalDictionary = elementalDictionary;
 
-    if (elementalDictionary) {
-      this.languageData.loadFromJSON(elementalDictionary);
-      if (shouldLog) console.log(`Loaded ${this.languageData.entries.size} language entries`);
-    }
-
-    this.itemData.loadFromLanguageData(this.languageData, itemTypes);
-    if (shouldLog) console.log(`Loaded ItemData with ${this.itemData.entries.size} items`);
+    // if (shouldLog) console.log(`Loaded ${this.languageData.entries.size} language entries`);
 
     if (shouldLog) console.log("Game data loaded:", Object.keys(this.gameData));
 
     // Initialize synchronized state
-    this.setState(new MyRoomState());
+    // this.setState(new MyRoomState());
+    this.state = (new MyRoomState());
 
     // Get dungeon generation options
     const width = options.width || 60;
@@ -685,43 +692,14 @@ export class MyRoom extends Room<MyRoomState> {
     this.state.player.inventory.push("Shortbow");
   }
 
-  private scatterItems() {
-    // Helper to add item at position
-    const addItem = (x: number, y: number, itemKey: string, itemEntry: any) => {
-      const key = `${x},${y}`;
-      
-      // Prevent world from getting too large
-      if (this.state.world.size > 1000) {
-        console.log("World is full, not adding more items");
-        return;
-      }
-      
-      const item = new WorldItem();
-      item.name = itemKey; // Use the synset key for inventory
-      item.type = itemEntry.type; // Use the type from ItemData
-      this.state.world.set(key, item);
-    };
+  private getAnEmptyTile() {
+    const tiles = this.getEmptyTiles()
+    const n = Math.floor( Math.random() * tiles.length);
+    return tiles[n];
+  }
 
-    // Get available item types from ItemData
-    const itemTypes = ['weapons', 'tools', 'gems']; // Add more types as needed
-    const availableItems: Array<{key: string, entry: any}> = [];
-    
-    // Collect items from each type
-    for (const type of itemTypes) {
-      const typeItems = this.itemData.getItemsByType(type);
-      availableItems.push(...typeItems);
-      console.log(`Found ${typeItems.length} items of type '${type}'`);
-    }
-    
-    if (availableItems.length === 0) {
-      console.log("No items available in ItemData, using fallback");
-      return;
-    }
-
-    // Create a stack of empty tiles for random placement
+  private getEmptyTiles() {
     const emptyTiles: Array<{x: number, y: number}> = [];
-    const walkableTiles = new Set([0, 3, 4, 5, 6]); // floor, corridor, room_floor, entrance, exit
-    
     // Search entire map for empty, walkable tiles
     for (let y = 0; y < this.state.map.height; y++) {
       for (let x = 0; x < this.state.map.width; x++) {
@@ -741,29 +719,40 @@ export class MyRoom extends Room<MyRoomState> {
         }
       }
     }
+    return emptyTiles;
+  }
+
+  private scatterItems() {
+    // Helper to add item at position
+      const addItem = (x: number, y: number, itemKey: string, itemEntry: any) => {
+          const key = `${x},${y}`;
+          
+          // Prevent world from getting too large
+          if (this.state.world.size > 1000) {
+            console.log("World is full, not adding more items");
+            return;
+          }
+          
+          const item = new WorldItem();
+          item.name = itemKey; // Use the synset key for inventory
+          // item.type = itemEntry.type; // Use the type from ItemData ASSHOLE
+          this.state.world.set(key, item);
+    };
+
+    // Get available item types from ItemData
+    const itemTypes = ['weapons', 'armor', 'spells']; // Add more types as needed
+    const availableItems: Array<{key: string, entry: any}> = [];
     
-    // Shuffle empty tiles for random placement
-    for (let i = emptyTiles.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [emptyTiles[i], emptyTiles[j]] = [emptyTiles[j], emptyTiles[i]];
-    }
-    
-    // Place items randomly on empty tiles
-    const itemsToPlace = Math.min(15, emptyTiles.length); // Place up to 15 items
-    let placed = 0;
-    
-    for (let i = 0; i < itemsToPlace && i < emptyTiles.length; i++) {
-      const tile = emptyTiles[i];
-      
-      // Select random item from available items
-      const randomItem = availableItems[Math.floor(Math.random() * availableItems.length)];
+    const items = this.itemData.query({ type: 'weapons', limit: 5 })
+    // console.log('ITEMS',items);
+
+    for (let i=0; i<GAME_CONSTANTS.SCATTER_ITEMS; i++) {
+      const randomItem = items[Math.floor(Math.random()*items.length)]; //safely fake an index
+      const tile = this.getAnEmptyTile()
+      // key property is no longer valid but we need items to have results first
       addItem(tile.x, tile.y, randomItem.key, randomItem.entry);
-      placed++;
-      
-      console.log(`Placed ${randomItem.entry.word} (${randomItem.entry.type}) at (${tile.x}, ${tile.y})`);
     }
-    
-    console.log(`Scattered ${placed} items from ${availableItems.length} available items using ${emptyTiles.length} empty tiles`);
+
   }
 
   private handleSpacebarAttack(client: Client, player: PlayerState) {
@@ -1297,48 +1286,36 @@ export class MyRoom extends Room<MyRoomState> {
     client.send("unequip_result", { message: `Unequipped ${currentItem} from ${slotName}!`, item: currentItem, slotPath });
   }
 
+  private monsterMash() {
+      const monsterTypes = ['goblin', 'slime', 'orc', 'skeleton', 'troll'];
+      const monsterType = monsterTypes[Math.floor(Math.random() * monsterTypes.length)];
+      const monster = new WorldItem();
+      monster.name = monsterType;
+      monster.type = 'monster';
+      monster.info = {}
+      monster.description = `${monsterType} lurking in the dungeon`;
+      monster.value = 64;
+      monster.weight = 4500;
+      return monster;
+  }
+
   private spawnMonsters() {
-    const monsterTypes = ['goblin', 'slime', 'orc', 'skeleton', 'troll'];
     const walkableTiles = new Set([0, 3, 4, 5, 6]); // floor, corridor, room_floor, entrance, exit
     let monsterCount = 0;
     
-    // Try to spawn monsters in random locations
-    for (let attempts = 0; attempts < 50; attempts++) {
-      const x = Math.floor(Math.random() * this.state.map.width);
-      const y = Math.floor(Math.random() * this.state.map.height);
+    let emptyTiles = this.getEmptyTiles();
+
+    for (let i =0; i<GAME_CONSTANTS.SPAWN_MONSTERS; i++) {
+      //randomly selected an emptyTiles
+      const randomIndex = Math.floor(Math.random() * emptyTiles.length);
+      const tile = emptyTiles[randomIndex];
       
-      // Check if tile is walkable
-      const tileIndex = y * this.state.map.width + x;
-      if (tileIndex >= 0 && tileIndex < this.state.map.tiles.length &&
-          walkableTiles.has(this.state.map.tiles[tileIndex])) {
-        
-        // Check if position is not occupied by player
-        if (x === this.state.player.x && y === this.state.player.y) continue;
-        
-        // Check if position is not occupied by another monster
-        const key = `${x},${y}`;
-        if (this.state.world.has(key)) continue;
-        
-        // Create monster
-        const monsterType = monsterTypes[Math.floor(Math.random() * monsterTypes.length)];
-        const monster = new WorldItem();
-        monster.name = monsterType;
-        monster.type = 'monster';
-        monster.description = `${monsterType} lurking in the dungeon`;
-        monster.value = 0;
-        monster.weight = 0;
-        
-        this.state.world.set(key, monster);
-        monsterCount++;
-        
-        console.log(`Spawned ${monsterType} at (${x}, ${y})`);
-        
-        // Limit number of monsters
-        if (monsterCount >= 8) break;
-      }
+      const monster = this.monsterMash()
+      const key = `${tile.x},${tile.y}`;
+      this.state.world.set(key, monster);
     }
-    
-    console.log(`Spawned ${monsterCount} monsters on the map`);
+
+    return;
   }
 
   private startMonsterAI() {

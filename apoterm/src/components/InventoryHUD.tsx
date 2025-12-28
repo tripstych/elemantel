@@ -29,13 +29,16 @@ export const InventoryHUD: React.FC<InventoryHUDProps> = ({ isVisible, onClose, 
 
     // Set up item inspect listener
     gameClient.onLanguageEntryResult((result: any) => {
+      console.log('DEBUG: InventoryHUD received item data:', result);
       if (result.entry) {
+        console.log('DEBUG: Entry data:', result.entry);
         // Add the synset key to the entry for display purposes
         setInspectItem({
           ...result.entry,
           synsetKey: result.key
         });
       } else {
+        console.log('DEBUG: No entry found, using fallback');
         // Item not found, show fallback
         setInspectItem({
           synsetKey: result.key,
@@ -411,31 +414,20 @@ export const InventoryHUD: React.FC<InventoryHUDProps> = ({ isVisible, onClose, 
               </div>
             </div>
 
+
             <div style={{ backgroundColor: '#2a2a2a', padding: '10px', borderRadius: '4px' }}>
-              <strong style={{ color: '#gold' }}>Spell Effect:</strong>
+              <strong style={{ color: '#gold' }}>Item Details:</strong>
               <div style={{ marginTop: '5px' }}>
-                <div><strong>Type:</strong> {inspectItem.spell_effect?.type || 'None'}</div>
-                <div><strong>Target:</strong> {inspectItem.spell_effect?.target || 'None'}</div>
-                <div><strong>Amount:</strong> {inspectItem.spell_effect?.amount || 'None'}</div>
-                <div><strong>Element:</strong> {inspectItem.spell_effect?.element || 'None'}</div>
-                <div><strong>Description:</strong> {inspectItem.spell_effect?.description || 'None'}</div>
+                {inspectItem.item ? (
+                  Object.entries(inspectItem.item).map(([key, value]) => (
+                    <div key={key}><strong>{key}:</strong> {String(value)}</div>
+                  ))
+                ) : (
+                  <div>No item data available</div>
+                )}
               </div>
             </div>
 
-            <div style={{ backgroundColor: '#2a2a2a', padding: '10px', borderRadius: '4px' }}>
-              <strong style={{ color: '#gold' }}>Weapon Effect:</strong>
-              <div style={{ marginTop: '5px' }}>
-                <div><strong>Type:</strong> {inspectItem.weapon_effect?.type || 'None'}</div>
-                <div><strong>Damage:</strong> {inspectItem.weapon_effect?.damage || 'None'}</div>
-                <div><strong>Range:</strong> {inspectItem.weapon_effect?.range || 'None'}</div>
-                <div><strong>Special:</strong> {inspectItem.weapon_effect?.special || 'None'}</div>
-                <div><strong>Description:</strong> {inspectItem.weapon_effect?.description || 'None'}</div>
-              </div>
-            </div>
-
-            <div style={{ backgroundColor: '#2a2a2a', padding: '10px', borderRadius: '4px' }}>
-              <strong style={{ color: '#gold' }}>Spirit:</strong> {inspectItem.spirit || 'None'}
-            </div>
           </div>
         </div>
       )}

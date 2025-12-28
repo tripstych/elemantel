@@ -29,15 +29,14 @@ export class DataService {
   }
 
   async ensureLoaded(): Promise<void> {
-    if (this.loaded) return;
-
+    console.log('calling ensureLoaded--------------');
     const readJson = async (filename: string) => {
       const filePath = path.join(this.dataDir, filename);
+      console.log('READING JSON',filename);
       try {
         const buf = await fsp.readFile(filePath, "utf8");
         return JSON.parse(buf);
       } catch (err) {
-        console.warn(`[DataService] Failed to read ${filename} at ${filePath}:`, err);
         return null;
       }
     };

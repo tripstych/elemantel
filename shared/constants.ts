@@ -2,7 +2,12 @@
 
 export const GAME_CONSTANTS = {
   // Debug
-  DEBUG: true,
+  DEBUG: false,
+
+
+  SCATTER_ITEMS: 20,
+
+  SPAWN_MONSTERS: 10,
   
   // Movement and timing
   BASE_MOVE_INTERVAL: 100,

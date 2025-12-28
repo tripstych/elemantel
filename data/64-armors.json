@@ -330,7 +330,7 @@
     "weight": 11000,
     "material": "steel",
     "body_parts": ["torso"],
-    "description": A breastplate and backplate fastened together."
+    "description": "A breastplate and backplate fastened together."
   },
   {
     "name": "Gorget",
