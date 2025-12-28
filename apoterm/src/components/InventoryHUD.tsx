@@ -423,6 +423,17 @@ export const InventoryHUD: React.FC<InventoryHUDProps> = ({ isVisible, onClose, 
             </div>
 
             <div style={{ backgroundColor: '#2a2a2a', padding: '10px', borderRadius: '4px' }}>
+              <strong style={{ color: '#gold' }}>Weapon Effect:</strong>
+              <div style={{ marginTop: '5px' }}>
+                <div><strong>Type:</strong> {inspectItem.weapon_effect?.type || 'None'}</div>
+                <div><strong>Damage:</strong> {inspectItem.weapon_effect?.damage || 'None'}</div>
+                <div><strong>Range:</strong> {inspectItem.weapon_effect?.range || 'None'}</div>
+                <div><strong>Special:</strong> {inspectItem.weapon_effect?.special || 'None'}</div>
+                <div><strong>Description:</strong> {inspectItem.weapon_effect?.description || 'None'}</div>
+              </div>
+            </div>
+
+            <div style={{ backgroundColor: '#2a2a2a', padding: '10px', borderRadius: '4px' }}>
               <strong style={{ color: '#gold' }}>Spirit:</strong> {inspectItem.spirit || 'None'}
             </div>
           </div>

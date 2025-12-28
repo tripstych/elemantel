@@ -2,7 +2,7 @@
 
 export const GAME_CONSTANTS = {
   // Debug
-  DEBUG: false,
+  DEBUG: true,
   
   // Movement and timing
   BASE_MOVE_INTERVAL: 100,

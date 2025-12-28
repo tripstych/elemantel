@@ -1,7 +1,10 @@
 import { Room, Client } from "@colyseus/core";
+import { ClientMessages } from "../utils/ClientSend";
+import { PlayerCommands } from "../commands/PlayerCommands";
 import { MyRoomState, WorldItem, PlayerSchema } from "./schema/MyRoomState";
 import { ArraySchema, Encoder } from "@colyseus/schema";
 import { CombatCommand, CombatLog } from "../commands/CombatCommand";
+import { Weapon } from "../schema/Equipment";
 import { ItemData } from "../schema/ItemData";
 import { WorldGenerationCommand } from "../commands/WorldGenerationCommand";
 import { LanguageData } from "../schema/LanguageData";
@@ -24,6 +27,7 @@ export class MyRoom extends Room<MyRoomState> {
   private playerPaths: Map<string, { path: Array<{x: number, y: number}>, currentIndex: number, moveInterval: NodeJS.Timeout | null }> = new Map();
   private playerMoveTimes: Map<string, number> = new Map();
   private dataService: DataService | null = null;
+  private playerClient: Client | null = null;
 
   async onCreate (options: any) {
     if (shouldLog) console.log("Creating room with full main.py functionality");
@@ -142,6 +146,13 @@ export class MyRoom extends Room<MyRoomState> {
           this.playerMoveTimes.set(client.sessionId, now);
           console.log(`[DEBUG] Backend - Player moved to (${newX}, ${newY})`);
           console.log(`${player.name} moved to (${newX}, ${newY})`);
+
+          // Broadcast movement info to the player
+          const direction = PlayerCommands.getDirectionName(dx, dy);
+          const msg = direction !== "unknown"
+            ? `You move ${direction}.`
+            : `You move to (${newX}, ${newY}).`;
+          ClientMessages.info(client, msg);
         }
       }
     });
@@ -805,6 +816,12 @@ export class MyRoom extends Room<MyRoomState> {
     });
 
     console.log(`${player.name} performed spacebar attack, hit ${hitTargets.length} targets`);
+
+    // Broadcast attack summary to the player
+    const info = hitTargets.length > 0
+      ? `You swing and hit ${hitTargets.length} target${hitTargets.length === 1 ? "" : "s"}.`
+      : "You swing but hit nothing.";
+    ClientMessages.info(client, info);
   }
 
   private handleAttack(client: Client, message: any) {
@@ -818,8 +835,19 @@ export class MyRoom extends Room<MyRoomState> {
     const distance = Math.abs(player.x - targetX) + Math.abs(player.y - targetY);
     if (distance === 1) {
       console.log(`${player.name} attacks position (${targetX}, ${targetY})`);
+      // Describe target if present
+      const key = `${targetX},${targetY}`;
+      const occupant = this.state.world.get(key);
+      const targetDesc = occupant && occupant.type === "monster" ? (occupant.name || "monster") : null;
+
       // TODO: Add actual combat logic with CombatCommand
-      client.send("combat_result", { message: "Attack executed!", targetX, targetY });
+      client.send("combat_result", { 
+        message: targetDesc ? `You attack the ${targetDesc}!` : "You swing at the air.",
+        targetX, 
+        targetY 
+      });
+      // Also broadcast via info channel
+      ClientMessages.info(client, targetDesc ? `You attack the ${targetDesc}.` : "You attack, but there is nothing there.");
     } else {
       client.send("error", { message: "Target too far away!" });
     }
@@ -845,6 +873,8 @@ export class MyRoom extends Room<MyRoomState> {
 
   onJoin(client: Client, options: any) {
     console.log("Client joined:", client.sessionId);
+    // Track the player's client for AI notifications
+    this.playerClient = client;
     
     // Don't send language data automatically - let client request it
     // client.send("language_data_init", {
@@ -1130,6 +1160,9 @@ export class MyRoom extends Room<MyRoomState> {
   onLeave(client: Client) {
     // Clear player's path when they disconnect
     this.clearPlayerPath(client.sessionId);
+    if (this.playerClient && this.playerClient.sessionId === client.sessionId) {
+      this.playerClient = null;
+    }
   }
 
   private handlePickup(client: Client, message: any) {
@@ -1352,6 +1385,72 @@ export class MyRoom extends Room<MyRoomState> {
           
           console.log(`Monster moved from (${monster.x}, ${monster.y}) to (${nextPos.x}, ${nextPos.y})`);
         }
+        // If adjacent after move, notify player
+        const dx = Math.abs(monster.x - player.x);
+        const dy = Math.abs(monster.y - player.y);
+        const adjacent = Math.max(dx, dy) === 1;
+        if (adjacent && this.playerClient) {
+          const name = monster.item.name || "monster";
+
+          // Build attacker and target entities for combat resolution
+          const attacker = {
+            name,
+            combat_stats: {
+              hp: 20,
+              max_hp: 20,
+              armor_class: 10,
+              strength: 10,
+              dexterity: 10,
+              constitution: 10,
+              intelligence: 10,
+              wisdom: 10,
+              charisma: 10,
+              proficiency_bonus: 2,
+            },
+          };
+
+          const playerStats = this.state.player;
+          const target = {
+            name: playerStats.name,
+            combat_stats: {
+              hp: playerStats.hp,
+              max_hp: playerStats.max_hp,
+              armor_class: playerStats.armor_class,
+              strength: playerStats.strength,
+              dexterity: playerStats.dexterity,
+              constitution: playerStats.constitution,
+              intelligence: playerStats.intelligence,
+              wisdom: playerStats.wisdom,
+              charisma: playerStats.charisma,
+              proficiency_bonus: playerStats.proficiency_bonus,
+            },
+          };
+
+          const weapon = new Weapon();
+          weapon.name = "claws";
+          weapon.damage_dice = "1d4";
+          weapon.damage_type = "slashing" as any;
+
+          const log: CombatLog = CombatCommand.resolveAttack(attacker, target, weapon);
+          // Sync computed HP back to schema
+          this.state.player.hp = target.combat_stats.hp;
+
+          // Broadcast concise combat summary to the player
+          ClientMessages.info(this.playerClient, log.message);
+
+          // Optional: additional HUD-friendly summary
+          if (typeof log.damage === "number") {
+            ClientMessages.log(
+              this.playerClient,
+              `You take ${log.damage} damage. HP ${this.state.player.hp}/${this.state.player.max_hp}.`
+            );
+          }
+
+          // If player is defeated, notify
+          if (this.state.player.hp <= 0) {
+            ClientMessages.error(this.playerClient, "You fall unconscious!");
+          }
+        }
       } else {
           // make the monster wander randomly if player not visible
           const d = [{x: -1, y: 0}, {x: 1, y: 0}, {x: 0, y: -1}, {x: 0, y: 1}];
@@ -1371,6 +1470,9 @@ export class MyRoom extends Room<MyRoomState> {
       this.state.world.delete(oldKey);
       const newKey = `${point.x},${point.y}`;
       this.state.world.set(newKey, monster.item);
+      // Update local monster coordinates
+      monster.x = point.x;
+      monster.y = point.y;
   }
 
 

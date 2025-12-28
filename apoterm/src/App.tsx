@@ -16,9 +16,37 @@ const DungeonRenderer: React.FC<{ gameState: any }> = ({ gameState }) => {
   const viewportHeight = 25; // tiles visible vertically
   
   const handleTileClick = (worldX: number, worldY: number) => {
-    if (GAME_CONSTANTS.DEBUG) console.log(`[DEBUG] CSS Tile clicked at (${worldX}, ${worldY}) -> melee attack`);
-    // Trigger melee AoE (server handles via move attack flag)
-    gameClient.meleeAttack();
+    if (GAME_CONSTANTS.DEBUG) console.log(`[DEBUG] CSS Tile clicked at (${worldX}, ${worldY})`);
+    
+    // Check if the tile is a floor (not a wall)
+    const tileIndex = worldY * map.width + worldX;
+    let tileValue;
+    if (map.tiles.items) {
+      tileValue = map.tiles.items[tileIndex];
+    } else if (Array.isArray(map.tiles)) {
+      tileValue = map.tiles[tileIndex];
+    }
+    
+    if (GAME_CONSTANTS.DEBUG) console.log(`[DEBUG] Tile value at (${worldX}, ${worldY}):`, tileValue);
+    
+    if (tileValue === GAME_CONSTANTS.TILE_TYPES.WALL) {
+      if (GAME_CONSTANTS.DEBUG) console.log(`[DEBUG] Cannot navigate to wall tile at (${worldX}, ${worldY})`);
+      return;
+    }
+    
+    // Check if there's a monster at the clicked position
+    const clickedKey = `${worldX},${worldY}`;
+    const hasMonster = world && world.has(clickedKey) && world.get(clickedKey).type === 'monster';
+    
+    if (hasMonster) {
+      // If there's a monster, do melee attack
+      if (GAME_CONSTANTS.DEBUG) console.log(`[DEBUG] Monster at clicked position -> melee attack`);
+      gameClient.meleeAttack();
+    } else {
+      // If no monster, use pathfinder to navigate
+      if (GAME_CONSTANTS.DEBUG) console.log(`[DEBUG] No monster at clicked position -> pathfinding to (${worldX}, ${worldY})`);
+      gameClient.autoNavigate(worldX, worldY);
+    }
   };
   
   // Debug logging

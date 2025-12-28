@@ -276,13 +276,13 @@ export class GameClient {
   }
 
   // Autonavigation methods
-  autoNavigate(targetX: number, targetY: number, moveInterval: number = 1000) {
-    if (GAME_CONSTANTS.DEBUG) console.log(`[DEBUG] GameClient.autoNavigate called with target (${targetX}, ${targetY}), interval: ${moveInterval}`);
+  autoNavigate(targetX: number, targetY: number) {
+    if (GAME_CONSTANTS.DEBUG) console.log(`[DEBUG] GameClient.autoNavigate called with target (${targetX}, ${targetY})`);
     if (GAME_CONSTANTS.DEBUG) console.log(`[DEBUG] Room available:`, !!this.room);
     
     if (this.room) {
       if (GAME_CONSTANTS.DEBUG) console.log(`[DEBUG] Sending auto_navigate message to server`);
-      this.room.send("auto_navigate", { targetX, targetY, moveInterval });
+      this.room.send("auto_navigate", { targetX, targetY });
       if (GAME_CONSTANTS.DEBUG) console.log(`[DEBUG] auto_navigate message sent`);
     } else {
       if (GAME_CONSTANTS.DEBUG) console.log(`[DEBUG] No room available for autonavigation`);
