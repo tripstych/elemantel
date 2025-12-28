@@ -1,4 +1,5 @@
 import { Texture, Assets } from "pixi.js";
+import { ASSET_URLS } from "../assetsManifest";
 import { GAME_CONSTANTS } from "../../../shared/constants";
 
 export interface TileAssets {
@@ -29,12 +30,21 @@ export class TileManager {
     try {
       if (GAME_CONSTANTS.DEBUG) console.log("Loading tile assets...");
       
-      // Load individual tiles based on the provided paths
-      this.assets.floor = await Assets.load("/assets/tiles/dc-dngn/floor/sandstone_floor0.png");
-      this.assets.wall = await Assets.load("/assets/tiles/dc-dngn/wall/brick_brown0.png");
-      this.assets.player = await Assets.load("/assets/tiles/player/base/human_m.png");
-      this.assets.enemy = await Assets.load("/assets/tiles/dc-mon/goblin.png");
-      this.assets.item = await Assets.load("/assets/tiles/item/misc/misc_box.png");
+      // Discover assets via generated manifest
+      const urls = (ASSET_URLS || []) as string[];
+      const pick = (predicate: (u: string) => boolean) => urls.find(u => predicate(u.toLowerCase()));
+
+      const floorUrl = pick(u => u.includes("floor") && (u.includes("sand") || u.includes("stone") || u.includes("floor")));
+      const wallUrl = pick(u => u.includes("wall"));
+      const playerUrl = pick(u => u.includes("player") && (u.includes("human") || u.includes("huaman") || u.includes("base")));
+      const enemyUrl = pick(u => u.includes("goblin") || u.includes("enemy") || u.includes("monster"));
+      const itemUrl = pick(u => u.includes("item") && (u.includes("misc") || u.includes("box") || u.includes("gem") || u.includes("weapon")));
+
+      this.assets.floor = floorUrl ? await Assets.load(floorUrl) : Texture.EMPTY;
+      this.assets.wall = wallUrl ? await Assets.load(wallUrl) : Texture.EMPTY;
+      this.assets.player = playerUrl ? await Assets.load(playerUrl) : Texture.EMPTY;
+      this.assets.enemy = enemyUrl ? await Assets.load(enemyUrl) : Texture.EMPTY;
+      this.assets.item = itemUrl ? await Assets.load(itemUrl) : Texture.EMPTY;
 
       if (GAME_CONSTANTS.DEBUG) console.log("All tile assets loaded successfully!");
       this.loaded = true;
@@ -44,6 +54,8 @@ export class TileManager {
       this.createPlaceholderTextures();
     }
   }
+
+  // No-op: manifest-driven loading now used
 
   private createPlaceholderTextures(): void {
     if (GAME_CONSTANTS.DEBUG) console.log("Creating placeholder textures...");

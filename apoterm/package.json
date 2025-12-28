@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "start": "npm run dev",
-    "dev": "vite",
-    "build": "npm run lint && tsc -b && vite build",
+    "dev": "npm run assets:gen && vite",
+    "build": "npm run lint && npm run assets:gen && tsc -b && vite build",
+    "assets:gen": "node ./scripts/generateAssetsManifest.mjs",
     "lint": "eslint ."
   },
   "dependencies": {

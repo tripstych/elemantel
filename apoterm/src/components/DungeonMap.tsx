@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Texture } from "pixi.js";
+import React, { useEffect, useRef, useState } from "react";
+import { Texture, Sprite as PixiSprite, Container as PixiContainer, Graphics as PixiGraphics, Application as PixiApplication } from "pixi.js";
 import { tileManager } from "../services/TileManager";
 import { GameState, gameClient } from "../services/GameClient";
 import { GAME_CONSTANTS } from "../../../shared/constants";
@@ -7,61 +7,23 @@ import { GAME_CONSTANTS } from "../../../shared/constants";
 interface DungeonMapProps {
   gameState: GameState | null;
   tileSize?: number;
+  app: PixiApplication;
 }
 
 const TILE_SIZE = 32;
 
-interface TileProps {
-  x: number;
-  y: number;
-  texture: Texture;
-  tileSize: number;
-  isHighlighted?: boolean;
-}
-
-const Tile: React.FC<TileProps> = ({ x, y, texture, tileSize, isHighlighted = false }) => {
-  console.log(`[DEBUG] Rendering Tile at (${x}, ${y}), interactive: true, highlighted: ${isHighlighted}`);
-
-  return (
-    <Sprite
-      texture={texture}
-      x={x * tileSize}
-      y={y * tileSize}
-      width={tileSize}
-      height={tileSize}
-      tint={isHighlighted ? 0x00FF00 : 0xFFFFFF} // Green tint for highlighted path
-      alpha={isHighlighted ? 0.7 : 1.0}
-    />
-  );
-};
-
-interface EntityProps {
-  x: number;
-  y: number;
-  texture: Texture;
-  tileSize: number;
-}
-
-const Entity: React.FC<EntityProps> = ({ x, y, texture, tileSize }) => {
-  return (
-    <pixiSprite
-      texture={texture}
-      x={x * tileSize + tileSize / 2}
-      y={y * tileSize + tileSize / 2}
-      width={tileSize}
-      height={tileSize}
-      anchor={0.5}
-    />
-  );
-};
+// Imperative rendering via pixi.js directly (avoids missing @pixi/react component exports)
 
 export const DungeonMap: React.FC<DungeonMapProps> = ({ 
   gameState, 
-  tileSize = TILE_SIZE 
+  tileSize = TILE_SIZE,
+  app
 }) => {
   console.log("DungeonMap component called with gameState:", !!gameState);
+  const layerRef = useRef<PixiContainer | null>(null);
   const [assetsLoaded, setAssetsLoaded] = useState(false);
   const [highlightedPath, setHighlightedPath] = useState<Array<{x: number, y: number}>>([]);
+  const [pixelTexture, setPixelTexture] = useState<Texture | null>(null);
 
   useEffect(() => {
     console.log("DungeonMap gameState updated:", gameState);
@@ -89,6 +51,8 @@ export const DungeonMap: React.FC<DungeonMapProps> = ({
       console.log("Navigation stopped, clearing path");
     });
   }, []);
+
+  // Pixel texture prepared during assets loading effect below
 
   const handleTileClick = (x: number, y: number) => {
     console.log(`[DEBUG] handleTileClick called at (${x}, ${y})`);
@@ -153,6 +117,16 @@ export const DungeonMap: React.FC<DungeonMapProps> = ({
     const loadAssets = async () => {
       try {
         await tileManager.loadAssets();
+        // Prepare 1x1 pixel texture
+        const pxCanvas = document.createElement('canvas');
+        pxCanvas.width = 1;
+        pxCanvas.height = 1;
+        const pctx = pxCanvas.getContext('2d');
+        if (pctx) {
+          pctx.fillStyle = '#ffffff';
+          pctx.fillRect(0, 0, 1, 1);
+        }
+        setPixelTexture(Texture.from(pxCanvas));
         setAssetsLoaded(true);
         console.log("Tile assets loaded for dungeon map");
       } catch (error) {
@@ -176,154 +150,155 @@ export const DungeonMap: React.FC<DungeonMapProps> = ({
   const itemTexture = tileManager.getAsset("item");
   const enemyTexture = tileManager.getAsset("enemy");
 
-  // Find the current player (first player in the map)
-  const currentPlayer = players.values().next().value;
+  // Find the current player from state
+  const currentPlayer = (gameState as any).player || (players && typeof (players as any).values === 'function' ? (players as Map<string, any>).values().next().value : null);
   
   // Calculate camera offset to center the player
-  const screenWidth = 800;
-  const screenHeight = 600;
-  
-  let cameraOffsetX = 0;
-  let cameraOffsetY = 0;
-  
-  if (currentPlayer) {
-    // Center camera on player
-    cameraOffsetX = screenWidth / 2 - (currentPlayer.x * tileSize + tileSize / 2);
-    cameraOffsetY = screenHeight / 2 - (currentPlayer.y * tileSize + tileSize / 2);
-  }
+  const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 800;
+  const screenHeight = typeof window !== 'undefined' ? window.innerHeight : 600;
+  // Imperative render to Pixi stage
+  useEffect(() => {
+    if (!gameState || !assetsLoaded || !app) return;
+    if (layerRef.current) {
+      layerRef.current.destroy(true);
+      layerRef.current = null;
+    }
+    const layer = new PixiContainer();
+    layerRef.current = layer;
 
-  // Render map tiles
-  const mapTiles: React.ReactElement[] = [];
-  let wallCount = 0;
-  let floorCount = 0;
-  
-  console.log("Full map structure:", map);
-  console.log("Map tiles type:", typeof map.tiles);
-  console.log("Map tiles constructor:", map.tiles?.constructor?.name);
-  console.log("First tile row:", map.tiles[0]);
-  console.log("First tile row tiles type:", typeof map.tiles[0]?.tiles);
-  console.log("Rendering map with new tile structure:", {
-    width: map.width,
-    height: map.height,
-    tileRows: map.tiles.length,
-    firstTileRow: map.tiles[0],
-    firstTile: map.tiles[0]?.tiles[0]
-  });
-  
-  for (let y = 0; y < map.height; y++) {
-    for (let x = 0; x < map.width; x++) {
-      // Use new tile structure
-      const tile = map.tiles[y]?.tiles[x];
-      
-      if (!tile) {
-        console.warn(`Missing tile at (${x}, ${y})`);
-        continue;
+    // Transparent capture overlay
+    const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 800;
+    const screenHeight = typeof window !== 'undefined' ? window.innerHeight : 600;
+    const overlay = new PixiGraphics();
+    overlay.rect(0, 0, screenWidth, screenHeight).fill({ color: 0x000000, alpha: 0 });
+    overlay.eventMode = 'static';
+    overlay.on('pointertap', (event: any) => {
+      // FederatedPointerEvent
+      const clickX = event.global.x;
+      const clickY = event.global.y;
+      const adjustedX = clickX - cameraOffsetX;
+      const adjustedY = clickY - cameraOffsetY;
+      const tileX = Math.floor(adjustedX / tileSize);
+      const tileY = Math.floor(adjustedY / tileSize);
+      if (tileX >= 0 && tileX < map.width && tileY >= 0 && tileY < map.height) {
+        handleTileClick(tileX, tileY);
       }
-      
-      // Debug first few tiles
-      if (y === 0 && x < 10) {
+    });
+    layer.addChild(overlay);
+
+    // Render tiles, items, monsters, players
+    for (let y = 0; y < map.height; y++) {
+      for (let x = 0; x < map.width; x++) {
+        const tile = map.tiles[y]?.tiles[x];
+        if (!tile) continue;
         const isWall = tile.terrain === 1;
-        console.log(`Tile at (${x},${y}):`, {
-          tile: tile,
-          terrain: tile?.terrain,
-          isWall: isWall,
-          texture: isWall ? 'wall' : 'floor'
+        const texture = isWall ? wallTexture : floorTexture;
+        const tileSprite = new PixiSprite(texture);
+        tileSprite.x = x * tileSize + cameraOffsetX;
+        tileSprite.y = y * tileSize + cameraOffsetY;
+        // Highlighted path tint
+        const isHighlighted = highlightedPath.some(p => p.x === x && p.y === y);
+        tileSprite.tint = isHighlighted ? 0x00FF00 : 0xFFFFFF;
+        tileSprite.alpha = isHighlighted ? 0.7 : 1.0;
+        layer.addChild(tileSprite);
+
+        // Items
+        tile.items.forEach(() => {
+          const s = new PixiSprite(itemTexture);
+          s.x = x * tileSize + cameraOffsetX;
+          s.y = y * tileSize + cameraOffsetY;
+          layer.addChild(s);
+        });
+
+        // Monsters + HP bars
+        tile.monsters.forEach((monster: any, index: number) => {
+          const m = new PixiSprite(enemyTexture);
+          m.x = x * tileSize + cameraOffsetX;
+          m.y = y * tileSize + cameraOffsetY;
+          layer.addChild(m);
+
+          const hp = Number(monster.hp ?? 0);
+          const maxHp = 20;
+          const pct = Math.max(0, Math.min(1, maxHp > 0 ? hp / maxHp : 0));
+          const barWidth = Math.max(1, Math.floor(tileSize * pct));
+          const barHeight = 3;
+          const barX = x * tileSize + cameraOffsetX;
+          const barY = y * tileSize + cameraOffsetY - (4 + index * (barHeight + 1));
+          if (pixelTexture) {
+            for (let row = 0; row < barHeight; row++) {
+              for (let col = 0; col < tileSize; col++) {
+                const px = new PixiSprite(pixelTexture);
+                px.x = barX + col;
+                px.y = barY + row;
+                px.tint = 0x660000;
+                layer.addChild(px);
+              }
+            }
+            for (let row = 0; row < barHeight; row++) {
+              for (let col = 0; col < barWidth; col++) {
+                const px = new PixiSprite(pixelTexture);
+                px.x = barX + col;
+                px.y = barY + row;
+                px.tint = 0xCC0000;
+                layer.addChild(px);
+              }
+            }
+          }
         });
       }
-      
-      const isWall = tile.terrain === 1; // 1 = wall, 0 = floor
-      
-      if (isWall) wallCount++;
-      else floorCount++;
-      
-      const texture = isWall ? wallTexture : floorTexture;
-      
-      // Check if this tile is in the highlighted path
-      const isHighlighted = highlightedPath.some(pathTile => pathTile.x === x && pathTile.y === y);
-      
-      mapTiles.push(
-        <Tile
-          key={`tile-${x}-${y}`}
-          x={x}
-          y={y}
-          texture={texture}
-          tileSize={tileSize}
-          isHighlighted={isHighlighted}
-        />
-      );
     }
-  }
-  
-  console.log(`Frontend rendering: ${wallCount} walls, ${floorCount} floors`);
 
-  // Render items and monsters from tiles
-  const itemEntities: React.ReactElement[] = [];
-  const monsterEntities: React.ReactElement[] = [];
-  
-  for (let y = 0; y < map.height; y++) {
-    for (let x = 0; x < map.width; x++) {
-      const tile = map.tiles[y]?.tiles[x];
-      if (!tile) continue;
-      
-      // Render items
-      tile.items.forEach((item, index) => {
-        itemEntities.push(
-          <Entity
-            key={`item-${x}-${y}-${index}`}
-            x={x}
-            y={y}
-            texture={itemTexture}
-            tileSize={tileSize}
-          />
-        );
-      });
-      
-      // Render monsters
-      tile.monsters.forEach((monster, index) => {
-        monsterEntities.push(
-          <Entity
-            key={`monster-${x}-${y}-${index}`}
-            x={x}
-            y={y}
-            texture={enemyTexture}
-            tileSize={tileSize}
-          />
-        );
-      });
+    // Players + HP bars
+    const renderPlayer = (player: any) => {
+      const p = new PixiSprite(playerTexture);
+      p.x = player.x * tileSize + cameraOffsetX;
+      p.y = player.y * tileSize + cameraOffsetY;
+      layer.addChild(p);
+
+      const hp = Number(player.hp ?? 0);
+      const maxHp = Number(player.max_hp ?? 0) || 1;
+      const pct = Math.max(0, Math.min(1, maxHp > 0 ? hp / maxHp : 0));
+      const barWidth = Math.max(1, Math.floor(tileSize * pct));
+      const barHeight = 4;
+      const barX = player.x * tileSize + cameraOffsetX;
+      const barY = player.y * tileSize + cameraOffsetY - 5;
+      if (pixelTexture) {
+        for (let row = 0; row < barHeight; row++) {
+          for (let col = 0; col < tileSize; col++) {
+            const px = new PixiSprite(pixelTexture);
+            px.x = barX + col;
+            px.y = barY + row;
+            px.tint = 0x333333;
+            layer.addChild(px);
+          }
+        }
+        for (let row = 0; row < barHeight; row++) {
+          for (let col = 0; col < barWidth; col++) {
+            const px = new PixiSprite(pixelTexture);
+            px.x = barX + col;
+            px.y = barY + row;
+            px.tint = 0xCC0000;
+            layer.addChild(px);
+          }
+        }
+      }
+    };
+    if (players && typeof (players as any).forEach === 'function') {
+      (players as Map<string, any>).forEach((player: any) => renderPlayer(player));
+    } else if (currentPlayer) {
+      renderPlayer(currentPlayer);
     }
-  }
 
-  // Render players
-  const playerEntities: React.ReactElement[] = [];
-  players.forEach((player, sessionId) => {
-    playerEntities.push(
-      <Entity
-        key={`player-${sessionId}`}
-        x={player.x}
-        y={player.y}
-        texture={playerTexture}
-        tileSize={tileSize}
-      />
-    );
-  });
+    app.stage.addChild(layer);
 
-  return (
-    <pixiContainer 
-      position={{ x: cameraOffsetX, y: cameraOffsetY }}
-      interactive={true}
-      onClick={handleStageClick}
-    >
-      {/* Map tiles */}
-      {mapTiles}
-      
-      {/* Items */}
-      {itemEntities}
-      
-      {/* Monsters */}
-      {monsterEntities}
-      
-      {/* Players */}
-      {playerEntities}
-    </pixiContainer>
-  );
+    return () => {
+      if (layerRef.current) {
+        app.stage.removeChild(layerRef.current);
+        layerRef.current.destroy(true);
+        layerRef.current = null;
+      }
+    };
+  }, [gameState, assetsLoaded, pixelTexture, tileSize, highlightedPath]);
+
+  return null;
 };

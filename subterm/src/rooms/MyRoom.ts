@@ -39,6 +39,15 @@ export class MyRoom extends Room<MyRoomState> {
   private playerMoveTimes: Map<string, number> = new Map();
   private dataService: DataService | null = null;
   private playerClient: Client | null = null;
+  private deepPlain(obj: any): any {
+    if (!obj || typeof obj !== 'object') { return obj; }
+    const out: any = Array.isArray(obj) ? [] : {};
+    for (const k of Object.keys(obj)) {
+      if (k === 'constructor' || k.startsWith('~')) continue;
+      out[k] = this.deepPlain(obj[k]);
+    }
+    return out;
+  }
 
   async onCreate (options: any) {
     if (shouldLog) console.log("Creating room with full main.py functionality");
@@ -56,6 +65,11 @@ export class MyRoom extends Room<MyRoomState> {
 
     this.gameData = { elementalDarkAlphabet, elementalDictionary, elementalLightAlphabet };
     this.itemData.elementalDictionary = elementalDictionary;
+    // Build LanguageData entries from dictionary for reliable lookups
+    const ld = this.dataService.createLanguageData();
+    if (ld) {
+      this.languageData = ld;
+    }
 
     // if (shouldLog) console.log(`Loaded ${this.languageData.entries.size} language entries`);
 
@@ -308,28 +322,19 @@ export class MyRoom extends Room<MyRoomState> {
       const key = message.key;
       console.log(`Looking for language entry: ${key}`);
       
-      // First check ItemData (for physical items)
-      const itemEntry = this.itemData.getEntry(key);
-      console.log(`ItemData.getEntry(${key}) returned:`, itemEntry);
-      if (itemEntry) {
-        console.log(`Found item in ItemData: ${itemEntry.word}`, {
-          origin: {
-            fire: itemEntry.origin.fire,
-            water: itemEntry.origin.water,
-            earth: itemEntry.origin.earth,
-            air: itemEntry.origin.air
-          },
-          type: itemEntry.type
-        });
-        client.send("language_entry_result", { key, entry: itemEntry });
-        return;
-      }
-      
-      // Fall back to LanguageData (for general language entries)
+      // Prefer LanguageData (Schema built from dictionary)
       const languageEntry = this.languageData.getEntry(key);
       if (languageEntry) {
         console.log(`Found entry in LanguageData: ${languageEntry.word}`);
-        client.send("language_entry_result", { key, entry: languageEntry });
+        const plain = (languageEntry as any)?.toJSON ? (languageEntry as any).toJSON() : this.deepPlain(languageEntry);
+        client.send("language_entry_result", { key, entry: plain });
+        return;
+      }
+      
+      // Final fallback: raw dictionary (plain JSON)
+      const raw = this.gameData.elementalDictionary ? this.gameData.elementalDictionary[key] : undefined;
+      if (raw) {
+        client.send("language_entry_result", { key, entry: raw });
         return;
       }
       
@@ -337,6 +342,8 @@ export class MyRoom extends Room<MyRoomState> {
       console.log(`Entry not found: ${key}`);
       client.send("language_entry_result", { key, entry: null });
     });
+
+  
 
     // Autonavigation handler
     this.onMessage("auto_navigate", (client, message) => {

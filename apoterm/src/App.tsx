@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { gameClient, GameState } from './services/GameClient';
+import { PixiStage } from './components/PixiStage';
 import { InventoryHUD } from './components/InventoryHUD';
 import { KeyboardControls } from "./components/KeyboardControls";
 import { GameUI } from "./components/GameUI";
@@ -70,6 +71,13 @@ export default function App() {
         onClose={() => setShowInventory(false)}
         playerState={gameState?.player}
       />
+
+      {/* Pixi Stage rendering the dungeon map (imperative Pixi.js) */}
+      {isConnected && gameState && (
+        <div style={{ position: 'absolute', inset: 0, zIndex: 1 }}>
+          <PixiStage gameState={gameState} />
+        </div>
+      )}
 
       {/* Pixi Message HUD overlay (lower-right) */}
       {isConnected && (

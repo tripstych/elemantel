@@ -418,13 +418,23 @@ export const InventoryHUD: React.FC<InventoryHUDProps> = ({ isVisible, onClose, 
             <div style={{ backgroundColor: '#2a2a2a', padding: '10px', borderRadius: '4px' }}>
               <strong style={{ color: '#gold' }}>Item Details:</strong>
               <div style={{ marginTop: '5px' }}>
-                {inspectItem.item ? (
-                  Object.entries(inspectItem.item).map(([key, value]) => (
-                    <div key={key}><strong>{key}:</strong> {String(value)}</div>
-                  ))
-                ) : (
-                  <div>No item data available</div>
-                )}
+                {(() => {
+                  console.log('DEBUG: inspectItem.item:', inspectItem.item);
+                  console.log('DEBUG: inspectItem:', inspectItem);
+                  if (inspectItem.item) {
+                    return (
+                      <div>
+                        <div><strong>Synset:</strong> {inspectItem.item.synset}</div>
+                        <div><strong>Type:</strong> {inspectItem.item.type}</div>
+                        <div><strong>Material:</strong> {inspectItem.item.material}</div>
+                        <div><strong>Definition:</strong> {inspectItem.item.definition}</div>
+                        <div><strong>Source:</strong> {inspectItem.item.source}</div>
+                      </div>
+                    );
+                  } else {
+                    return <div>No item data available</div>;
+                  }
+                })()}
               </div>
             </div>
 

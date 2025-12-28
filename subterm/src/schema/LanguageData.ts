@@ -25,13 +25,21 @@ export class WeaponEffect extends Schema {
   @type(["string"]) properties: ArraySchema<string> = new ArraySchema<string>();
 }
 
+export class ItemSchema extends Schema {
+  @type("string") synset: string = "";
+  @type("string") type: string = "";
+  @type("string") material: string = "";
+  @type("string") definition: string = "";
+  @type("string") source: string = "";
+}
+
 export class LanguageEntry extends Schema {
   @type("string") word: string = "";
   @type("string") definition: string = "";
   @type(ElementalOrigin) origin: ElementalOrigin = new ElementalOrigin();
   @type("string") type: string = "";
   @type("number") weight: number = 0;
-  item: any = {};
+  @type(ItemSchema) item: ItemSchema = new ItemSchema();
 }
 
 export class LanguageData extends Schema {
@@ -72,6 +80,15 @@ export class LanguageData extends Schema {
       
       // Weight (optional)
       entry.weight = (value as any).weight || 0;
+      
+      // Item (optional)
+      if ((value as any).item) {
+        entry.item.synset = (value as any).item.synset || "";
+        entry.item.type = (value as any).item.type || "";
+        entry.item.material = (value as any).item.material || "";
+        entry.item.definition = (value as any).item.definition || "";
+        entry.item.source = (value as any).item.source || "";
+      }
       
       this.entries.set(key, entry);
     }
