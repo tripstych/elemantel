@@ -22,10 +22,38 @@ body {
     top: 12px;
     left: 12px;
     display: flex;
-    gap: 8px;
+    gap: 12px;
     align-items: center;
     z-index: 10;
     background: rgba(0,0,0,0.4);
     padding: 6px 10px;
     border-radius: 6px;
 }
+
+#messages {
+    max-width: 420px;
+    max-height: 160px;
+    overflow: auto;
+    font-size: 13px;
+    line-height: 1.4;
+    padding-left: 8px;
+    border-left: 1px solid rgba(255,255,255,0.2);
+}
+
+.panel {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    min-width: 220px;
+    max-height: 260px;
+    overflow: auto;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 6px;
+    padding: 8px 10px;
+    z-index: 10;
+}
+.panel-title { font-weight: 600; margin-bottom: 6px; }
+.hidden { display: none; }
+#inventory-list { list-style: none; margin: 0; padding: 0; }
+#inventory-list li { padding: 2px 0; font-size: 13px; }
