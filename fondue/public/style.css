@@ -6,6 +6,26 @@ body {
     overflow: hidden;
 }
 
+
+
+.center-screen {
+    position: relative;
+    z-index: 500;
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  align-items: center;     /* Centers vertically */
+  min-height: 100vh; 
+}
+
+#join-btn {
+    background: url(/assets/logo.svg) 0 0 no-repeat;
+    background-size: cover;
+    display: block;
+    width: 128px;
+    height: 128px;
+}
+
+
 #app {
     position: relative;
     width: 100%;
@@ -30,18 +50,23 @@ body {
     position: fixed;
     top: 60px;
 }
+#pixi-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
 
 .hud {
+    display: block;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
     position: absolute;
-    top: 12px;
-    left: 12px;
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    z-index: 10;
-    background: rgba(0,0,0,0.4);
-    padding: 6px 10px;
-    border-radius: 6px;
+    width: 200px;
+    height: 200px;
+    z-index: 100;
 }
 
 #messages {
@@ -54,16 +79,23 @@ body {
     border-left: 1px solid rgba(255,255,255,0.2);
 }
 
+.hide {
+    display: none !important;
+}
+.panel.hidden {
+    right: -360px;
+}
 .panel {
+    transition-duration: 0.3s;
     position: absolute;
-    right: 12px;
-    top: 12px;
+    top: 0px;
+    right: 0;
     width: 360px;
     max-width: 90vw;
     height: 100%;
     overflow: hidden;
     box-sizing: border-box;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.9);
     border: 1px solid rgba(255,255,255,0.2);
     border-radius: 6px;
     padding: 8px 10px;
@@ -72,8 +104,9 @@ body {
     flex-direction: column;
     gap: 8px;
 }
+
 .panel-title { font-weight: 600; margin-bottom: 6px; }
-.hidden { display: none !important; }
+
 #inventory-list {
     list-style: none;
     margin: 0 0 8px 0;

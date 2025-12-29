@@ -167,6 +167,7 @@ function isClientMap(m: unknown): m is ClientMap {
     try {
       statusEl.textContent = "Connecting...";
       joinBtn.disabled = true;
+      joinBtn.parentNode.className+=' hide';
 
       const client = new Colyseus.Client("ws://localhost:2567");
       const room = await client.joinOrCreate("my_room");
@@ -296,7 +297,7 @@ function isClientMap(m: unknown): m is ClientMap {
           centerCameraOn(player.x, player.y);
 
           initialized = true;
-          statusEl.textContent = "Map loaded";
+          statusEl.textContent = "-----------MOVES-------------";
         }
 
         // Refresh overlays each patch
@@ -586,5 +587,5 @@ function isClientMap(m: unknown): m is ClientMap {
   joinBtn.addEventListener("click", joinGame);
   
   
-  // setTimeout(() => { joinGame();},300);
+  //  setTimeout(() => { joinGame();},1000);
 })();

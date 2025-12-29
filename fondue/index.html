@@ -9,10 +9,9 @@
 </head>
 
 <body>
+    <div class="center-screen"><button id="join-btn"></button></div>
     <div id="app">
-        <div id="pixi-container"></div>
         <div class="hud">
-            <button id="join-btn">Join Game</button>
             <span id="status"></span>
             <div id="messages"></div>
         </div>
@@ -26,13 +25,14 @@
                 <div>Off hand: <span id="equip-off">(empty)</span></div>
             </div>
             <div class="equip-grid" id="equip-grid"></div>
-            <div class="panel-actions hidden">
+            <div class="panel-actions hide">
                 <label for="equip-slot">Slot:</label>
                 <select id="equip-slot"></select>
                 <button id="btn-equip">Equip</button>
             </div>
         </div>
     </div>
+    <div id="pixi-container"></div>
     <script type="module" src="/src/main.ts"></script>
 </body>
 </html>
