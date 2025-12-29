@@ -2,6 +2,7 @@ import { Schema, type, ArraySchema, MapSchema } from "@colyseus/schema";
 
 export class PlayerState extends Schema {
   @type("string") name: string = "Hero";
+
   @type("number") x: number = 0;
   @type("number") y: number = 0;
   @type("number") hp: number = 100;
@@ -17,12 +18,12 @@ export class PlayerState extends Schema {
   @type("number") wisdom: number = 32;
   @type("number") charisma: number = 32;
 
+  @type("number") defense: number = 32;
   @type("number") proficiency_bonus: number = 6;
-  @type("number") armor_class: number = 32;
 
   @type("number") max_hp: number = 100;
   @type("number") temporary_hp: number = 0;
-  @type({ map: "number" }) death_saves: MapSchema<number> = new MapSchema<number>();
   @type("number") spell_save_dc: number = 8;
   @type("number") spell_attack_bonus: number = 0;
+
 }

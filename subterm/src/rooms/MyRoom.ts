@@ -17,6 +17,7 @@ import { MonsterState } from "../schema/MonsterState";
 import * as path from "path";
 import * as fsp from "fs/promises";
 import { Encoder } from "@colyseus/schema";
+import fs from 'fs';
 
 // Increase buffer size for large language data
 Encoder.BUFFER_SIZE = 64 * 1024; // 64 KB
@@ -53,6 +54,11 @@ export class MyRoom extends Room<MyRoomState> {
 
   async onCreate (options: any) {
     if (shouldLog) console.log("Creating room with full main.py functionality");
+
+    fs.writeFileSync("combat.log","\r\n");
+
+
+    this.GAME_MODE = 'auto';
 
     // Delay setState until after initial world generation
 
@@ -828,11 +834,11 @@ export class MyRoom extends Room<MyRoomState> {
   }
 
   private handleAttack(client: Client, message: any) {
-    const player = this.state.player; // Fixed: player is stored directly
-    if (!player) return;
-
     const targetX = message.targetX;
     const targetY = message.targetY;
+    const player = this.state.player; // Fixed: player is stored directly
+
+    console.log("handleAttck", message);
     
     // Simple attack logic - attack adjacent tile
     const distance = Math.abs(player.x - targetX) + Math.abs(player.y - targetY);
@@ -1360,11 +1366,19 @@ export class MyRoom extends Room<MyRoomState> {
   private startMonsterAI() {
     // Run monster AI every 2 seconds
     this.clock.setInterval(() => {
-      this.updateMonsters();
+      if (this.GAME_MODE == 'auto'/* !='engaged' */) {
+        this.updateMonsters();
+      }
     }, 2000);
   }
 
-  private updateMonsters() {
+  private combat_log(entry: object) {
+      const data = JSON.stringify(entry);
+      fs.appendFileSync('combat.log', data);
+      fs.appendFileSync('combat.log', "\r\n");
+  }
+
+  private updateMonsters(client: Client) {
     if (!this.state.player) return;
 
     const player = this.state.player;
@@ -1382,118 +1396,33 @@ export class MyRoom extends Room<MyRoomState> {
       }
     }
 
-    console.log(`Monster AI: Found ${monsters.length} monsters to update`);
-
-    console.log(`Found ${monsters.length} monsters to update`);
-
     // Move each monster towards player
     for (const monster of monsters) {
       // Calculate distance to player
       const distance = Math.abs(monster.x - player.x) + Math.abs(monster.y - player.y);
       
-      console.log(`Monster at (${monster.x}, ${monster.y}) is ${distance} tiles from player at (${player.x}, ${player.y})`);
+      // If adjacent after move, notify player
+      const dx = Math.abs(monster.x - player.x);
+      const dy = Math.abs(monster.y - player.y);
+      const adjacent = Math.max(dx, dy) === 1;
       
-      // Only move if monster is within 10 tiles and not already adjacent
-      if (distance <= 10 && distance > 1) {
-        console.log(`Monster at (${monster.x}, ${monster.y}) is in range and will try to move`);
-        
-        // Simple pathfinding - move one step towards player
-        if (this.isVisible(monster.x, monster.y, player.x, player.y) === true) {
-          const nextPos = this.getNextPositionTowards(monster.x, monster.y, player.x, player.y);
-          
-          console.log(`Next position for monster:`, nextPos);
-          
-          if (nextPos && this.isValidPosition(nextPos.x, nextPos.y, walkableTiles)) {
-            // Remove monster from old position
-            this.moveMonster(monster, nextPos);
-            console.log(`Monster moved from (${monster.x}, ${monster.y}) to (${nextPos.x}, ${nextPos.y})`);
-          } else {
-            console.log(`Monster cannot move to next position - invalid or blocked`);
-          }
-        } else {
-          console.log(`Monster cannot see player - no line of sight`);
-        }
+      /* {"x":4,"y":21,"item":{"x":0,"y":0,"id":0,"kind":"troll","mana":50,"level":1,"experience":0,"inventory":[],"strength":32,"dexterity":32,"constitution":32,"intelligence":32,"wisdom":32,"charisma":32,"defense":32,"proficiency_bonus":6,"hp":20,"max_hp":100,"temporary_hp":0,"spell_save_dc":8,"spell_attack_bonus":0}} */
+      if (adjacent && this.playerClient) {
+        const name = monster.item.name || "monster";
+        ClientMessages.info(this.playerClient,`${monster.item.kind} attacks`);
+        CombatCommand.resolveAttack(this.state.player, monster);
       } else {
-        console.log(`Monster at (${monster.x}, ${monster.y}) is out of range (${distance}) or adjacent`);
-        
-        // If adjacent after move, notify player
-        const dx = Math.abs(monster.x - player.x);
-        const dy = Math.abs(monster.y - player.y);
-        const adjacent = Math.max(dx, dy) === 1;
-        
-        if (adjacent && this.playerClient) {
-          const name = monster.item.name || "monster";
-
-          // Build attacker and target entities for combat resolution
-          const attacker = {
-            name,
-            combat_stats: {
-              hp: 20,
-              max_hp: 20,
-              armor_class: 32,
-              strength: 32,
-              dexterity: 32,
-              constitution: 32,
-              intelligence: 32,
-              wisdom: 32,
-              charisma: 32,
-              proficiency_bonus: 6,
-            },
-          };
-
-          const playerStats = this.state.player;
-          const target = {
-            name: playerStats.name,
-            combat_stats: {
-              hp: playerStats.hp,
-              max_hp: playerStats.max_hp,
-              armor_class: playerStats.armor_class,
-              strength: playerStats.strength,
-              dexterity: playerStats.dexterity,
-              constitution: playerStats.constitution,
-              intelligence: playerStats.intelligence,
-              wisdom: playerStats.wisdom,
-              charisma: playerStats.charisma,
-              proficiency_bonus: playerStats.proficiency_bonus,
-            },
-          };
-
-          const weapon = new Weapon();
-          weapon.name = "claws";
-          weapon.damage = 8; // flat damage on 1-64 scale
-          weapon.damage_type = "slashing" as any;
-
-          const log: CombatLog = CombatCommand.resolveAttack(attacker, target, weapon);
-          // Sync computed HP back to schema
-          this.state.player.hp = target.combat_stats.hp;
-
-          // Broadcast concise combat summary to the player
-          ClientMessages.info(this.playerClient, log.message);
-
-          // Optional: additional HUD-friendly summary
-          if (typeof log.damage === "number") {
-            ClientMessages.log(
-              this.playerClient,
-              `You take ${log.damage} damage. HP ${this.state.player.hp}/${this.state.player.max_hp}.`
-            );
-          }
-
-          // If player is defeated, notify
-          if (this.state.player.hp <= 0) {
-            ClientMessages.error(this.playerClient, "You fall unconscious!");
-          }
-        } else {
-          // make the monster wander randomly if player not visible
-          const d = [{x: -1, y: 0}, {x: 1, y: 0}, {x: 0, y: -1}, {x: 0, y: 1}];
-          const n = Math.floor(Math.random() * 3);
-          const r = d[n];
-          const nextPos = { x: monster.x + d[n].x, y: monster.y + d[n].y };
-          if (this.isValidPosition(nextPos.x, nextPos.y, walkableTiles)) {
-            // console.log(`Monster wandered from (${monster.x}, ${monster.y}) to (${nextPos})`);
-            this.moveMonster(monster, nextPos);
-          }
+        // make the monster wander randomly if player not visible
+        const d = [{x: -1, y: 0}, {x: 1, y: 0}, {x: 0, y: -1}, {x: 0, y: 1}];
+        const n = Math.floor(Math.random() * 3);
+        const r = d[n];
+        const nextPos = { x: monster.x + d[n].x, y: monster.y + d[n].y };
+        if (this.isValidPosition(nextPos.x, nextPos.y, walkableTiles)) {
+          // console.log(`Monster wandered from (${monster.x}, ${monster.y}) to (${nextPos})`);
+          this.moveMonster(monster, nextPos);
         }
       }
+    
     }
   }
 

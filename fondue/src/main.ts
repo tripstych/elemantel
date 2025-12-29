@@ -1,9 +1,13 @@
 /* eslint-disable prettier/prettier */
-import { Application, Assets, Container, Sprite, Rectangle } from "pixi.js";
+import { Application, Assets, Container, Sprite, Rectangle, Graphics } from "pixi.js";
 import * as Colyseus from "colyseus.js";
 import { GAME_CONSTANTS } from "../../shared/constants";
+import jQuery from 'jquery';
+
+window.$ = window.jQuery = jQuery;
 
 const TILE_SIZE = 32;
+const MONSTER_DEFAULT_MAX_HP = 20;
 
 // Absolute FS paths via Vite /@fs for dev server access outside project root
 const ASSET_PATHS = {
@@ -15,11 +19,11 @@ const ASSET_PATHS = {
 };
 
 type ClientItem = { name: string; type: string };
-type ClientMonster = { x: number; y: number; kind: string };
+type ClientMonster = { x: number; y: number; kind: string; hp?: number; max_hp?: number };
 type ClientTile = { terrain: number; items: ClientItem[]; monsters: ClientMonster[] };
 type ClientTileRow = { tiles: ClientTile[] };
 type ClientMap = { width: number; height: number; tiles: ClientTileRow[] };
-type ClientPlayer = { x: number; y: number; onChange?: (changes?: unknown) => void };
+type ClientPlayer = { x: number; y: number; hp?: number; max_hp?: number; onChange?: (changes?: unknown) => void };
 
 function isClientMap(m: unknown): m is ClientMap {
   if (!m || typeof m !== "object") return false;
@@ -144,6 +148,7 @@ function isClientMap(m: unknown): m is ClientMap {
 
   // Entities
   let playerSprite: Sprite | null = null;
+  let playerHpBar: Graphics | null = null;
   let roomRef: Colyseus.Room | null = null;
   let playerRef: ClientPlayer | null = null;
   let mapRef: ClientMap | null = null;
@@ -156,6 +161,29 @@ function isClientMap(m: unknown): m is ClientMap {
       app.screen.width / 2 - targetX,
       app.screen.height / 2 - targetY
     );
+  }
+
+  function updatePlayerHealthBar(player: ClientPlayer) {
+    if (typeof player.hp !== "number" || typeof player.max_hp !== "number") {
+      if (playerHpBar) playerHpBar.visible = false;
+      return;
+    }
+    if (!playerHpBar) {
+      playerHpBar = new Graphics();
+      playerLayer.addChild(playerHpBar);
+    }
+    const pct = Math.max(0, Math.min(1, player.hp / Math.max(1, player.max_hp)));
+    const barWidth = TILE_SIZE;
+    const barHeight = 4;
+    playerHpBar.clear();
+    playerHpBar.beginFill(0x000000, 0.75);
+    playerHpBar.drawRect(0, 0, barWidth, barHeight);
+    playerHpBar.endFill();
+    playerHpBar.beginFill(0xff3333);
+    playerHpBar.drawRect(0, 0, barWidth * pct, barHeight);
+    playerHpBar.endFill();
+    playerHpBar.position.set(player.x * TILE_SIZE, player.y * TILE_SIZE - 6);
+    playerHpBar.visible = true;
   }
 
   let inventoryRefreshPending = false;
@@ -183,6 +211,7 @@ function isClientMap(m: unknown): m is ClientMap {
         messagesEl.appendChild(line);
         // Limit to last ~30 messages
         while (messagesEl.childElementCount > 30) messagesEl.removeChild(messagesEl.firstElementChild!);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
       });
       room.onMessage("error", (payload: unknown) => {
         const message = (payload && typeof payload === "object" && "message" in (payload as Record<string, unknown>))
@@ -273,6 +302,8 @@ function isClientMap(m: unknown): m is ClientMap {
         mapRef = map;
         const width: number = map.width;
         const height: number = map.height;
+        const player = state.player;
+        playerRef = player;
         if (!initialized) {
           tileLayer.removeChildren();
           for (let y = 0; y < height; y++) {
@@ -288,12 +319,11 @@ function isClientMap(m: unknown): m is ClientMap {
             }
           }
 
-          const player = state.player;
-          playerRef = player;
           playerSprite = new Sprite(texPlayer);
           playerSprite.x = player.x * TILE_SIZE;
           playerSprite.y = player.y * TILE_SIZE;
           playerLayer.addChild(playerSprite);
+          updatePlayerHealthBar(player);
           centerCameraOn(player.x, player.y);
 
           initialized = true;
@@ -315,21 +345,38 @@ function isClientMap(m: unknown): m is ClientMap {
               overlayLayer.addChild(itemSprite);
             }
             if (tile.monsters && (tile.monsters.length as number) > 0) {
+              // Render the first monster on the tile with an HP bar
+              const monsters = tile.monsters as unknown as ClientMonster[];
+              const monster = monsters[0];
               const enemySprite = new Sprite(texEnemy);
               enemySprite.x = px;
               enemySprite.y = py;
               overlayLayer.addChild(enemySprite);
+
+              if (monster && typeof monster.hp === "number") {
+                const maxHp = typeof monster.max_hp === "number" ? monster.max_hp : MONSTER_DEFAULT_MAX_HP;
+                const pct = Math.max(0, Math.min(1, monster.hp / Math.max(1, maxHp)));
+                const hpBar = new Graphics();
+                hpBar.beginFill(0x000000, 0.75);
+                hpBar.drawRect(0, 0, TILE_SIZE, 3);
+                hpBar.endFill();
+                hpBar.beginFill(0xff4444);
+                hpBar.drawRect(0, 0, TILE_SIZE * pct, 3);
+                hpBar.endFill();
+                hpBar.position.set(px, py - 4);
+                overlayLayer.addChild(hpBar);
+              }
             }
           }
         }
 
         // Update player position on each patch
-        const player = state.player;
         if (playerSprite) {
           playerSprite.x = player.x * TILE_SIZE;
           playerSprite.y = player.y * TILE_SIZE;
           centerCameraOn(player.x, player.y);
         }
+        updatePlayerHealthBar(player);
 
         // Refresh inventory once when flagged and a state patch has arrived
         if (inventoryRefreshPending && !inventoryEl.classList.contains("hidden")) {
@@ -587,5 +634,5 @@ function isClientMap(m: unknown): m is ClientMap {
   joinBtn.addEventListener("click", joinGame);
   
   
-  //  setTimeout(() => { joinGame();},1000);
+  setTimeout(() => { joinGame();},200);
 })();

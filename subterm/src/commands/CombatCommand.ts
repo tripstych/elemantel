@@ -1,13 +1,14 @@
 import { send, ClientMessages } from "../utils/ClientSend";
 import { RulesEngine, AttackResult, DamageResult } from "./RulesEngine";
 import { Weapon } from "../schema/Equipment";
+import { LanguageData } from "../schema/LanguageData";
 
 export interface CombatEntity {
   name: string;
   combat_stats: {
     hp: number;
     max_hp: number;
-    armor_class: number;
+    defense: number;
     strength: number;
     dexterity: number;
     constitution: number;
@@ -31,43 +32,50 @@ export class CombatCommand {
    */
   static resolveAttack(
     attacker: CombatEntity, 
-    target: CombatEntity, 
-    weapon: Weapon
+    defender: CombatEntity
   ): CombatLog {
-    const attackResult: AttackResult = RulesEngine.rollAttack(
-      attacker.combat_stats, 
-      target.combat_stats, 
-      weapon
-    );
 
-    const attackerName = attacker.name || "Attacker";
-    const targetName = target.name || "Target";
-    const weaponName = weapon.name || "Weapon";
 
-    if (attackResult.hit) {
-      const damageResult: DamageResult = RulesEngine.rollDamage(
-        attacker.combat_stats, 
-        weapon, 
-        attackResult.is_critical
-      );
+      const executeAttack = (attacker, defender) => {
+        // DAMAGE FORMULA:
+        // (Weapon Damage + Strength Bonus) - (Armor Mitigation)
+        // Strength Bonus = Strength / 4
+        // Armor Mitigation = Armor / 2
+        const weapon = (attacker.equipment.hand_slots.main_hand);
 
-      // Apply damage
-      const newHp = Math.max(0, target.combat_stats.hp - damageResult.damage);
-      target.combat_stats.hp = newHp;
+        const ld = new LanguageData();
+        const ld_weapon = ld.getEntry(weapon);
+        console.log(ld_weapon, weapon, '?');
 
-      const critText = attackResult.is_critical ? " Critical Hit!" : "";
+
+
+        const strBonus = Math.floor(attacker.strength / 4);
+        const rawPower = attacker.weaponDamage + attacker.strength;
+        const mitigation = Math.floor(defender.armorDefense / 2);
+        
+        // Ensure damage is at least 1 so fights don't stall forever
+        const finalDamage = Math.max(1, rawPower - mitigation);
+
+        // Apply Damage
+        defender.currentHp -= finalDamage;
+
+        return {
+            attacker: attacker.name,
+            defender: defender.name,
+            damageDealt: finalDamage,
+            defenderRemainingHP: Math.max(0, defender.currentHp), // Don't show negative HP
+            isFatal: defender.currentHp <= 0
+        };
+    };
+
+      const attack = executeAttack(attacker, defender);
+      console.log(attack,'attackack');
       
       return {
-        message: `${attackerName} attacks ${targetName} with ${weaponName}: Hit!${critText} (roll ${attackResult.roll_total} vs Defense ${target.combat_stats.armor_class}) for ${damageResult.damage} damage.`,
-        damage: damageResult.damage,
-        target_hp: newHp,
-        is_critical: attackResult.is_critical
+        message: `- placeholder message -`,
+        is_critical: false
       };
-    } else {
-      return {
-        message: `${attackerName} attacks ${targetName} with ${weaponName}: Miss. (roll ${attackResult.roll_total} vs Defense ${target.combat_stats.armor_class})`
-      };
-    }
+
   }
 
   /**
