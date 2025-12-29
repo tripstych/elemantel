@@ -194,27 +194,34 @@ export const GameUI: React.FC<GameUIProps> = ({
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        background: 'rgba(0, 0, 0, 0.8)',
+        background: 'rgba(0, 0, 0, 0.85)',
         color: 'white',
-        padding: '20px',
-        borderRadius: '10px',
-        textAlign: 'center'
+        padding: '28px',
+        borderRadius: '16px',
+        textAlign: 'center',
+        boxShadow: '0 12px 32px rgba(0,0,0,0.45)',
+        border: '1px solid #2f2f2f'
       }}>
-        <h2>Dungeon Explorer</h2>
-        <p>Connect to the game server to begin</p>
-        <button 
+        <h2 style={{ marginTop: 0, marginBottom: '12px', letterSpacing: '0.04em' }}>Dungeon Explorer</h2>
+        <p style={{ marginTop: 0, marginBottom: '18px', color: '#b0b0b0' }}>Tap to begin</p>
+        <button
           onClick={onConnect}
           style={{
-            padding: '10px 20px',
-            fontSize: '16px',
-            backgroundColor: '#3b82f6',
-            color: 'white',
+            background: 'none',
             border: 'none',
-            borderRadius: '5px',
-            cursor: 'pointer'
+            padding: 0,
+            cursor: 'pointer',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center'
           }}
+          aria-label="Start game"
         >
-          Connect to Game
+          <img
+            src="/assets/logo.svg"
+            alt="Start"
+            style={{ width: '220px', height: '220px', objectFit: 'contain', filter: 'drop-shadow(0 6px 10px rgba(0,0,0,0.45))' }}
+          />
         </button>
         {error && (
           <div style={{ color: '#ef4444', marginTop: '10px' }}>
@@ -277,7 +284,22 @@ export const GameUI: React.FC<GameUIProps> = ({
         zIndex: 1000
       }}>
         <h3 style={{ margin: '0 0 10px 0' }}>{player.name || 'Player'}</h3>
-        <div>HP: {player.hp || 0}/{player.max_hp || 0}</div>
+        <div style={{ marginBottom: '6px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px' }}>
+            <span>HP</span>
+            <span>{player.hp || 0}/{player.max_hp || 0}</span>
+          </div>
+          {(() => {
+            const hp = Math.max(0, Number(player.hp || 0));
+            const maxHp = Math.max(1, Number(player.max_hp || 0));
+            const pct = Math.max(0, Math.min(1, hp / maxHp));
+            return (
+              <div style={{ marginTop: '4px', width: '100%', height: '10px', background: '#2a2a2a', border: '1px solid #444', borderRadius: '4px', overflow: 'hidden' }}>
+                <div style={{ width: `${pct * 100}%`, height: '100%', background: '#c62828' }} />
+              </div>
+            );
+          })()}
+        </div>
         <div>Mana: {player.mana || 0}</div>
         <div>Position: ({player.x || 0}, {player.y || 0})</div>
         <div>STR: {player.strength || 0} DEX: {player.dexterity || 0}</div>

@@ -8,6 +8,7 @@ export interface TileAssets {
   player: Texture;
   enemy: Texture;
   item: Texture;
+  hpbar: Texture;
 }
 
 export class TileManager {
@@ -39,12 +40,14 @@ export class TileManager {
       const playerUrl = pick(u => u.includes("player") && (u.includes("human") || u.includes("huaman") || u.includes("base")));
       const enemyUrl = pick(u => u.includes("goblin") || u.includes("enemy") || u.includes("monster"));
       const itemUrl = pick(u => u.includes("item") && (u.includes("misc") || u.includes("box") || u.includes("gem") || u.includes("weapon")));
+      const hpBarUrl = pick(u => u.includes("hp_bar")) || "/assets/HP_bar.png";
 
       this.assets.floor = floorUrl ? await Assets.load(floorUrl) : Texture.EMPTY;
       this.assets.wall = wallUrl ? await Assets.load(wallUrl) : Texture.EMPTY;
       this.assets.player = playerUrl ? await Assets.load(playerUrl) : Texture.EMPTY;
       this.assets.enemy = enemyUrl ? await Assets.load(enemyUrl) : Texture.EMPTY;
       this.assets.item = itemUrl ? await Assets.load(itemUrl) : Texture.EMPTY;
+      this.assets.hpbar = hpBarUrl ? await Assets.load(hpBarUrl) : Texture.EMPTY;
 
       if (GAME_CONSTANTS.DEBUG) console.log("All tile assets loaded successfully!");
       this.loaded = true;
@@ -90,6 +93,11 @@ export class TileManager {
     ctx.fillStyle = '#eab308';
     ctx.fillRect(0, 0, 32, 32);
     this.assets.item = Texture.from(canvas);
+
+    // HP bar placeholder (red strip)
+    ctx.fillStyle = '#ff0000';
+    ctx.fillRect(0, 0, 32, 3);
+    this.assets.hpbar = Texture.from(canvas);
 
     this.loaded = true;
   }

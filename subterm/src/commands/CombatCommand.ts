@@ -58,14 +58,14 @@ export class CombatCommand {
       const critText = attackResult.is_critical ? " Critical Hit!" : "";
       
       return {
-        message: `${attackerName} attacks ${targetName} with ${weaponName}: Hit!${critText} (${attackResult.roll_total} vs AC ${target.combat_stats.armor_class}) for ${damageResult.damage} damage.`,
+        message: `${attackerName} attacks ${targetName} with ${weaponName}: Hit!${critText} (roll ${attackResult.roll_total} vs Defense ${target.combat_stats.armor_class}) for ${damageResult.damage} damage.`,
         damage: damageResult.damage,
         target_hp: newHp,
         is_critical: attackResult.is_critical
       };
     } else {
       return {
-        message: `${attackerName} attacks ${targetName} with ${weaponName}: Miss. (${attackResult.roll_total} vs AC ${target.combat_stats.armor_class})`
+        message: `${attackerName} attacks ${targetName} with ${weaponName}: Miss. (roll ${attackResult.roll_total} vs Defense ${target.combat_stats.armor_class})`
       };
     }
   }
@@ -119,18 +119,18 @@ export class CombatCommand {
    * Roll a death saving throw
    */
   static rollDeathSave(entity: CombatEntity): CombatLog {
-    const roll = RulesEngine.rollD20();
+    const roll = RulesEngine.roll64();
     const deathSaves = (entity.combat_stats as any).death_saves || { failures: 0, successes: 0 };
     
-    if (roll.total === 20) {
-      // Natural 20: 1 HP and stand up
+    if (roll.total === 64) {
+      // Natural max: 1 HP and stand up
       entity.combat_stats.hp = 1;
       deathSaves.failures = 0;
       deathSaves.successes = 0;
       (entity.combat_stats as any).death_saves = deathSaves;
       
       return {
-        message: `${entity.name} rolls a natural 20 on death save and returns to 1 HP!`,
+        message: `${entity.name} rolls a natural 64 on death save and returns to 1 HP!`,
         target_hp: 1
       };
     } else if (roll.total === 1) {
@@ -148,7 +148,7 @@ export class CombatCommand {
       return {
         message: `${entity.name} rolls a natural 1 on death save (2 failures).`
       };
-    } else if (roll.total >= 10) {
+    } else if (roll.total >= 32) {
       // Success
       deathSaves.successes += 1;
       (entity.combat_stats as any).death_saves = deathSaves;

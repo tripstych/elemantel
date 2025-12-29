@@ -39,15 +39,15 @@ export class PlayerSchema extends Schema {
   @type("number") mana: number = 50;
   @type(["string"]) inventory: ArraySchema<string> = new ArraySchema<string>();
 
-  @type("number") strength: number = 10;
-  @type("number") dexterity: number = 10;
-  @type("number") constitution: number = 10;
-  @type("number") intelligence: number = 10;
-  @type("number") wisdom: number = 10;
-  @type("number") charisma: number = 10;
+  @type("number") strength: number = 32;
+  @type("number") dexterity: number = 32;
+  @type("number") constitution: number = 32;
+  @type("number") intelligence: number = 32;
+  @type("number") wisdom: number = 32;
+  @type("number") charisma: number = 32;
 
-  @type("number") proficiency_bonus: number = 2;
-  @type("number") armor_class: number = 10;
+  @type("number") proficiency_bonus: number = 6;
+  @type("number") armor_class: number = 32;
   @type(Equipment) equipment: Equipment = new Equipment();
 }
 

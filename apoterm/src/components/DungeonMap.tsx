@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Texture, Sprite as PixiSprite, Container as PixiContainer, Graphics as PixiGraphics, Application as PixiApplication } from "pixi.js";
+import { Sprite as PixiSprite, Container as PixiContainer, Graphics as PixiGraphics, Application as PixiApplication, Texture as PixiTexture } from "pixi.js";
 import { tileManager } from "../services/TileManager";
 import { GameState, gameClient } from "../services/GameClient";
 import { GAME_CONSTANTS } from "../../../shared/constants";
@@ -23,7 +23,7 @@ export const DungeonMap: React.FC<DungeonMapProps> = ({
   const layerRef = useRef<PixiContainer | null>(null);
   const [assetsLoaded, setAssetsLoaded] = useState(false);
   const [highlightedPath, setHighlightedPath] = useState<Array<{x: number, y: number}>>([]);
-  const [pixelTexture, setPixelTexture] = useState<Texture | null>(null);
+  
 
   useEffect(() => {
     console.log("DungeonMap gameState updated:", gameState);
@@ -41,7 +41,10 @@ export const DungeonMap: React.FC<DungeonMapProps> = ({
       }
     });
 
-    gameClient.onAutoNavigateComplete(() => {
+    gameClient.onAutoNavigateComplete(() =>
+    
+    
+    {
       setHighlightedPath([]);
       console.log("Navigation complete, clearing path");
     });
@@ -117,16 +120,7 @@ export const DungeonMap: React.FC<DungeonMapProps> = ({
     const loadAssets = async () => {
       try {
         await tileManager.loadAssets();
-        // Prepare 1x1 pixel texture
-        const pxCanvas = document.createElement('canvas');
-        pxCanvas.width = 1;
-        pxCanvas.height = 1;
-        const pctx = pxCanvas.getContext('2d');
-        if (pctx) {
-          pctx.fillStyle = '#ffffff';
-          pctx.fillRect(0, 0, 1, 1);
-        }
-        setPixelTexture(Texture.from(pxCanvas));
+        
         setAssetsLoaded(true);
         console.log("Tile assets loaded for dungeon map");
       } catch (error) {
@@ -149,13 +143,16 @@ export const DungeonMap: React.FC<DungeonMapProps> = ({
   const playerTexture = tileManager.getAsset("player");
   const itemTexture = tileManager.getAsset("item");
   const enemyTexture = tileManager.getAsset("enemy");
+  const hpBarTexture = tileManager.getAsset("hpbar");
 
   // Find the current player from state
   const currentPlayer = (gameState as any).player || (players && typeof (players as any).values === 'function' ? (players as Map<string, any>).values().next().value : null);
   
-  // Calculate camera offset to center the player
+  // Calculate camera offset to center the player on screen
   const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 800;
   const screenHeight = typeof window !== 'undefined' ? window.innerHeight : 600;
+  const cameraOffsetX = screenWidth / 2 - (currentPlayer ? currentPlayer.x * tileSize + tileSize / 2 : 0);
+  const cameraOffsetY = screenHeight / 2 - (currentPlayer ? currentPlayer.y * tileSize + tileSize / 2 : 0);
   // Imperative render to Pixi stage
   useEffect(() => {
     if (!gameState || !assetsLoaded || !app) return;
@@ -163,7 +160,9 @@ export const DungeonMap: React.FC<DungeonMapProps> = ({
       layerRef.current.destroy(true);
       layerRef.current = null;
     }
+    app.stage.sortableChildren = true;
     const layer = new PixiContainer();
+    layer.sortableChildren = true;
     layerRef.current = layer;
 
     // Transparent capture overlay
@@ -186,7 +185,7 @@ export const DungeonMap: React.FC<DungeonMapProps> = ({
     });
     layer.addChild(overlay);
 
-    // Render tiles, items, monsters, players
+    // Render tiles, items, monsters
     for (let y = 0; y < map.height; y++) {
       for (let x = 0; x < map.width; x++) {
         const tile = map.tiles[y]?.tiles[x];
@@ -210,84 +209,43 @@ export const DungeonMap: React.FC<DungeonMapProps> = ({
           layer.addChild(s);
         });
 
-        // Monsters + HP bars
-        tile.monsters.forEach((monster: any, index: number) => {
+        // Monsters
+        tile.monsters.forEach((monster: any) => {
           const m = new PixiSprite(enemyTexture);
           m.x = x * tileSize + cameraOffsetX;
           m.y = y * tileSize + cameraOffsetY;
+          m.zIndex = 2;
           layer.addChild(m);
-
-          const hp = Number(monster.hp ?? 0);
-          const maxHp = 20;
-          const pct = Math.max(0, Math.min(1, maxHp > 0 ? hp / maxHp : 0));
-          const barWidth = Math.max(1, Math.floor(tileSize * pct));
-          const barHeight = 3;
-          const barX = x * tileSize + cameraOffsetX;
-          const barY = y * tileSize + cameraOffsetY - (4 + index * (barHeight + 1));
-          if (pixelTexture) {
-            for (let row = 0; row < barHeight; row++) {
-              for (let col = 0; col < tileSize; col++) {
-                const px = new PixiSprite(pixelTexture);
-                px.x = barX + col;
-                px.y = barY + row;
-                px.tint = 0x660000;
-                layer.addChild(px);
-              }
-            }
-            for (let row = 0; row < barHeight; row++) {
-              for (let col = 0; col < barWidth; col++) {
-                const px = new PixiSprite(pixelTexture);
-                px.x = barX + col;
-                px.y = barY + row;
-                px.tint = 0xCC0000;
-                layer.addChild(px);
-              }
-            }
-          }
         });
       }
     }
 
-    // Players + HP bars
+    // Players with HP bar sprite above the sprite
     const renderPlayer = (player: any) => {
       const p = new PixiSprite(playerTexture);
       p.x = player.x * tileSize + cameraOffsetX;
       p.y = player.y * tileSize + cameraOffsetY;
+      p.zIndex = 3;
       layer.addChild(p);
 
-      const hp = Number(player.hp ?? 0);
-      const maxHp = Number(player.max_hp ?? 0) || 1;
-      const pct = Math.max(0, Math.min(1, maxHp > 0 ? hp / maxHp : 0));
-      const barWidth = Math.max(1, Math.floor(tileSize * pct));
-      const barHeight = 4;
-      const barX = player.x * tileSize + cameraOffsetX;
-      const barY = player.y * tileSize + cameraOffsetY - 5;
-      if (pixelTexture) {
-        for (let row = 0; row < barHeight; row++) {
-          for (let col = 0; col < tileSize; col++) {
-            const px = new PixiSprite(pixelTexture);
-            px.x = barX + col;
-            px.y = barY + row;
-            px.tint = 0x333333;
-            layer.addChild(px);
-          }
-        }
-        for (let row = 0; row < barHeight; row++) {
-          for (let col = 0; col < barWidth; col++) {
-            const px = new PixiSprite(pixelTexture);
-            px.x = barX + col;
-            px.y = barY + row;
-            px.tint = 0xCC0000;
-            layer.addChild(px);
-          }
-        }
-      }
+      const barX = player.x;
+      const barY = player.y;
+      const bar = new PixiSprite(hpBarTexture || PixiTexture.WHITE);
+      bar.width = 32;
+      bar.height = 3;
+      bar.x = barX;
+      bar.y = barY - 32;
+      bar.zIndex = 1000;
+      layer.addChild(bar);
     };
     if (players && typeof (players as any).forEach === 'function') {
       (players as Map<string, any>).forEach((player: any) => renderPlayer(player));
     } else if (currentPlayer) {
       renderPlayer(currentPlayer);
     }
+
+    layer.sortChildren();
+    app.stage.sortChildren();
 
     app.stage.addChild(layer);
 
@@ -298,7 +256,7 @@ export const DungeonMap: React.FC<DungeonMapProps> = ({
         layerRef.current = null;
       }
     };
-  }, [gameState, assetsLoaded, pixelTexture, tileSize, highlightedPath]);
+  }, [gameState, assetsLoaded, tileSize, highlightedPath]);
 
   return null;
 };

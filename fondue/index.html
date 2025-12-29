@@ -5,7 +5,7 @@
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/style.css">
-    <title>PixiJS - Template</title>
+    <title>ElemVntel</title>
 </head>
 
 <body>
@@ -18,7 +18,19 @@
         </div>
         <div id="inventory" class="panel hidden">
             <div class="panel-title">Inventory</div>
+            <div id="inventory-container">
             <ul id="inventory-list"></ul>
+            </div>
+            <div id="equip-status">
+                <div>Main hand: <span id="equip-main">(empty)</span></div>
+                <div>Off hand: <span id="equip-off">(empty)</span></div>
+            </div>
+            <div class="equip-grid" id="equip-grid"></div>
+            <div class="panel-actions hidden">
+                <label for="equip-slot">Slot:</label>
+                <select id="equip-slot"></select>
+                <button id="btn-equip">Equip</button>
+            </div>
         </div>
     </div>
     <script type="module" src="/src/main.ts"></script>

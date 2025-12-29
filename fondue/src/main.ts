@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Application, Assets, Container, Sprite, Rectangle } from "pixi.js";
 import * as Colyseus from "colyseus.js";
+import { GAME_CONSTANTS } from "../../shared/constants";
 
 const TILE_SIZE = 32;
 
@@ -38,6 +39,82 @@ function isClientMap(m: unknown): m is ClientMap {
   const messagesEl = document.getElementById("messages")!;
   const inventoryEl = document.getElementById("inventory")!;
   const inventoryListEl = document.getElementById("inventory-list")!;
+    // Enable drop-to-unequip on the inventory list
+    inventoryListEl.addEventListener("dragover", (ev) => {
+      ev.preventDefault();
+      inventoryListEl.classList.add("drag-over");
+    });
+    inventoryListEl.addEventListener("dragleave", () => {
+      inventoryListEl.classList.remove("drag-over");
+    });
+    inventoryListEl.addEventListener("drop", (ev) => {
+      ev.preventDefault();
+      inventoryListEl.classList.remove("drag-over");
+      const slotPath = ev.dataTransfer?.getData("text/slot-path");
+      if (slotPath && roomRef) {
+        roomRef.send("unequip", { slotPath });
+      }
+    });
+  const equipMainEl = document.getElementById("equip-main")!;
+  const equipOffEl = document.getElementById("equip-off")!;
+  const equipGridEl = document.getElementById("equip-grid")!;
+  const equipSlotEl = document.getElementById("equip-slot")! as HTMLSelectElement;
+  const equipBtnEl = document.getElementById("btn-equip")! as HTMLButtonElement;
+
+  // Populate slot selector from shared constants (hands + body)
+  function populateEquipSlots() {
+    equipSlotEl.innerHTML = "";
+    const handSlots = GAME_CONSTANTS.EQUIPMENT_SLOTS.HAND;
+    const bodySlots = GAME_CONSTANTS.EQUIPMENT_SLOTS.BODY;
+    // Use slots from shared constants (already referenced in section builders)
+    for (const s of handSlots) {
+      const opt = document.createElement("option");
+      opt.value = `hand_slots.${s}`;
+      opt.textContent = s;
+      equipSlotEl.appendChild(opt);
+    }
+    for (const s of bodySlots) {
+      const opt = document.createElement("option");
+      opt.value = `body_slots.${s}`;
+      opt.textContent = s;
+      equipSlotEl.appendChild(opt);
+    }
+  }
+  populateEquipSlots();
+
+  // Icon mapping for slots using repo assets
+  const SLOT_ICONS: Record<string, string> = {
+    // Right hand (main)
+    "hand_slots.main_hand": "/@fs/f:/elemantel/assets/tiles/item/weapon/long_sword1.png",
+    // Left hand (off)
+    "hand_slots.off_hand": "/@fs/f:/elemantel/assets/tiles/item/armour/shields/shield2_kite.png",
+    "body_slots.head": "/@fs/f:/elemantel/assets/tiles/item/armour/headgear/helmet1_visored.png",
+    "body_slots.face": "/@fs/f:/elemantel/assets/tiles/item/armour/headgear/helmet2_etched.png",
+    "body_slots.neck": "/@fs/f:/elemantel/assets/tiles/item/amulet/celtic_blue.png",
+    "body_slots.torso": "/@fs/f:/elemantel/assets/tiles/item/armour/plate_mail1.png",
+    "body_slots.back": "/@fs/f:/elemantel/assets/tiles/item/armour/cloak1_leather.png",
+    "body_slots.waist": "/@fs/f:/elemantel/assets/tiles/item/armour/robe1.png",
+    "body_slots.wrists": "/@fs/f:/elemantel/assets/tiles/item/armour/glove1.png",
+    "body_slots.left_finger": "/@fs/f:/elemantel/assets/tiles/item/ring/gold.png",
+    "body_slots.right_finger": "/@fs/f:/elemantel/assets/tiles/item/ring/silver.png",
+    "body_slots.legs": "/@fs/f:/elemantel/assets/tiles/item/armour/scale_mail1.png",
+    "body_slots.feet": "/@fs/f:/elemantel/assets/tiles/item/armour/boots1_brown.png",
+  };
+
+  // Try to derive an item icon from its name
+  function getItemIcon(name: string): string {
+    const n = name.toLowerCase();
+    if (n.includes("ring")) return "/@fs/f:/elemantel/assets/tiles/item/ring/gold.png";
+    if (n.includes("amulet") || n.includes("neck")) return "/@fs/f:/elemantel/assets/tiles/item/amulet/celtic_blue.png";
+    if (n.includes("helm") || n.includes("helmet")) return "/@fs/f:/elemantel/assets/tiles/item/armour/headgear/helmet1_visored.png";
+    if (n.includes("cloak")) return "/@fs/f:/elemantel/assets/tiles/item/armour/cloak1_leather.png";
+    if (n.includes("boot")) return "/@fs/f:/elemantel/assets/tiles/item/armour/boots1_brown.png";
+    if (n.includes("glove") || n.includes("gauntlet")) return "/@fs/f:/elemantel/assets/tiles/item/armour/glove1.png";
+    if (n.includes("sword") || n.includes("axe") || n.includes("mace") || n.includes("dagger")) return "/@fs/f:/elemantel/assets/tiles/item/weapon/long_sword1.png";
+    if (n.includes("shield")) return "/@fs/f:/elemantel/assets/tiles/item/armour/shields/shield2_kite.png";
+    if (n.includes("armor") || n.includes("armour") || n.includes("mail") || n.includes("robe") || n.includes("plate")) return "/@fs/f:/elemantel/assets/tiles/item/armour/plate_mail1.png";
+    return "/@fs/f:/elemantel/assets/tiles/item/misc/misc_box.png";
+  }
 
   // Create and init Pixi
   const app = new Application();
@@ -70,6 +147,7 @@ function isClientMap(m: unknown): m is ClientMap {
   let roomRef: Colyseus.Room | null = null;
   let playerRef: ClientPlayer | null = null;
   let mapRef: ClientMap | null = null;
+  let selectedItemName: string | null = null;
 
   function centerCameraOn(x: number, y: number) {
     const targetX = x * TILE_SIZE + TILE_SIZE / 2;
@@ -78,6 +156,11 @@ function isClientMap(m: unknown): m is ClientMap {
       app.screen.width / 2 - targetX,
       app.screen.height / 2 - targetY
     );
+  }
+
+  let inventoryRefreshPending = false;
+  function markInventoryDirty() {
+    inventoryRefreshPending = true;
   }
 
   async function joinGame() {
@@ -115,6 +198,7 @@ function isClientMap(m: unknown): m is ClientMap {
                 : "Picked up";
               line.textContent = msg;
               messagesEl.appendChild(line);
+              markInventoryDirty();
             });
             room.onMessage("drop_result", (payload: { message?: string; item?: string } | unknown) => {
               const line = document.createElement("div");
@@ -123,6 +207,12 @@ function isClientMap(m: unknown): m is ClientMap {
                 : "Dropped";
               line.textContent = msg;
               messagesEl.appendChild(line);
+            });
+            room.onMessage("equip_result", () => {
+              markInventoryDirty();
+            });
+            room.onMessage("unequip_result", () => {
+              markInventoryDirty();
             });
       room.onMessage("log", (payload: unknown) => {
         const message = (payload && typeof payload === "object" && "message" in (payload as Record<string, unknown>))
@@ -239,6 +329,12 @@ function isClientMap(m: unknown): m is ClientMap {
           playerSprite.y = player.y * TILE_SIZE;
           centerCameraOn(player.x, player.y);
         }
+
+        // Refresh inventory once when flagged and a state patch has arrived
+        if (inventoryRefreshPending && !inventoryEl.classList.contains("hidden")) {
+          refreshInventoryUI();
+          inventoryRefreshPending = false;
+        }
       });
     } catch (err) {
       // Report detailed error info for easier debugging
@@ -278,7 +374,7 @@ function isClientMap(m: unknown): m is ClientMap {
     }
   });
 
-  // Pickup (E) and Drop (G)
+  // Inventory toggle (I), Equip (E), Pickup (G)
   window.addEventListener("keydown", (ev) => {
     const key = ev.key.toLowerCase();
     if (!roomRef) return;
@@ -287,14 +383,12 @@ function isClientMap(m: unknown): m is ClientMap {
       // Toggle inventory panel and refresh list
       const isHidden = inventoryEl.classList.contains("hidden");
       if (isHidden) inventoryEl.classList.remove("hidden"); else inventoryEl.classList.add("hidden");
-      // Refresh list
-      inventoryListEl.textContent = "";
-      const items = (playerRef as unknown as { inventory?: { length: number; [index: number]: string } })?.inventory;
-      const count = items?.length ?? 0;
-      for (let i = 0; i < count; i++) {
-        const li = document.createElement("li");
-        li.textContent = String(items![i]);
-        inventoryListEl.appendChild(li);
+      if (isHidden) {
+        refreshInventoryUI();
+        inventoryRefreshPending = false;
+      } else if (inventoryRefreshPending) {
+        refreshInventoryUI();
+        inventoryRefreshPending = false;
       }
     } else if (key === "e") {
       ev.preventDefault();
@@ -311,18 +405,159 @@ function isClientMap(m: unknown): m is ClientMap {
       }
     } else if (key === "g") {
       ev.preventDefault();
-      // Drop last item in inventory if available
-      const items = (playerRef as unknown as { inventory?: { length: number; [index: number]: string } })?.inventory;
-      const count = items?.length ?? 0;
-      if (count > 0) {
-        const itemName = items![count - 1];
-        roomRef.send("drop_item", { itemName });
-      } else {
-        const line = document.createElement("div");
-        line.textContent = "No items to drop";
-        messagesEl.appendChild(line);
-      }
+      // Pick up item(s) on current tile
+      roomRef.send("pickup", {});
     }
+  });
+
+  function refreshInventoryUI() {
+    // List inventory
+    inventoryListEl.textContent = "";
+    selectedItemName = null;
+    const items = (playerRef as unknown as { inventory?: { length: number; [index: number]: string } })?.inventory;
+    const count = items?.length ?? 0;
+    for (let i = 0; i < count; i++) {
+      const name = String(items![i]);
+      const li = document.createElement("li");
+      const icon = document.createElement("img");
+      icon.className = "item-icon";
+      icon.src = getItemIcon(name);
+      const label = document.createElement("span");
+      label.textContent = name;
+      li.appendChild(icon);
+      li.appendChild(label);
+      li.draggable = true;
+      li.addEventListener("dragstart", (ev) => {
+        ev.dataTransfer?.setData("text/item-name", name);
+        ev.dataTransfer!.effectAllowed = "copy";
+      });
+      li.addEventListener("click", () => {
+        selectedItemName = name;
+        // mark selected
+        Array.from(inventoryListEl.children).forEach((child) => child.classList.remove("selected"));
+        li.classList.add("selected");
+      });
+      inventoryListEl.appendChild(li);
+    }
+
+    // Show equipped (try both equipment and slots structures)
+    type EquipStructFull = {
+      hand_slots?: { main_hand?: string; off_hand?: string };
+      body_slots?: Record<string, string | undefined>;
+    };
+    const pEquip = (playerRef as unknown as { equipment?: EquipStructFull; slots?: EquipStructFull });
+    const main = pEquip?.slots?.hand_slots?.main_hand ?? pEquip?.equipment?.hand_slots?.main_hand ?? "(empty)";
+    const off = pEquip?.slots?.hand_slots?.off_hand ?? pEquip?.equipment?.hand_slots?.off_hand ?? "(empty)";
+    equipMainEl.textContent = String(main || "(empty)");
+    equipOffEl.textContent = String(off || "(empty)");
+
+    // Equipment grid rows per pseudocode
+    const makeVal = (path: string, key: string) => {
+      const v = path.startsWith("hand_slots")
+        ? (pEquip?.slots?.hand_slots?.[key as "main_hand"|"off_hand"] ?? pEquip?.equipment?.hand_slots?.[key as "main_hand"|"off_hand"]) 
+        : (pEquip?.slots?.body_slots?.[key] ?? pEquip?.equipment?.body_slots?.[key]);
+      return String(v || "(empty)");
+    };
+    equipGridEl.textContent = "";
+
+    function makeSlot(label: string, path: string, key: string) {
+      const value = makeVal(path, key);
+      const el = document.createElement("div");
+      el.className = `equip-slot ${value === "(empty)" ? "empty" : ""}`;
+      el.dataset.path = path;
+      const iconEl = document.createElement("img");
+      iconEl.className = "icon";
+      const iconPath = value !== "(empty)" ? getItemIcon(value) : SLOT_ICONS[path];
+      if (iconPath) iconEl.src = iconPath;
+      el.appendChild(iconEl);
+      // Tooltip with slot/value info
+      el.title = `${label}: ${value}`;
+      // Click-to-equip
+      el.addEventListener("click", () => {
+        if (!roomRef) return;
+        if (!selectedItemName) {
+          const line = document.createElement("div");
+          line.textContent = "Select an item, then click a slot";
+          messagesEl.appendChild(line);
+          return;
+        }
+        roomRef.send("equip", { slotPath: path, itemName: selectedItemName });
+      });
+      // Drag-over to equip
+      el.addEventListener("dragover", (ev) => {
+        ev.preventDefault();
+        el.classList.add("drag-over");
+      });
+      el.addEventListener("dragleave", () => {
+        el.classList.remove("drag-over");
+      });
+      el.addEventListener("drop", (ev) => {
+        ev.preventDefault();
+        el.classList.remove("drag-over");
+        const itemName = ev.dataTransfer?.getData("text/item-name");
+        if (itemName && roomRef) {
+          roomRef.send("equip", { slotPath: path, itemName });
+        }
+      });
+      // Drag-from slot to unequip (when not empty)
+      if (value && value !== "(empty)") {
+        el.draggable = true;
+        el.addEventListener("dragstart", (ev) => {
+          ev.dataTransfer?.setData("text/slot-path", path);
+          ev.dataTransfer!.effectAllowed = "move";
+        });
+      }
+      return el;
+    }
+
+    // Row 1: center Head
+    const row1 = document.createElement("div");
+    row1.className = "equip-row";
+    const r1c1 = document.createElement("div");
+    const r1c2 = document.createElement("div"); r1c2.className = "center"; r1c2.appendChild(makeSlot("Head", "body_slots.head", "head"));
+    const r1c3 = document.createElement("div");
+    row1.appendChild(r1c1); row1.appendChild(r1c2); row1.appendChild(r1c3);
+    equipGridEl.appendChild(row1);
+
+    // Row 2: left Arm (Left Hand), center Torso, right Arm (Right Hand)
+    const row2 = document.createElement("div");
+    row2.className = "equip-row";
+    const r2c1 = document.createElement("div"); r2c1.className = "left"; r2c1.appendChild(makeSlot("Left Hand", "hand_slots.off_hand", "off_hand"));
+    const r2c2 = document.createElement("div"); r2c2.className = "center"; r2c2.appendChild(makeSlot("Torso", "body_slots.torso", "torso"));
+    const r2c3 = document.createElement("div"); r2c3.className = "right"; r2c3.appendChild(makeSlot("Right Hand", "hand_slots.main_hand", "main_hand"));
+    row2.appendChild(r2c1); row2.appendChild(r2c2); row2.appendChild(r2c3);
+    equipGridEl.appendChild(row2);
+
+    // Row 3: left leg, center spacer, right leg (both map to same 'legs' slot)
+    const row3 = document.createElement("div");
+    row3.className = "equip-row";
+    const r3c1 = document.createElement("div"); r3c1.className = "left"; r3c1.appendChild(makeSlot("Left Leg", "body_slots.legs", "legs"));
+    const r3c2 = document.createElement("div"); r3c2.className = "center";
+    const r3c3 = document.createElement("div"); r3c3.className = "right"; r3c3.appendChild(makeSlot("Right Leg", "body_slots.legs", "legs"));
+    row3.appendChild(r3c1); row3.appendChild(r3c2); row3.appendChild(r3c3);
+    equipGridEl.appendChild(row3);
+
+    // Row 4: left foot, center little spacer, right foot (both map to same 'feet' slot)
+    const row4 = document.createElement("div");
+    row4.className = "equip-row";
+    const r4c1 = document.createElement("div"); r4c1.className = "left"; r4c1.appendChild(makeSlot("Left Foot", "body_slots.feet", "feet"));
+    const r4c2 = document.createElement("div"); r4c2.className = "center";
+    const r4c3 = document.createElement("div"); r4c3.className = "right"; r4c3.appendChild(makeSlot("Right Foot", "body_slots.feet", "feet"));
+    row4.appendChild(r4c1); row4.appendChild(r4c2); row4.appendChild(r4c3);
+    equipGridEl.appendChild(row4);
+  }
+
+  // Equip button
+  equipBtnEl.addEventListener("click", () => {
+    if (!roomRef) return;
+    if (!selectedItemName) {
+      const line = document.createElement("div");
+      line.textContent = "Select an item to equip";
+      messagesEl.appendChild(line);
+      return;
+    }
+    const slotPath = equipSlotEl.value;
+    roomRef.send("equip", { slotPath, itemName: selectedItemName });
   });
 
   // Click to travel/attack
@@ -349,4 +584,7 @@ function isClientMap(m: unknown): m is ClientMap {
   });
 
   joinBtn.addEventListener("click", joinGame);
+  
+  
+  // setTimeout(() => { joinGame();},300);
 })();

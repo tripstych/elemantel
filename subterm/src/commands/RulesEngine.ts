@@ -14,110 +14,79 @@ export interface DamageResult {
 
 export class RulesEngine {
   /**
-   * Roll a d20, with optional advantage/disadvantage.
-   * Returns { total, is_critical } where is_critical is true on natural 20
+   * Roll a d64, with optional advantage/disadvantage.
+   * Returns { total, is_critical } where is_critical is true on natural 64
    */
-  static rollD20(advantage: boolean = false, disadvantage: boolean = false): { total: number; is_critical: boolean } {
+  static roll64(advantage: boolean = false, disadvantage: boolean = false): { total: number; is_critical: boolean } {
     if (advantage && disadvantage) {
       advantage = disadvantage = false;
     }
 
     if (advantage) {
-      const a = this.randomInt(1, 20);
-      const b = this.randomInt(1, 20);
+      const a = this.randomInt(1, 64);
+      const b = this.randomInt(1, 64);
       const pick = Math.max(a, b);
-      return { total: pick, is_critical: pick === 20 };
+      return { total: pick, is_critical: pick === 64 };
     } else if (disadvantage) {
-      const a = this.randomInt(1, 20);
-      const b = this.randomInt(1, 20);
+      const a = this.randomInt(1, 64);
+      const b = this.randomInt(1, 64);
       const pick = Math.min(a, b);
-      return { total: pick, is_critical: pick === 20 };
+      return { total: pick, is_critical: pick === 64 };
     } else {
-      const roll = this.randomInt(1, 20);
-      return { total: roll, is_critical: roll === 20 };
+      const roll = this.randomInt(1, 64);
+      return { total: roll, is_critical: roll === 64 };
     }
   }
 
   /**
-   * Calculate ability modifier from ability score
+   * Calculate ability modifier from ability score on 1-64 scale
    */
   static getAbilityMod(score: number): number {
-    return Math.floor((score - 10) / 2);
+    return Math.floor((score - 32) / 8);
   }
 
   /**
-   * Calculate initiative: d20 + Dexterity modifier
+   * Calculate initiative: d64 + Dexterity modifier
    */
   static calculateInitiative(stats: CombatStats): number {
-    const d20 = this.rollD20().total;
+    const roll = this.roll64().total;
     const dexMod = this.getAbilityMod(stats.dexterity);
-    return d20 + dexMod;
+    return roll + dexMod;
   }
 
   /**
-   * Determine attack modifier and ability for a weapon
+   * Determine attack modifier and ability for a weapon (unused in flat system)
    */
   static getAttackModForWeapon(attackerStats: CombatStats, weapon: Weapon): { mod: number; ability: string } {
-    const strMod = this.getAbilityMod(attackerStats.strength);
-    const dexMod = this.getAbilityMod(attackerStats.dexterity);
-    const props = (weapon.properties || []).map(p => p.toLowerCase());
-
-    if (props.includes("ranged")) {
-      return { mod: dexMod, ability: "dexterity" };
-    }
-    if (props.includes("finesse")) {
-      // Choose the higher of STR/DEX for finesse
-      if (dexMod >= strMod) {
-        return { mod: dexMod, ability: "dexterity" };
-      }
-      return { mod: strMod, ability: "strength" };
-    }
-    return { mod: strMod, ability: "strength" };
+    return { mod: 0, ability: "flat" };
   }
 
   /**
-   * Roll an attack: d20 + ability mod (from weapon) + proficiency
+   * Roll an attack: d64 vs defender's armor_class (no ability/proficiency mods)
    */
   static rollAttack(
     attackerStats: CombatStats,
     targetStats: CombatStats,
     weapon: Weapon
   ): AttackResult {
-    const { mod } = this.getAttackModForWeapon(attackerStats, weapon);
-    const d20 = this.rollD20();
-    const total = d20.total + mod + attackerStats.proficiency_bonus;
+    const roll = this.roll64();
+    const total = roll.total;
     const hit = total >= targetStats.armor_class;
     
     return {
       hit,
-      is_critical: d20.is_critical,
+      is_critical: roll.is_critical,
       roll_total: total
     };
   }
 
   /**
-   * Roll weapon damage dice (double dice on crit) and add the appropriate ability modifier
+   * Roll weapon damage with crit multiplier (no ability modifier)
    */
   static rollDamage(attackerStats: CombatStats, weapon: Weapon, isCrit: boolean = false): DamageResult {
-    const diceMatch = weapon.damage_dice.trim().match(/(\d+)[dD](\d+)/);
-    if (!diceMatch) {
-      throw new Error(`Invalid dice string: ${weapon.damage_dice}`);
-    }
-
-    let count = parseInt(diceMatch[1]);
-    const sides = parseInt(diceMatch[2]);
-
-    if (isCrit) {
-      count *= 2;
-    }
-
-    let total = 0;
-    for (let i = 0; i < count; i++) {
-      total += this.randomInt(1, sides);
-    }
-
-    const { mod } = this.getAttackModForWeapon(attackerStats, weapon);
-    total += mod;
+    const baseDamage = Math.max(0, weapon.damage || 0);
+    const critMultiplier = isCrit ? 2 : 1;
+    const total = Math.max(0, baseDamage * critMultiplier);
 
     return { damage: total };
   }

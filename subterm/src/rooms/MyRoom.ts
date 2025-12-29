@@ -39,6 +39,8 @@ export class MyRoom extends Room<MyRoomState> {
   private playerMoveTimes: Map<string, number> = new Map();
   private dataService: DataService | null = null;
   private playerClient: Client | null = null;
+  private weaponDamageMap: Map<string, number> = new Map();
+  private armorDefenseMap: Map<string, number> = new Map();
   private deepPlain(obj: any): any {
     if (!obj || typeof obj !== 'object') { return obj; }
     const out: any = Array.isArray(obj) ? [] : {};
@@ -79,6 +81,9 @@ export class MyRoom extends Room<MyRoomState> {
     // this.setState(new MyRoomState());
     this.state = (new MyRoomState());
 
+    // Preload item power scales
+    await this.loadItemScales();
+
     // Get dungeon generation options
     const width = options.width || 60;
     const height = options.height || 30;
@@ -118,8 +123,8 @@ export class MyRoom extends Room<MyRoomState> {
       }
       
       // Calculate movement interval based on inventory weight
-      const strength = player.strength || 10;
-      const maxCarryWeight = strength * 15 * 450;
+      const strength = player.strength || 32;
+      const maxCarryWeight = strength * 2000; // grams; 1-64 scale strength gives ~2kg per point
       const currentWeight = player.inventory?.length || 0;
       let moveInterval = 100; // Base interval
 
@@ -127,7 +132,7 @@ export class MyRoom extends Room<MyRoomState> {
         const excessWeight = currentWeight - maxCarryWeight;
         const penalty = excessWeight * 15; // 15ms per kg over limit
         moveInterval += penalty;
-        console.log(`[DEBUG] Backend - Overweight by ${excessWeight}kg, adding ${penalty}ms penalty`);
+        console.log(`[DEBUG] Backend - Overweight by ${excessWeight} units, adding ${penalty}ms penalty`);
       }
       
       console.log(`[DEBUG] Backend - Final movement interval: ${moveInterval}ms`);
@@ -300,6 +305,9 @@ export class MyRoom extends Room<MyRoomState> {
               (player.equipment.body_slots as any)[slot] = saveData.player.equipment.body_slots[slot];
             });
           }
+
+          // Refresh derived stats from equipment after load
+          this.recalculateDefenseFromEquipment();
         }
         
         // Restore world state
@@ -691,15 +699,17 @@ export class MyRoom extends Room<MyRoomState> {
     this.state.player.hp = 100;
     this.state.player.max_hp = 100;
     this.state.player.mana = 50;
-    this.state.player.strength = 14;
-    this.state.player.dexterity = 12;
-    this.state.player.constitution = 13;
-    this.state.player.intelligence = 10;
-    this.state.player.wisdom = 12;
-    this.state.player.charisma = 10;
-    this.state.player.armor_class = 10;
+    this.state.player.strength = 45;
+    this.state.player.dexterity = 38;
+    this.state.player.constitution = 42;
+    this.state.player.intelligence = 32;
+    this.state.player.wisdom = 38;
+    this.state.player.charisma = 32;
+    this.state.player.armor_class = 32;
     // movement speed removed from schema to ensure consistent client/server definitions
-    this.state.player.proficiency_bonus = 2;
+    this.state.player.proficiency_bonus = 6;
+
+    this.recalculateDefenseFromEquipment();
   }
 
   private addStarterItems() {
@@ -908,15 +918,15 @@ export class MyRoom extends Room<MyRoomState> {
     player.hp = 100;
     player.max_hp = 100;
     player.mana = 50;
-    player.strength = 10;
-    player.dexterity = 10;
-    player.constitution = 10;
-    player.intelligence = 10;
-    player.wisdom = 10;
-    player.charisma = 10;
-    player.armor_class = 10;
+    player.strength = 32;
+    player.dexterity = 32;
+    player.constitution = 32;
+    player.intelligence = 32;
+    player.wisdom = 32;
+    player.charisma = 32;
+    player.armor_class = 32;
     // movement speed removed from schema to ensure consistent client/server definitions
-    player.proficiency_bonus = 2;
+    player.proficiency_bonus = 6;
     player.inventory = new ArraySchema<string>();
     // Initialize slots with proper schema objects
     this.state.player = player;
@@ -1099,8 +1109,8 @@ export class MyRoom extends Room<MyRoomState> {
     if (!pathData) return;
 
     const player = this.state.player;
-    const strength = player.strength || 10;
-    const maxCarryWeight = strength * 15 * 450;
+    const strength = player.strength || 32;
+    const maxCarryWeight = strength * 2000; // grams; 1-64 scale strength gives ~2kg per point
     const currentWeight = player.inventory?.length || 0;
     let moveInterval = 100; // Base interval
 
@@ -1244,15 +1254,15 @@ export class MyRoom extends Room<MyRoomState> {
     }
 
     const [slotGroup, slotName] = slotParts;
-    
-    // Check if slot exists
-    if (!player.slots[slotGroup] || player.slots[slotGroup][slotName] === undefined) {
+    // Use equipment structure from schema
+    const group: any = (player.equipment as any)[slotGroup];
+    if (!group || group[slotName] === undefined) {
       client.send("error", { message: "Invalid slot!" });
       return;
     }
 
     // Get current item in slot (if any)
-    const currentItem = player.slots[slotGroup][slotName];
+    const currentItem = group[slotName];
     
     // Remove item from inventory
     const itemIndex = player.inventory.indexOf(itemName);
@@ -1264,8 +1274,10 @@ export class MyRoom extends Room<MyRoomState> {
     }
     
     // Equip new item
-    player.slots[slotGroup][slotName] = itemName;
+    group[slotName] = itemName;
     
+    this.recalculateDefenseFromEquipment();
+
     console.log(`${player.name} equipped ${itemName} to ${slotPath}`);
     client.send("equip_result", { message: `Equipped ${itemName} to ${slotName}!`, item: itemName, slotPath });
   }
@@ -1284,20 +1296,22 @@ export class MyRoom extends Room<MyRoomState> {
     }
 
     const [slotGroup, slotName] = slotParts;
-    
-    // Check if slot exists and has an item
-    if (!player.slots[slotGroup] || !player.slots[slotGroup][slotName]) {
+    // Use equipment structure from schema
+    const group: any = (player.equipment as any)[slotGroup];
+    if (!group || !group[slotName]) {
       client.send("error", { message: "Slot is empty!" });
       return;
     }
 
-    const currentItem = player.slots[slotGroup][slotName];
+    const currentItem = group[slotName];
     
     // Add item back to inventory
     player.inventory.push(currentItem);
     
     // Clear slot
-    player.slots[slotGroup][slotName] = '';
+    group[slotName] = '';
+
+    this.recalculateDefenseFromEquipment();
     
     console.log(`${player.name} unequipped ${currentItem} from ${slotPath}`);
     client.send("unequip_result", { message: `Unequipped ${currentItem} from ${slotName}!`, item: currentItem, slotPath });
@@ -1416,14 +1430,14 @@ export class MyRoom extends Room<MyRoomState> {
             combat_stats: {
               hp: 20,
               max_hp: 20,
-              armor_class: 10,
-              strength: 10,
-              dexterity: 10,
-              constitution: 10,
-              intelligence: 10,
-              wisdom: 10,
-              charisma: 10,
-              proficiency_bonus: 2,
+              armor_class: 32,
+              strength: 32,
+              dexterity: 32,
+              constitution: 32,
+              intelligence: 32,
+              wisdom: 32,
+              charisma: 32,
+              proficiency_bonus: 6,
             },
           };
 
@@ -1446,7 +1460,7 @@ export class MyRoom extends Room<MyRoomState> {
 
           const weapon = new Weapon();
           weapon.name = "claws";
-          weapon.damage_dice = "1d4";
+          weapon.damage = 8; // flat damage on 1-64 scale
           weapon.damage_type = "slashing" as any;
 
           const log: CombatLog = CombatCommand.resolveAttack(attacker, target, weapon);
@@ -1481,6 +1495,72 @@ export class MyRoom extends Room<MyRoomState> {
         }
       }
     }
+  }
+
+  // --- Item scaling helpers (1-64 damage/defense) ---
+  private async loadItemScales() {
+    if (this.weaponDamageMap.size || this.armorDefenseMap.size) return;
+
+    const basePath = process.cwd();
+    const weaponPath = path.resolve(basePath, "data/64-melee-weapons.json");
+    const armorPath = path.resolve(basePath, "data/64-armors.json");
+
+    try {
+      const weaponsRaw = await fsp.readFile(weaponPath, "utf8");
+      const weapons = JSON.parse(weaponsRaw);
+      weapons.forEach((w: any) => {
+        if (typeof w.name === "string" && typeof w.damage === "number") {
+          this.weaponDamageMap.set(w.name.toLowerCase(), w.damage);
+        }
+      });
+    } catch (err) {
+      console.warn("Unable to load weapon scale data", err);
+    }
+
+    try {
+      const armorsRaw = await fsp.readFile(armorPath, "utf8");
+      const armors = JSON.parse(armorsRaw);
+      armors.forEach((a: any) => {
+        if (typeof a.name === "string" && typeof a.armor_class === "number") {
+          this.armorDefenseMap.set(a.name.toLowerCase(), a.armor_class);
+        }
+      });
+    } catch (err) {
+      console.warn("Unable to load armor scale data", err);
+    }
+  }
+
+  private lookupArmorDefense(name: string | undefined | null): number | null {
+    if (!name) return null;
+    const found = this.armorDefenseMap.get(name.toLowerCase());
+    return typeof found === "number" ? found : null;
+  }
+
+  private recalculateDefenseFromEquipment() {
+    const player = this.state.player;
+    if (!player || !player.equipment) return;
+
+    // Start from baseline defense
+    let defense = player.armor_class || 32;
+
+    const equipped: Array<string> = [];
+    const handSlots = player.equipment.hand_slots;
+    if (handSlots.main_hand) equipped.push(handSlots.main_hand);
+    if (handSlots.off_hand) equipped.push(handSlots.off_hand);
+    const bodySlots = player.equipment.body_slots as any;
+    Object.keys(bodySlots).forEach(slot => {
+      const itemName = bodySlots[slot];
+      if (itemName) equipped.push(itemName);
+    });
+
+    for (const itemName of equipped) {
+      const value = this.lookupArmorDefense(itemName);
+      if (value !== null) {
+        defense = Math.max(defense, value);
+      }
+    }
+
+    player.armor_class = defense;
   }
 
   private moveMonster(monster: {x:number,y:number,item:any}, point: {x:number,y:number}) {

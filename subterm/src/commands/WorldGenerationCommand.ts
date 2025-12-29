@@ -66,15 +66,15 @@ export class WorldGenerationCommand {
         hp: 100,
         max_hp: 100,
         mana: 50,
-        strength: 14,
-        dexterity: 12,
-        constitution: 13,
-        intelligence: 10,
-        wisdom: 12,
-        charisma: 10,
-        armor_class: 10,
+        strength: 45,
+        dexterity: 38,
+        constitution: 42,
+        intelligence: 32,
+        wisdom: 38,
+        charisma: 32,
+        armor_class: 32,
         speed: 30,
-        proficiency_bonus: 2,
+        proficiency_bonus: 6,
         inventory: []
       },
       entities: [],
@@ -322,14 +322,14 @@ export class WorldGenerationCommand {
     player.hp = 100;
     player.max_hp = 100;
     player.mana = 50;
-    player.strength = 14;
-    player.dexterity = 12;
-    player.constitution = 13;
-    player.intelligence = 10;
-    player.wisdom = 12;
-    player.charisma = 10;
-    player.armor_class = 10;
-    player.proficiency_bonus = 2;
+    player.strength = 45;
+    player.dexterity = 38;
+    player.constitution = 42;
+    player.intelligence = 32;
+    player.wisdom = 38;
+    player.charisma = 32;
+    player.armor_class = 32;
+    player.proficiency_bonus = 6;
   }
 
   /**
@@ -381,14 +381,14 @@ export class WorldGenerationCommand {
     // Create starter weapons
     const shortsword = new Weapon();
     shortsword.name = "Shortsword";
-    shortsword.damage_dice = "1d6";
+    shortsword.damage = 11; // approx. d6 on 1-64 scale
     shortsword.damage_type = "piercing" as DamageType;
     shortsword.properties = new ArraySchema<string>("finesse");
     shortsword.range = 5;
 
     const shortbow = new Weapon();
     shortbow.name = "Shortbow";
-    shortbow.damage_dice = "1d6";
+    shortbow.damage = 11; // approx. d6 on 1-64 scale
     shortbow.damage_type = "piercing" as DamageType;
     shortbow.properties = new ArraySchema<string>("ranged");
     shortbow.range = 60;

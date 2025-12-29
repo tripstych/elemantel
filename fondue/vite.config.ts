@@ -13,6 +13,10 @@ export default defineConfig({
         path.resolve(__dirname),
         // Repo-level assets for tiles
         path.resolve(__dirname, "../assets"),
+        // Shared data folder (JSON, dictionaries)
+        path.resolve(__dirname, "../data"),
+        // Shared code folder (TS constants)
+        path.resolve(__dirname, "../shared"),
       ],
       strict: false,
     },
@@ -21,6 +25,8 @@ export default defineConfig({
     alias: {
       // Convenience alias if needed for imports
       "/assets": path.resolve(__dirname, "../assets"),
+      "@shared": path.resolve(__dirname, "../shared"),
+      "@data": path.resolve(__dirname, "../data"),
     },
   },
 });
